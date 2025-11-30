@@ -1504,6 +1504,68 @@ tbody tr:last-child td {
   transform: translateY(-7px) rotate(-45deg);
 }
 
+/* Hamburger Menu Button (in page-header) */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 44px;
+  height: 44px;
+  background: var(--primary-600);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  padding: 0;
+  gap: 4px;
+  transition: all var(--transition-base);
+  box-shadow: var(--shadow-sm);
+  z-index: var(--z-sticky);
+}
+
+.hamburger-menu:hover {
+  background: var(--primary-700);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+}
+
+.hamburger-menu:active {
+  transform: scale(0.95);
+}
+
+.hamburger-menu:focus {
+  outline: 2px solid var(--primary-400);
+  outline-offset: 2px;
+}
+
+.hamburger-bar {
+  width: 22px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all var(--transition-base);
+}
+
+.hamburger-menu.active .hamburger-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-menu.active .hamburger-bar:nth-child(2) {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+.hamburger-menu.active .hamburger-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+/* Show hamburger menu on mobile and tablet */
+@media (max-width: 1024px) {
+  .hamburger-menu {
+    display: flex;
+  }
+}
+
 /* Touch device optimization */
 .touch .action-link,
 .touch .nav-links a,
@@ -1565,11 +1627,6 @@ tbody tr:last-child td {
   :root {
     --header-height: auto;
     --sidebar-width: 280px;
-  }
-
-  /* Hide desktop sidebar toggle on tablet */
-  .sidebar-toggle {
-    display: none;
   }
 
   /* Show mobile menu toggle on tablet */
@@ -1684,11 +1741,6 @@ tbody tr:last-child td {
     --header-height: auto;
     --sidebar-width: 85vw;
     --text-base: 0.9375rem; /* 15px for better mobile readability */
-  }
-
-  /* Hide desktop sidebar toggle on mobile */
-  .sidebar-toggle {
-    display: none;
   }
 
   /* Show mobile menu toggle */

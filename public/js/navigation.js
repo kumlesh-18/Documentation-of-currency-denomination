@@ -144,7 +144,13 @@
         const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
         const isMobileOrTablet = device === 'mobile' || device === 'tablet' || state.isMobile;
 
-        // Create mobile toggle button for mobile AND tablet devices
+        // Handle hamburger menu button clicks (from HTML)
+        const hamburgerBtns = document.querySelectorAll('.hamburger-menu');
+        hamburgerBtns.forEach(btn => {
+            btn.addEventListener('click', toggleMobileMenu);
+        });
+
+        // Create mobile toggle button for mobile and tablet (dynamic creation)
         let toggleBtn = document.querySelector('.mobile-menu-toggle');
         
         if (!toggleBtn && isMobileOrTablet) {
@@ -155,18 +161,18 @@
             toggleBtn.innerHTML = '<span aria-hidden="true">☰</span>';
             document.body.appendChild(toggleBtn);
 
-            // Create overlay for backdrop
+            // Create overlay
             const overlay = document.createElement('div');
             overlay.className = 'mobile-overlay';
             overlay.setAttribute('aria-hidden', 'true');
             document.body.appendChild(overlay);
 
-            // Toggle menu on click
+            // Toggle menu
             toggleBtn.addEventListener('click', toggleMobileMenu);
             overlay.addEventListener('click', closeMobileMenu);
         }
 
-        // Handle sidebar links on mobile and tablet - auto-close after navigation
+        // Handle sidebar links on mobile and tablet - close menu after navigation
         if (isMobileOrTablet) {
             const sidebarLinks = sidebar.querySelectorAll('a');
             sidebarLinks.forEach(link => {
@@ -195,6 +201,7 @@
     function updateMobileMenuState() {
         const sidebar = document.querySelector('.sidebar');
         const toggleBtn = document.querySelector('.mobile-menu-toggle');
+        const hamburgerBtns = document.querySelectorAll('.hamburger-menu');
         const overlay = document.querySelector('.mobile-overlay');
 
         if (!sidebar) return;
@@ -204,12 +211,26 @@
             overlay?.classList.add('active');
             toggleBtn?.setAttribute('aria-expanded', 'true');
             toggleBtn && (toggleBtn.innerHTML = '<span aria-hidden="true">✕</span>');
+            
+            // Update all hamburger menu buttons
+            hamburgerBtns.forEach(btn => {
+                btn.classList.add('active');
+                btn.setAttribute('aria-expanded', 'true');
+            });
+            
             document.body.style.overflow = 'hidden';
         } else {
             sidebar.classList.remove('mobile-open');
             overlay?.classList.remove('active');
             toggleBtn?.setAttribute('aria-expanded', 'false');
             toggleBtn && (toggleBtn.innerHTML = '<span aria-hidden="true">☰</span>');
+            
+            // Update all hamburger menu buttons
+            hamburgerBtns.forEach(btn => {
+                btn.classList.remove('active');
+                btn.setAttribute('aria-expanded', 'false');
+            });
+            
             document.body.style.overflow = '';
         }
     }
@@ -533,7 +554,7 @@
     }
 
     // ========================================
-    // Edge Detection & Auto-Appear (Desktop/Laptop Only)
+    // Edge Detection & Auto-Appear (Desktop Only)
     // ========================================
     function initEdgeDetection() {
         // Get device type from ResponsiveSystem if available
@@ -549,7 +570,7 @@
             return;
         }
 
-        // Desktop/Laptop only: Create edge detection hotspot
+        // Create hotspot if it doesn't exist
         let hotspot = document.querySelector('.sidebar-hotspot');
         if (!hotspot) {
             hotspot = document.createElement('div');
@@ -600,7 +621,6 @@
             return;
         }
 
-        // Desktop/Laptop only: Enable auto-collapse functionality
         const sidebar = document.querySelector('.sidebar');
         if (!sidebar) return;
 
