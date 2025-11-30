@@ -46,7 +46,7 @@ const ENCODING_FIXES = [
     // Box drawing characters (often corrupted in diagrams)
     { pattern: /›/g, replacement: '›' },  // Right angle quote
     { pattern: /│/g, replacement: '│' },  // Box drawing vertical
-    { pattern: /â"/g, replacement: '─' },   // Box drawing horizontal
+    { pattern: /┐/g, replacement: '─' },   // Box drawing horizontal
     
     // Fix PowerShell artifacts
     { pattern: /`n\s*/g, replacement: '' }, // Backtick-n newline

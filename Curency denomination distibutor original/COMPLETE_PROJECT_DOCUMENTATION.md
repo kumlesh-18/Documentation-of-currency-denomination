@@ -1,4 +1,4 @@
-Ã¯Â»Â¿# Currency Denomination Distributor - Complete Project Documentation
+Ã¯Â»¿# Currency Denomination Distributor - Complete Project Documentation
 
 **Document Version:** 1.0.0  
 **Last Updated:** November 25, 2025  

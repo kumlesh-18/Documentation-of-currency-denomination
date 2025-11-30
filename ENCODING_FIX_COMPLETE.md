@@ -46,12 +46,12 @@
 
 | Type | Broken | Fixed |
 |------|--------|-------|
-| File Emoji | ðŸ"„ | 📄 |
+| File Emoji | 📄 | 📄 |
 | Euro Symbol | â‚¬ | € |
 | Rupee Symbol | â‚¹ | ₹ |
 | French Word | FranÃ§ais | Français |
 | Bullet Point | â€¢ | • |
-| Box Line | â"‚ | │ |
+| Box Line | │ | │ |
 
 ---
 
@@ -114,8 +114,8 @@
 **Before:**
 ```json
 {
-  "bulkUpload": "TÃ©lÃ©chargement en Masse",
-  "selectCurrency": "SÃ©lectionner la devise"
+  "bulkUpload": "Téléchargement en Masse",
+  "selectCurrency": "Sélectionner la devise"
 }
 ```
 
@@ -130,7 +130,7 @@
 ### File Emoji (Visual Consistency)
 **Before:**
 ```html
-<span class="badge">ðŸ"„ Planned</span>
+<span class="badge">📄 Planned</span>
 ```
 
 **After:**
@@ -141,9 +141,9 @@
 ### ASCII Art UI Mockup (Documentation Quality)
 **Before:**
 ```
-â"Œâ"€â"€â"€â"€â"€â"€â"€â"
-â"‚ ðŸ"„ File â"‚
-â""â"€â"€â"€â"€â"€â"€â"€â"˜
+┌───────┐
+│ 📄 File │
+└───────┘
 ```
 
 **After:**
