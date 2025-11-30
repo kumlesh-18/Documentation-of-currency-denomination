@@ -749,13 +749,15 @@ hr {
   top: 0;
   z-index: var(--z-sticky);
   box-shadow: var(--shadow-sm);
+  gap: var(--space-4);
 }
 
 .header-content {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 100%;
+  flex: 1;
+  min-width: 0; /* Allow flex item to shrink */
 }
 
 /* Breadcrumbs */
@@ -1521,7 +1523,9 @@ tbody tr:last-child td {
   gap: 4px;
   transition: all var(--transition-base);
   box-shadow: var(--shadow-sm);
-  z-index: var(--z-sticky);
+  z-index: calc(var(--z-sticky) + 1);
+  flex-shrink: 0; /* Prevent button from shrinking */
+  order: -1; /* Position hamburger as first item in header */
 }
 
 .hamburger-menu:hover {
@@ -1654,12 +1658,13 @@ tbody tr:last-child td {
 
   /* Header adjustments */
   .page-header {
-    padding: var(--space-5) var(--space-6);
-    margin-left: 60px; /* Account for hamburger */
+    padding: var(--space-4) var(--space-6);
+    gap: var(--space-3);
   }
 
   .breadcrumbs {
-    font-size: var(--text-sm);
+    font-size: var(--text-xs);
+    gap: var(--space-1);
   }
 
   .header-actions {
@@ -1784,8 +1789,8 @@ tbody tr:last-child td {
 
   /* Header - compact mobile layout */
   .page-header {
-    padding: var(--space-4);
-    margin-left: 52px; /* Account for hamburger */
+    padding: var(--space-3);
+    gap: var(--space-2);
     position: sticky;
     top: 0;
     background: linear-gradient(to bottom right, var(--slate-50), var(--slate-100));
@@ -1796,13 +1801,13 @@ tbody tr:last-child td {
   .header-content {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--space-3);
+    gap: var(--space-2);
   }
 
   .breadcrumbs {
     font-size: var(--text-xs);
     flex-wrap: wrap;
-    gap: var(--space-2);
+    gap: var(--space-1);
   }
 
   .separator {
