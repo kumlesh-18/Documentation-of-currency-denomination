@@ -1627,11 +1627,18 @@ tbody tr:last-child td {
     --sidebar-width: 280px;
   }
 
-  /* Ensure hamburger button is always visible on tablet */
+  /* Ensure hamburger button is always visible on tablet - use fixed positioning */
   .hamburger-menu {
     display: flex !important;
-    position: relative;
-    z-index: calc(var(--z-sticky) + 2);
+    position: fixed !important;
+    top: 16px !important;
+    left: 16px !important;
+    z-index: 9999 !important;
+    width: 44px;
+    height: 44px;
+    background: var(--primary-600);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
   }
 
   /* Show mobile menu toggle on tablet */
@@ -1663,9 +1670,9 @@ tbody tr:last-child td {
     width: 100%;
   }
 
-  /* Header adjustments */
+  /* Header adjustments - add left padding for fixed hamburger on tablet */
   .page-header {
-    padding: var(--space-4) var(--space-6);
+    padding: var(--space-4) var(--space-6) var(--space-4) 72px; /* Left padding for hamburger */
     gap: var(--space-3);
   }
 
@@ -1749,14 +1756,31 @@ tbody tr:last-child td {
     --text-base: 0.9375rem; /* 15px for better mobile readability */
   }
 
-  /* Ensure hamburger button is visible and properly positioned on mobile */
+  /* CRITICAL: Hamburger button MUST be visible - use fixed positioning on mobile */
   .hamburger-menu {
-    display: flex !important; /* Force visibility on mobile */
-    position: relative;
-    order: -1;
-    z-index: calc(var(--z-sticky) + 10); /* Significantly higher z-index */
-    flex-shrink: 0;
-    margin-right: var(--space-3); /* Add spacing from content */
+    display: flex !important; /* Force visibility */
+    position: fixed !important; /* Fixed positioning to guarantee visibility */
+    top: 12px !important;
+    left: 12px !important;
+    z-index: 9999 !important; /* Maximum z-index */
+    width: 44px;
+    height: 44px;
+    background: var(--primary-600);
+    border-radius: var(--radius-md);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    padding: 0;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+  }
+
+  .hamburger-menu:active {
+    transform: scale(0.95);
+    background: var(--primary-700);
   }
 
   /* Show mobile menu toggle */
@@ -1804,16 +1828,16 @@ tbody tr:last-child td {
     width: 100%;
   }
 
-  /* Header - compact mobile layout */
+  /* Header - compact mobile layout - add left padding for fixed hamburger */
   .page-header {
-    padding: var(--space-3);
+    padding: var(--space-3) var(--space-3) var(--space-3) 68px; /* Left padding for hamburger */
     gap: var(--space-2);
     position: sticky;
     top: 0;
     background: linear-gradient(to bottom right, var(--slate-50), var(--slate-100));
     z-index: var(--z-sticky); /* Restored proper z-index */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    flex-wrap: nowrap; /* Prevent wrapping */
+    flex-wrap: wrap; /* Allow wrapping on very small screens */
     align-items: center; /* Center items vertically */
   }
 
