@@ -150,7 +150,8 @@
         if (!toggleBtn && isMobileOrTablet) {
             toggleBtn = document.createElement('button');
             toggleBtn.className = 'mobile-menu-toggle';
-            toggleBtn.setAttribute('aria-label', 'Toggle navigation menu');
+            toggleBtn.setAttribute('role', 'button');
+            toggleBtn.setAttribute('aria-label', 'Toggle navigation');
             toggleBtn.setAttribute('aria-expanded', 'false');
             toggleBtn.innerHTML = '<span aria-hidden="true">☰</span>';
             document.body.appendChild(toggleBtn);
