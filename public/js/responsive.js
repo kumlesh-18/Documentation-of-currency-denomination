@@ -90,66 +90,13 @@
 
     /**
      * Mobile navigation toggle
+     * Note: Actual hamburger creation handled by navigation.js
+     * This just ensures device classes are set correctly
      */
     function initMobileNav() {
-        const sidebar = document.getElementById('sidebar');
-        if (!sidebar) return;
-
-        // Create hamburger button if it doesn't exist
-        if (!document.getElementById('mobile-menu-toggle')) {
-            const toggle = document.createElement('button');
-            toggle.id = 'mobile-menu-toggle';
-            toggle.className = 'mobile-menu-toggle';
-            toggle.setAttribute('aria-label', 'Toggle navigation menu');
-            toggle.setAttribute('aria-expanded', 'false');
-            toggle.innerHTML = `
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-            `;
-
-            // Insert at beginning of body
-            document.body.insertBefore(toggle, document.body.firstChild);
-
-            // Toggle functionality
-            toggle.addEventListener('click', function() {
-                const isOpen = sidebar.classList.toggle('mobile-open');
-                toggle.setAttribute('aria-expanded', isOpen);
-                toggle.classList.toggle('active', isOpen);
-                document.body.classList.toggle('nav-open', isOpen);
-            });
-        }
-
-        // Close sidebar when clicking outside on mobile
-        document.addEventListener('click', function(e) {
-            if (currentDevice === 'mobile' || currentDevice === 'tablet') {
-                if (!sidebar.contains(e.target) && 
-                    !e.target.closest('#mobile-menu-toggle') &&
-                    sidebar.classList.contains('mobile-open')) {
-                    sidebar.classList.remove('mobile-open');
-                    const toggle = document.getElementById('mobile-menu-toggle');
-                    if (toggle) {
-                        toggle.setAttribute('aria-expanded', 'false');
-                        toggle.classList.remove('active');
-                    }
-                    document.body.classList.remove('nav-open');
-                }
-            }
-        });
-
-        // Close sidebar on nav link click (mobile only)
-        sidebar.addEventListener('click', function(e) {
-            if ((currentDevice === 'mobile' || currentDevice === 'tablet') && 
-                e.target.tagName === 'A') {
-                sidebar.classList.remove('mobile-open');
-                const toggle = document.getElementById('mobile-menu-toggle');
-                if (toggle) {
-                    toggle.setAttribute('aria-expanded', 'false');
-                    toggle.classList.remove('active');
-                }
-                document.body.classList.remove('nav-open');
-            }
-        });
+        // Device classes are managed by updateDeviceClasses()
+        // navigation.js handles the actual mobile menu creation and behavior
+        // This function kept for API compatibility
     }
 
     /**
@@ -198,7 +145,6 @@
         // Initial detection
         updateDeviceClasses();
         updateVH();
-        initMobileNav();
         handleResponsiveTables();
 
         // Update on resize (debounced)

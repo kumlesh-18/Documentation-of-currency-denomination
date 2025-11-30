@@ -139,11 +139,15 @@
         const mainContent = document.querySelector('.main-content');
         
         if (!sidebar || !mainContent) return;
+        
+        // Get device type from ResponsiveSystem if available
+        const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
+        const isMobileOrTablet = device === 'mobile' || device === 'tablet' || state.isMobile;
 
-        // Create mobile toggle button
+        // Create mobile toggle button for mobile and tablet
         let toggleBtn = document.querySelector('.mobile-menu-toggle');
         
-        if (!toggleBtn && state.isMobile) {
+        if (!toggleBtn && isMobileOrTablet) {
             toggleBtn = document.createElement('button');
             toggleBtn.className = 'mobile-menu-toggle';
             toggleBtn.setAttribute('aria-label', 'Toggle navigation menu');
@@ -162,12 +166,17 @@
             overlay.addEventListener('click', closeMobileMenu);
         }
 
-        // Handle sidebar links on mobile
-        if (state.isMobile) {
+        // Handle sidebar links on mobile and tablet - close menu after navigation
+        if (isMobileOrTablet) {
             const sidebarLinks = sidebar.querySelectorAll('a');
             sidebarLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    setTimeout(closeMobileMenu, 150);
+                // Remove old listeners to prevent duplicates
+                const newLink = link.cloneNode(true);
+                link.parentNode.replaceChild(newLink, link);
+                
+                newLink.addEventListener('click', () => {
+                    // Auto-hide after navigation with slight delay
+                    setTimeout(closeMobileMenu, CONFIG.autoCollapse.delay);
                 });
             });
         }
@@ -395,12 +404,17 @@
     function handleResize() {
         const wasMobile = state.isMobile;
         state.isMobile = window.innerWidth <= CONFIG.breakpoints.mobile;
+        
+        // Get current device from ResponsiveSystem if available
+        const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
+        const wasDesktopOrLaptop = !wasMobile;
+        const isDesktopOrLaptop = device === 'desktop' || device === 'laptop';
 
         updateToggleVisibility();
 
         if (wasMobile !== state.isMobile) {
             if (!state.isMobile) {
-                // Switching to Desktop
+                // Switching to Desktop/Laptop
                 closeMobileMenu();
                 // Remove mobile elements
                 const toggleBtn = document.querySelector('.mobile-menu-toggle');
@@ -414,17 +428,23 @@
                     setSidebarState(true);
                 }
                 
-                // Re-initialize auto collapse and edge detection for desktop
-                initAutoCollapse();
-                initEdgeDetection();
+                // Re-initialize desktop-only features
+                if (isDesktopOrLaptop) {
+                    initAutoCollapse();
+                    initEdgeDetection();
+                }
             } else {
-                // Switching to Mobile
+                // Switching to Mobile/Tablet
                 initMobileMenu();
                 // Clear any desktop timers
                 if (state.autoCollapseTimer) {
                     clearTimeout(state.autoCollapseTimer);
                     state.autoCollapseTimer = null;
                 }
+                // Remove desktop-only elements
+                const hotspot = document.querySelector('.sidebar-hotspot');
+                hotspot?.remove();
+                
                 // Reset desktop specific classes to avoid conflicts
                 const sidebar = document.querySelector('.sidebar');
                 const mainContent = document.querySelector('.main-content');
@@ -432,6 +452,11 @@
                 sidebar?.classList.remove('peeking');
                 mainContent?.classList.remove('expanded');
             }
+        } else if (isDesktopOrLaptop !== wasDesktopOrLaptop) {
+            // Device type changed within desktop range (e.g., laptop <-> desktop)
+            // Re-initialize desktop features to ensure they're active
+            initAutoCollapse();
+            initEdgeDetection();
         }
     }
 
@@ -508,10 +533,21 @@
     }
 
     // ========================================
-    // Edge Detection & Auto-Appear
+    // Edge Detection & Auto-Appear (Desktop Only)
     // ========================================
     function initEdgeDetection() {
-        if (state.isMobile) return;
+        // Get device type from ResponsiveSystem if available
+        const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
+        
+        // ONLY enable on desktop/laptop - disable on mobile and tablet
+        if (device === 'mobile' || device === 'tablet' || state.isMobile) {
+            // Remove hotspot if it exists
+            const existingHotspot = document.querySelector('.sidebar-hotspot');
+            if (existingHotspot) {
+                existingHotspot.remove();
+            }
+            return;
+        }
 
         // Create hotspot if it doesn't exist
         let hotspot = document.querySelector('.sidebar-hotspot');
@@ -538,8 +574,7 @@
         };
 
         hotspot.addEventListener('mouseenter', startPeek);
-        hotspot.addEventListener('touchstart', startPeek, { passive: true });
-
+        
         // Hide when leaving sidebar (if peeking)
         sidebar.addEventListener('mouseleave', () => {
             if (state.isPeeking) {
@@ -549,10 +584,21 @@
     }
 
     // ========================================
-    // Auto-Collapse Sidebar Logic
+    // Auto-Collapse Sidebar Logic (Desktop/Laptop Only)
     // ========================================
     function initAutoCollapse() {
-        if (state.isMobile) return;
+        // Get device type from ResponsiveSystem if available
+        const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
+        
+        // ONLY enable on desktop/laptop - disable on mobile and tablet
+        if (device === 'mobile' || device === 'tablet' || state.isMobile) {
+            // Clear any existing timers
+            if (state.autoCollapseTimer) {
+                clearTimeout(state.autoCollapseTimer);
+                state.autoCollapseTimer = null;
+            }
+            return;
+        }
 
         const sidebar = document.querySelector('.sidebar');
         if (!sidebar) return;

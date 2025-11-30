@@ -1567,7 +1567,7 @@ tbody tr:last-child td {
     --sidebar-width: 280px;
   }
 
-  /* Show mobile menu toggle */
+  /* Show mobile menu toggle on tablet */
   .mobile-menu-toggle {
     display: flex;
   }
