@@ -1627,6 +1627,13 @@ tbody tr:last-child td {
     --sidebar-width: 280px;
   }
 
+  /* Ensure hamburger button is always visible on tablet */
+  .hamburger-menu {
+    display: flex !important;
+    position: relative;
+    z-index: calc(var(--z-sticky) + 2);
+  }
+
   /* Show mobile menu toggle on tablet */
   .mobile-menu-toggle {
     display: flex;
@@ -1742,6 +1749,16 @@ tbody tr:last-child td {
     --text-base: 0.9375rem; /* 15px for better mobile readability */
   }
 
+  /* Ensure hamburger button is visible and properly positioned on mobile */
+  .hamburger-menu {
+    display: flex !important; /* Force visibility on mobile */
+    position: relative;
+    order: -1;
+    z-index: calc(var(--z-sticky) + 10); /* Significantly higher z-index */
+    flex-shrink: 0;
+    margin-right: var(--space-3); /* Add spacing from content */
+  }
+
   /* Show mobile menu toggle */
   .mobile-menu-toggle {
     display: flex;
@@ -1794,20 +1811,27 @@ tbody tr:last-child td {
     position: sticky;
     top: 0;
     background: linear-gradient(to bottom right, var(--slate-50), var(--slate-100));
-    z-index: calc(var(--z-sticky) - 1);
+    z-index: var(--z-sticky); /* Restored proper z-index */
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    flex-wrap: nowrap; /* Prevent wrapping */
+    align-items: center; /* Center items vertically */
   }
 
   .header-content {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row; /* Keep horizontal on mobile for compact layout */
+    align-items: center;
     gap: var(--space-2);
+    flex-wrap: wrap; /* Allow content to wrap if needed */
   }
 
   .breadcrumbs {
     font-size: var(--text-xs);
     flex-wrap: wrap;
     gap: var(--space-1);
+    flex: 0 1 auto; /* Allow shrinking */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .separator {
@@ -1815,21 +1839,17 @@ tbody tr:last-child td {
   }
 
   .header-actions {
-    width: 100%;
-    justify-content: space-between;
-    padding-top: var(--space-3);
-    border-top: 1px solid var(--slate-200);
-    gap: var(--space-3);
+    display: flex;
+    gap: var(--space-2);
+    flex-shrink: 0; /* Prevent shrinking */
   }
 
-  .action-link {
-    flex: 1;
-    justify-content: center;
-    padding: var(--space-3);
-    font-size: var(--text-sm);
-    min-height: 44px;
-    display: flex;
-    align-items: center;
+  .action-link,
+  .btn {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+    min-height: 40px;
+    white-space: nowrap;
   }
 
   /* Typography - mobile optimized */
