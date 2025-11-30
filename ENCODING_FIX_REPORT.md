@@ -7,7 +7,7 @@
 - Files were then edited/viewed with incorrect encoding (likely Windows-1252)
 - When re-saved, the UTF-8 bytes were interpreted as Windows-1252 characters
 - These characters were then re-encoded as UTF-8, creating mojibake
-- Example: 📚 (f09f93ba) → ðŸ"š (c3b0c5b8e2809cc5a1)
+- Example: 📚 (f09f93ba) → 🐍š (c3b0c5b8e2809cc5a1)
 
 **Secondary Issues:**
 - PowerShell script artifacts (`\`n`) inserted into HTML files
@@ -70,7 +70,7 @@ All files in `public/pages/`:
 ### Sidebar Header (All Pages)
 **Before (Corrupted):**
 ```html
-<h2>ðŸ"š Documentation</h2>
+<h2>🐍š Documentation</h2>
 ```
 
 **After (Fixed):**
@@ -87,8 +87,8 @@ All files in `public/pages/`:
 **Before (Corrupted):**
 ```html
 <a href="../index.html" class="action-link">ðŸ  Home</a>
-<a href="javascript:window.print()" class="action-link">ðŸ–¨ï¸ Print</a>
-<a onclick="performLogout()" href="#" class="action-link">ðŸšª Logout</a>
+<a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+<a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
 ```
 
 **After (Fixed):**
@@ -103,7 +103,7 @@ All files in `public/pages/`:
 ### Status Badges (Executive Summary, etc.)
 **Before (Corrupted):**
 ```html
-<span class="badge badge-warning">ðŸ"„ Planned</span>
+<span class="badge badge-warning">📄 Planned</span>
 ```
 
 **After (Fixed):**
@@ -116,10 +116,10 @@ All files in `public/pages/`:
 ### Complete Codebase Icons
 **Before (Corrupted):**
 ```html
-ðŸ" Folder
-ðŸ"„ Document
-ðŸ"¦ Package
-ðŸ" Memo
+🐍 Folder
+📄 Document
+🐍¦ Package
+🐍 Memo
 ```
 
 **After (Fixed):**
@@ -259,7 +259,7 @@ grep -r 'meta charset="UTF-8"' public/
 npm run fix-encoding
 
 # Verify no mojibake in output
-grep -r "ðŸ" public/pages/
+grep -r "🐍 public/pages/
 # Should return: (empty - no matches)
 ```
 

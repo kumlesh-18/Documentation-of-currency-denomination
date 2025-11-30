@@ -538,7 +538,7 @@ def _is_list_format(self, text: str) -> bool:
                     <div class="alert alert-success">
                         <strong>4 Detection Strategies (Priority Order):</strong>
                         <ol>
-                            <li><strong>Currency Symbols:</strong> â‚¹, Rs, $, â‚¬, Â£</li>
+                            <li><strong>Currency Symbols:</strong> ₹, Rs, $, €, £</li>
                             <li><strong>Currency Codes:</strong> INR, USD, EUR, GBP</li>
                             <li><strong>Currency Names:</strong> Rupee, Dollar, Euro, Pound</li>
                             <li><strong>Default Fallback:</strong> INR (smart default)</li>
@@ -550,7 +550,7 @@ def _is_list_format(self, text: str) -> bool:
     Detect currency from text using multiple strategies.
     
     Strategy priority:
-    1. Currency symbols (â‚¹, $, â‚¬, Â£)
+    1. Currency symbols (₹, $, €, £)
     2. Currency codes (INR, USD, EUR, GBP)
     3. Currency names (Rupee, Dollar, Euro, Pound)
     4. Default fallback
@@ -558,13 +558,13 @@ def _is_list_format(self, text: str) -> bool:
     text_upper = text.upper()
     
     # Strategy 1: Symbols
-    if 'â‚¹' in text or 'RS' in text_upper or 'RS.' in text_upper:
+    if '₹' in text or 'RS' in text_upper or 'RS.' in text_upper:
         return 'INR'
     elif '$' in text:
         return 'USD'
-    elif 'â‚¬' in text:
+    elif '€' in text:
         return 'EUR'
-    elif 'Â£' in text:
+    elif '£' in text:
         return 'GBP'
     
     # Strategy 2: Currency codes

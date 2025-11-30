@@ -217,7 +217,7 @@ async def bulk_upload(file: UploadFile = File(...)):
                             <li><strong>Improved Currency Detection:</strong> 4-strategy detection system
                                 <ul>
                                     <li>Strategy 1: Explicit field/column detection</li>
-                                    <li>Strategy 2: Symbol detection (â‚¹, $, â‚¬, Â£)</li>
+                                    <li>Strategy 2: Symbol detection (₹, $, €, £)</li>
                                     <li>Strategy 3: Code detection (INR, USD, EUR, GBP)</li>
                                     <li>Strategy 4: Name detection (rupees, dollars, euros, pounds)</li>
                                 </ul>
@@ -361,7 +361,7 @@ async def bulk_upload(file: UploadFile = File(...)):
         &lt;p className="font-medium"&gt;Selected File:&lt;/p&gt;
         &lt;p className="text-lg font-semibold"&gt;{selectedFile.name}&lt;/p&gt;
         &lt;p className="text-sm text-gray-600 dark:text-gray-400"&gt;
-          Format: {fileFormat} â€¢ Size: {(selectedFile.size / 1024).toFixed(2)} KB
+          Format: {fileFormat} • Size: {(selectedFile.size / 1024).toFixed(2)} KB
         &lt;/p&gt;
       &lt;/div&gt;
     &lt;/div&gt;
@@ -383,7 +383,7 @@ async def bulk_upload(file: UploadFile = File(...)):
                             <pre><code class="language-text">â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
 â”‚  ðŸ“Š  Selected File:                         â”‚
 â”‚      test_bulk_upload.csv                   â”‚
-â”‚      Format: CSV â€¢ Size: 2.45 KB            â”‚
+â”‚      Format: CSV • Size: 2.45 KB            â”‚
 â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
                         </div>
                     </div>
@@ -466,7 +466,7 @@ INFO:     Successfully processed 10 rows</code></pre>
                                 </tr>
                                 <tr>
                                     <td>Symbol Detection</td>
-                                    <td>Image with "â‚¹1850"</td>
+                                    <td>Image with "₹1850"</td>
                                     <td>INR detected</td>
                                     <td><span class="badge badge-success">âœ“ Pass</span></td>
                                 </tr>

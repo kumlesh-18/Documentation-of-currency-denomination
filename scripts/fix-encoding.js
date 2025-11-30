@@ -11,41 +11,41 @@ const path = require('path');
 // Mapping of corrupted mojibake patterns to proper UTF-8 emojis
 const ENCODING_FIXES = [
     // Sidebar header - Books emoji 📚
-    { pattern: /ðŸ"š|ð\u009FÂ\u009Að\u009F"š/g, replacement: '📚' },
+    { pattern: /🐍š|ð\u009FÂ\u009Að\u009F"š/g, replacement: '📚' },
     
     // Header action buttons
     { pattern: /ðŸ\u00A0|ð\u009FÂ\u00A0/g, replacement: '🏠' },  // Home emoji 🏠
-    { pattern: /ðŸ–¨ï¸|ð\u009FÂ\u0096ð\u009F¨ï¸/g, replacement: '🖨️' }, // Printer emoji 🖨️
-    { pattern: /ðŸšª|ð\u009FÂ\u009Að\u009Fªª/g, replacement: '🚪' }, // Door emoji 🚪
+    { pattern: /🖨️|ð\u009FÂ\u0096ð\u009F¨ï¸/g, replacement: '🖨️' }, // Printer emoji 🖨️
+    { pattern: /🚪|ð\u009FÂ\u009Að\u009Fªª/g, replacement: '🚪' }, // Door emoji 🚪
     
     // Status badges and icons
-    { pattern: /ðŸ"„|ð\u009FÂ\u0094ð\u009F„„/g, replacement: '🔄' }, // Refresh emoji 🔄
-    { pattern: /ðŸ"|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📁' },   // Folder emoji 📁
-    { pattern: /ðŸ"„|ð\u009FÂ\u0093ð\u009F"„/g, replacement: '📄' }, // Document emoji 📄
-    { pattern: /ðŸ"¸|ð\u009FÂ\u0093ð\u009F¸¸/g, replacement: '📸' }, // Camera emoji 📸
-    { pattern: /ðŸ'¡|ð\u009FÂ\u0092ð\u009F¡¡/g, replacement: '💡' }, // Lightbulb emoji 💡
-    { pattern: /ðŸŽ¯|ð\u009FÂŽð\u009F¯¯/g, replacement: '🎯' },     // Target emoji 🎯
-    { pattern: /ðŸ"–|ð\u009FÂ\u0093ð\u009F––/g, replacement: '📖' }, // Open book emoji 📖
-    { pattern: /ðŸ'»|ð\u009FÂ\u0092ð\u009F»»/g, replacement: '💻' }, // Laptop emoji 💻
+    { pattern: /📄|ð\u009FÂ\u0094ð\u009F„„/g, replacement: '🔄' }, // Refresh emoji 🔄
+    { pattern: /🐍|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📁' },   // Folder emoji 📁
+    { pattern: /📄|ð\u009FÂ\u0093ð\u009F"„/g, replacement: '📄' }, // Document emoji 📄
+    { pattern: /🐍¸|ð\u009FÂ\u0093ð\u009F¸¸/g, replacement: '📸' }, // Camera emoji 📸
+    { pattern: /💡|ð\u009FÂ\u0092ð\u009F¡¡/g, replacement: '💡' }, // Lightbulb emoji 💡
+    { pattern: /🎯|ð\u009FÂŽð\u009F¯¯/g, replacement: '🎯' },     // Target emoji 🎯
+    { pattern: /🐍–|ð\u009FÂ\u0093ð\u009F––/g, replacement: '📖' }, // Open book emoji 📖
+    { pattern: /💻|ð\u009FÂ\u0092ð\u009F»»/g, replacement: '💻' }, // Laptop emoji 💻
     { pattern: /âš¡|â\u009A¡/g, replacement: '⚡' },                // Lightning emoji ⚡
-    { pattern: /ðŸ"|ð\u009FÂ\u0094ð\u009F"/g, replacement: '🔌' },   // Plug emoji 🔌
-    { pattern: /ðŸ—ï¸|ð\u009FÂ\u0097ð\u009Fï¸/g, replacement: '🗝️' }, // Key emoji 🗝️
-    { pattern: /ðŸŽ¨|ð\u009FÂŽð\u009F¨¨/g, replacement: '🎨' },     // Palette emoji 🎨
-    { pattern: /ðŸ"|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📦' },   // Package emoji 📦
-    { pattern: /ðŸš€|ð\u009FÂ\u009Að\u009F€€/g, replacement: '🚀' }, // Rocket emoji 🚀
+    { pattern: /🐍|ð\u009FÂ\u0094ð\u009F"/g, replacement: '🔌' },   // Plug emoji 🔌
+    { pattern: /🗝️|ð\u009FÂ\u0097ð\u009Fï¸/g, replacement: '🗝️' }, // Key emoji 🗝️
+    { pattern: /🎨|ð\u009FÂŽð\u009F¨¨/g, replacement: '🎨' },     // Palette emoji 🎨
+    { pattern: /🐍|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📦' },   // Package emoji 📦
+    { pattern: /🚀|ð\u009FÂ\u009Að\u009F€€/g, replacement: '🚀' }, // Rocket emoji 🚀
     { pattern: /âœ…|â\u009C…/g, replacement: '✅' },                // Checkmark emoji ✅
-    { pattern: /ðŸ"|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📝' },   // Memo emoji 📝
-    { pattern: /ðŸ"|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📋' },   // Clipboard emoji 📋
-    { pattern: /ðŸ"§|ð\u009FÂ\u0094ð\u009F§§/g, replacement: '🔧' }, // Wrench emoji 🔧
-    { pattern: /ðŸ"|ð\u009FÂ\u0094ð\u009F"/g, replacement: '🔐' },   // Lock emoji 🔐
-    { pattern: /ðŸ""|ð\u009FÂ\u0094ð\u009F""/g, replacement: '🔒' }, // Locked emoji 🔒
-    { pattern: /ðŸ"„|ð\u009FÂ\u0093ð\u009F„„/g, replacement: '📄' }, // Page emoji 📄
-    { pattern: /ðŸ"|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📅' },   // Calendar emoji 📅
-    { pattern: /ðŸŒ|ð\u009FÂŒð\u009F"/g, replacement: '🌐' },       // Globe emoji 🌐
+    { pattern: /🐍|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📝' },   // Memo emoji 📝
+    { pattern: /🐍|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📋' },   // Clipboard emoji 📋
+    { pattern: /🐍§|ð\u009FÂ\u0094ð\u009F§§/g, replacement: '🔧' }, // Wrench emoji 🔧
+    { pattern: /🐍|ð\u009FÂ\u0094ð\u009F"/g, replacement: '🔐' },   // Lock emoji 🔐
+    { pattern: /🐍"|ð\u009FÂ\u0094ð\u009F""/g, replacement: '🔒' }, // Locked emoji 🔒
+    { pattern: /📄|ð\u009FÂ\u0093ð\u009F„„/g, replacement: '📄' }, // Page emoji 📄
+    { pattern: /🐍|ð\u009FÂ\u0093ð\u009F"/g, replacement: '📅' },   // Calendar emoji 📅
+    { pattern: /🌐|ð\u009FÂŒð\u009F"/g, replacement: '🌐' },       // Globe emoji 🌐
     
     // Box drawing characters (often corrupted in diagrams)
-    { pattern: /â€º/g, replacement: '›' },  // Right angle quote
-    { pattern: /â"‚/g, replacement: '│' },  // Box drawing vertical
+    { pattern: /›/g, replacement: '›' },  // Right angle quote
+    { pattern: /│/g, replacement: '│' },  // Box drawing vertical
     { pattern: /â"/g, replacement: '─' },   // Box drawing horizontal
     
     // Fix PowerShell artifacts

@@ -184,7 +184,7 @@ interface DenominationBreakdown {
                             <tr>
                                 <td>Indian Rupee</td>
                                 <td><span class="badge badge-primary">INR</span></td>
-                                <td>â‚¹</td>
+                                <td>₹</td>
                                 <td>2000, 500, 200, 100, 50, 20, 10</td>
                                 <td>10, 5, 2, 1</td>
                                 <td>0.01 (paisa)</td>
@@ -200,7 +200,7 @@ interface DenominationBreakdown {
                             <tr>
                                 <td>Euro</td>
                                 <td><span class="badge badge-primary">EUR</span></td>
-                                <td>â‚¬</td>
+                                <td>€</td>
                                 <td>500, 200, 100, 50, 20, 10, 5</td>
                                 <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
                                 <td>0.01 (cent)</td>
@@ -208,7 +208,7 @@ interface DenominationBreakdown {
                             <tr>
                                 <td>British Pound</td>
                                 <td><span class="badge badge-primary">GBP</span></td>
-                                <td>Â£</td>
+                                <td>£</td>
                                 <td>50, 20, 10, 5</td>
                                 <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
                                 <td>0.01 (penny)</td>
@@ -222,7 +222,7 @@ interface DenominationBreakdown {
                     <pre><code class="language-json">{
   "INR": {
     "name": "Indian Rupee",
-    "symbol": "â‚¹",
+    "symbol": "₹",
     "code": "INR",
     "notes": [2000, 500, 200, 100, 50, 20, 10],
     "coins": [10, 5, 2, 1],
@@ -251,8 +251,8 @@ interface DenominationBreakdown {
                         </ul>
                         
                         <p><strong>Example:</strong></p>
-                        <pre><code>Amount: â‚¹50,000
-Result: 25 Ã— â‚¹2000 = â‚¹50,000
+                        <pre><code>Amount: ₹50,000
+Result: 25 × ₹2000 = ₹50,000
 Total: 25 denominations</code></pre>
                     </div>
 
@@ -266,10 +266,10 @@ Total: 25 denominations</code></pre>
                         </ul>
                         
                         <p><strong>Example:</strong></p>
-                        <pre><code>Amount: â‚¹50,000
+                        <pre><code>Amount: ₹50,000
 Result:
-  10 Ã— â‚¹2000 = â‚¹20,000
-  10 Ã— â‚¹500  = â‚¹5,000
+  10 × ₹2000 = ₹20,000
+  10 × ₹500  = ₹5,000
   ... (more balanced)</code></pre>
                     </div>
 
@@ -709,13 +709,13 @@ Total is 250 in EUR with balanced optimization</code></pre>
                     <h3>4.4.4 Currency Detection</h3>
 
                     <h4>Strategy 1: Currency Symbols</h4>
-                    <pre><code class="language-python">if 'â‚¹' in text or 'rs.' in text.lower():
+                    <pre><code class="language-python">if '₹' in text or 'rs.' in text.lower():
     return 'INR'
 if '$' in text:
     return 'USD'
-if 'â‚¬' in text:
+if '€' in text:
     return 'EUR'
-if 'Â£' in text:
+if '£' in text:
     return 'GBP'</code></pre>
 
                     <h4>Strategy 2: Currency Names</h4>
@@ -744,7 +744,7 @@ if match and match.group(1) not in ['THE', 'AND', 'FOR', ...]:
 
                     <h4>Single Calculation</h4>
                     <pre><code class="language-csv">Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Breakdown
-50000,INR,greedy,25,0,1,"25 Ã— â‚¹2000 = â‚¹50000"</code></pre>
+50000,INR,greedy,25,0,1,"25 × ₹2000 = ₹50000"</code></pre>
 
                     <h4>Bulk Upload Results</h4>
                     <pre><code class="language-csv">Row Number,Status,Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Error

@@ -193,34 +193,34 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>â‚¹500</td>
+                                    <td>₹500</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>3</td>
-                                    <td>â‚¹1,500.00</td>
+                                    <td>₹1,500.00</td>
                                 </tr>
                                 <tr>
-                                    <td>â‚¹200</td>
+                                    <td>₹200</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>1</td>
-                                    <td>â‚¹200.00</td>
+                                    <td>₹200.00</td>
                                 </tr>
                                 <tr>
-                                    <td>â‚¹100</td>
+                                    <td>₹100</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>1</td>
-                                    <td>â‚¹100.00</td>
+                                    <td>₹100.00</td>
                                 </tr>
                                 <tr>
-                                    <td>â‚¹50</td>
+                                    <td>₹50</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>1</td>
-                                    <td>â‚¹50.00</td>
+                                    <td>₹50.00</td>
                                 </tr>
                                 <tr>
-                                    <td>â‚¹0.50</td>
+                                    <td>₹0.50</td>
                                     <td><span class="badge badge-warning">Coin</span></td>
                                     <td>1</td>
-                                    <td>â‚¹0.50</td>
+                                    <td>₹0.50</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -338,7 +338,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
     # Skip largest denomination if possible
     for i, denom in enumerate(sorted_denoms):
         if i == 0 and remaining < denom * 2:
-            # Skip largest if amount < 2Ã— largest denomination
+            # Skip largest if amount < 2× largest denomination
             continue
         
         if remaining >= denom:
@@ -372,18 +372,18 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                             <tbody>
                                 <tr>
                                     <td><strong>Greedy</strong></td>
-                                    <td>â‚¹2000Ã—1, â‚¹500Ã—2</td>
+                                    <td>₹2000×1, ₹500×2</td>
                                     <td>3 pieces</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Minimize Large</strong></td>
-                                    <td>â‚¹500Ã—6</td>
+                                    <td>₹500×6</td>
                                     <td>6 pieces</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p class="text-sm text-gray-600">Minimize Large avoids â‚¹2000 note, uses more â‚¹500 notes instead.</p>
+                        <p class="text-sm text-gray-600">Minimize Large avoids ₹2000 note, uses more ₹500 notes instead.</p>
                     </div>
                 </section>
 
@@ -432,18 +432,18 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                             <tbody>
                                 <tr>
                                     <td><strong>Greedy</strong></td>
-                                    <td>â‚¹20Ã—2, â‚¹5Ã—1, â‚¹2Ã—1, â‚¹0.50Ã—1</td>
+                                    <td>₹20×2, ₹5×1, ₹2×1, ₹0.50×1</td>
                                     <td>5 pieces (4 notes, 1 coin)</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Minimize Small</strong></td>
-                                    <td>â‚¹20Ã—2 (rounded to â‚¹40)</td>
+                                    <td>₹20×2 (rounded to ₹40)</td>
                                     <td>2 pieces (2 notes, 0 coins)</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p class="text-sm text-gray-600">Minimize Small rounds â‚¹47.50 â†’ â‚¹40 to avoid coins entirely.</p>
+                        <p class="text-sm text-gray-600">Minimize Small rounds ₹47.50 â†’ ₹40 to avoid coins entirely.</p>
                     </div>
                 </section>
 
@@ -456,7 +456,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                     <pre><code class="language-json">{
   "INR": {
     "name": "Indian Rupee",
-    "symbol": "â‚¹",
+    "symbol": "₹",
     "code": "INR",
     "note_threshold": 10,
     "denominations": [
@@ -500,7 +500,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                     <pre><code class="language-json">{
   "EUR": {
     "name": "Euro",
-    "symbol": "â‚¬",
+    "symbol": "€",
     "code": "EUR",
     "note_threshold": 5,
     "denominations": [
@@ -527,7 +527,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                     <pre><code class="language-json">{
   "GBP": {
     "name": "British Pound",
-    "symbol": "Â£",
+    "symbol": "£",
     "code": "GBP",
     "note_threshold": 5,
     "denominations": [

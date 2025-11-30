@@ -214,7 +214,7 @@ class CSVProcessor:
             raise ValueError("Amount is required")
         
         # Remove common formatting
-        amount_str = amount_str.replace(',', '').replace('$', '').replace('â‚¹', '')
+        amount_str = amount_str.replace(',', '').replace('$', '').replace('₹', '')
         
         try:
             amount = Decimal(amount_str)
@@ -274,7 +274,7 @@ class CSVProcessor:
                             <tr>
                                 <td>Currency Symbols in Amount</td>
                                 <td>Strip before parsing</td>
-                                <td><code>amount_str.replace('$', '').replace('â‚¹', '')</code></td>
+                                <td><code>amount_str.replace('$', '').replace('₹', '')</code></td>
                             </tr>
                             <tr>
                                 <td>Case Sensitivity</td>
@@ -585,10 +585,10 @@ class TextParser:
     
     # Currency symbols and codes
     CURRENCY_SYMBOLS = {
-        'â‚¹': 'INR', 'Rs': 'INR', 'INR': 'INR',
+        '₹': 'INR', 'Rs': 'INR', 'INR': 'INR',
         '$': 'USD', 'USD': 'USD',
-        'â‚¬': 'EUR', 'EUR': 'EUR',
-        'Â£': 'GBP', 'GBP': 'GBP',
+        '€': 'EUR', 'EUR': 'EUR',
+        '£': 'GBP', 'GBP': 'GBP',
     }
     
     def parse(self, text: str) -> List[Dict]:
@@ -672,7 +672,7 @@ Calculate 500 euros</code></pre>
                         <tbody>
                             <tr>
                                 <td>Currency Symbols</td>
-                                <td>â‚¹, $, â‚¬, Â£ â†’ INR, USD, EUR, GBP</td>
+                                <td>₹, $, €, £ â†’ INR, USD, EUR, GBP</td>
                                 <td><span class="badge badge-success">Highest</span></td>
                             </tr>
                             <tr>

@@ -208,7 +208,7 @@
                         <strong>Priority Order:</strong>
                         <ol>
                             <li><strong>Explicit Column/Field:</strong> If CSV has 'currency' column or text has "Currency: USD"</li>
-                            <li><strong>Symbol Detection:</strong> Detect â‚¹, Rs, $, â‚¬, Â£ in the text</li>
+                            <li><strong>Symbol Detection:</strong> Detect ₹, Rs, $, €, £ in the text</li>
                             <li><strong>Code Detection:</strong> Detect INR, USD, EUR, GBP keywords</li>
                             <li><strong>Name Detection:</strong> Detect "Rupee", "Dollar", "Euro", "Pound"</li>
                             <li><strong>Smart Default:</strong> Fallback to INR</li>
@@ -221,7 +221,7 @@
     Intelligent currency detection with fallback.
     
     Detection strategies (in order):
-    1. Currency symbols: â‚¹, Rs, $, â‚¬, Â£
+    1. Currency symbols: ₹, Rs, $, €, £
     2. Currency codes: INR, USD, EUR, GBP
     3. Currency names: Rupee, Dollar, Euro, Pound
     4. Default: INR (smart default)
@@ -230,10 +230,10 @@
     
     # Strategy 1: Symbols
     symbol_map = {
-        'â‚¹': 'INR', 'RS': 'INR', 'RS.': 'INR',
+        '₹': 'INR', 'RS': 'INR', 'RS.': 'INR',
         '$': 'USD',
-        'â‚¬': 'EUR',
-        'Â£': 'GBP'
+        '€': 'EUR',
+        '£': 'GBP'
     }
     
     for symbol, currency in symbol_map.items():
@@ -281,7 +281,7 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>"1000 â‚¹"</td>
+                                <td>"1000 ₹"</td>
                                 <td>INR</td>
                                 <td>Symbol Detection</td>
                             </tr>

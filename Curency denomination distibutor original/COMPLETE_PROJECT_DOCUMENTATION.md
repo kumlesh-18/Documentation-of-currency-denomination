@@ -7,7 +7,7 @@
 
 ---
 
-## ÃƒÂ°Ã…Â¸Ã¢Â€ÂœÃ¢Â€Â¹ Table of Contents
+## Ãƒ°Ã…Â¸Ã¢Â€ÂœÃ¢Â€Â¹ Table of Contents
 
 1. [Executive Summary](#1-executive-summary)
 2. [Project Overview](#2-project-overview)
@@ -72,10 +72,10 @@ The **Currency Denomination Distributor** is an enterprise-grade, multi-platform
 - ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Automated installation system
 
 **Phase 2 (Planned):**
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cloud backend with PostgreSQL
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Mobile application (React Native)
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Public REST API with authentication
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cross-device synchronization
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cloud backend with PostgreSQL
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Mobile application (React Native)
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Public REST API with authentication
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cross-device synchronization
 
 **Phase 3 (Future):**
 - ÃƒÂ¢Ã‚ÂÃ‚Â³ AI-powered insights (Google Gemini integration)
@@ -275,15 +275,15 @@ User ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ Desktop/Mobile/Web ÃƒÂ¢Ã¢Â€Â�
 ```
 
 **Additional Features:**
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Live exchange rates from external APIs
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž AI-powered explanations (Google Gemini)
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cross-device synchronization
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Multi-user authentication
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Public REST API with rate limiting
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Analytics dashboard
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cloud backups
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Shared calculations
-- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Team collaboration features
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Live exchange rates from external APIs
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž AI-powered explanations (Google Gemini)
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cross-device synchronization
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Multi-user authentication
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Public REST API with rate limiting
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Analytics dashboard
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cloud backups
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Shared calculations
+- Ãƒ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Team collaboration features
 
 ---
 
@@ -1929,7 +1929,7 @@ const handleDrop = (e: React.DragEvent) => {
     [English ]                     
       - English                     
       - ??? (Hindi)              
-      - EspaÃƒÂ±ol (Spanish)           
+      - EspaÃƒ±ol (Spanish)           
       - FranÃƒÂ§ais (French)           
       - Deutsch (German)            
                                     
@@ -5202,7 +5202,7 @@ class DefaultApplicationLogger:
 **Current Support**:
 1. **English** (en) - Default
 2. **Hindi** (hi) - ???
-3. **Spanish** (es) - EspaÃƒÂ±ol
+3. **Spanish** (es) - EspaÃƒ±ol
 4. **French** (fr) - FranÃƒÂ§ais
 5. **German** (de) - Deutsch
 
@@ -5513,7 +5513,7 @@ const SettingsPage = () => {
       <select value={language} onChange={(e) => setLanguage(e.target.value as Language)}>
         <option value="en">English</option>
         <option value="hi">??? (Hindi)</option>
-        <option value="es">EspaÃƒÂ±ol (Spanish)</option>
+        <option value="es">EspaÃƒ±ol (Spanish)</option>
         <option value="fr">FranÃƒÂ§ais (French)</option>
         <option value="de">Deutsch (German)</option>
       </select>
@@ -7640,7 +7640,7 @@ interface SmartDefaultsSettings {
 **Supported Languages**:
 1. English (en) - Default
 2. Hindi (hi) - ???
-3. Spanish (es) - EspaÃƒÂ±ol
+3. Spanish (es) - EspaÃƒ±ol
 4. French (fr) - FranÃƒÂ§ais
 5. German (de) - Deutsch
 
@@ -7744,7 +7744,7 @@ function LanguageSelector() {
   const languages = [
     { code: 'en', name: 'English', flag: '' },
     { code: 'hi', name: '???', flag: '' },
-    { code: 'es', name: 'EspaÃƒÂ±ol', flag: '' },
+    { code: 'es', name: 'EspaÃƒ±ol', flag: '' },
     { code: 'fr', name: 'FranÃƒÂ§ais', flag: '' },
     { code: 'de', name: 'Deutsch', flag: '' }
   ];
