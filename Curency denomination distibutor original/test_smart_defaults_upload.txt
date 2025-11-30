@@ -1,0 +1,8 @@
+5000
+10000
+15000 USD
+₹20000
+25000 euros balanced
+Amount: 30000
+$35000 greedy
+40000 rupees

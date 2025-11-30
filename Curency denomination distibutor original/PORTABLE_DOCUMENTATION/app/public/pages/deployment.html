@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployment & Operations - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html" class="active">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Deployment & Operations</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>19. Deployment & Operations</h1>
+
+                <section id="build-process">
+                    <h2>19.1 Build Process</h2>
+
+                    <h3>Development Build</h3>
+                    <div class="feature-card">
+                        <h4>Backend (Development)</h4>
+                        <pre><code class="language-powershell">cd packages/local-backend
+python -m uvicorn app.main:app --reload --port 8000</code></pre>
+
+                        <h4>Frontend (Development)</h4>
+                        <pre><code class="language-powershell">cd packages/desktop-app
+npm run dev</code></pre>
+
+                        <p><strong>Development Server URLs:</strong></p>
+                        <ul>
+                            <li>Backend API: <code>http://localhost:8000</code></li>
+                            <li>Frontend: <code>http://localhost:5173</code></li>
+                            <li>API Docs: <code>http://localhost:8000/docs</code></li>
+                        </ul>
+                    </div>
+
+                    <h3>Production Build</h3>
+                    <div class="feature-card">
+                        <h4>Desktop App (Electron)</h4>
+                        <pre><code class="language-powershell">cd packages/desktop-app
+
+# Build frontend
+npm run build
+
+# Package desktop app
+npm run electron:build</code></pre>
+
+                        <h4>Electron Builder Configuration</h4>
+                        <p><strong>File:</strong> <code>electron-builder.json</code></p>
+                        <pre><code class="language-json">{
+  "appId": "com.currency.calculator",
+  "productName": "Currency Denomination Calculator",
+  "directories": {
+    "buildResources": "build",
+    "output": "dist-electron"
+  },
+  "files": [
+    "dist/**/*",
+    "dist-electron/**/*",
+    "package.json"
+  ],
+  "win": {
+    "target": ["nsis", "portable"],
+    "icon": "build/icon.ico",
+    "artifactName": "${productName}-${version}-${arch}.${ext}"
+  },
+  "nsis": {
+    "oneClick": false,
+    "allowToChangeInstallationDirectory": true,
+    "createDesktopShortcut": true,
+    "createStartMenuShortcut": true
+  },
+  "portable": {
+    "artifactName": "${productName}-${version}-portable.exe"
+  }
+}</code></pre>
+
+                        <h4>Build Outputs</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Format</th>
+                                    <th>File</th>
+                                    <th>Size</th>
+                                    <th>Use Case</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>NSIS Installer</td>
+                                    <td>CurrencyCalculator-1.0.0-win.exe</td>
+                                    <td>~80 MB</td>
+                                    <td>Standard installation</td>
+                                </tr>
+                                <tr>
+                                    <td>Portable</td>
+                                    <td>CurrencyCalculator-1.0.0-portable.exe</td>
+                                    <td>~80 MB</td>
+                                    <td>No installation required</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="backend-deployment">
+                    <h2>19.2 Backend Deployment</h2>
+
+                    <h3>Local Deployment (Default)</h3>
+                    <div class="feature-card">
+                        <pre><code class="language-powershell"># Start backend server
+cd packages/local-backend
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000
+
+# With production settings
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4</code></pre>
+
+                        <p><strong>Configuration:</strong></p>
+                        <ul>
+                            <li><code>--host 127.0.0.1</code>: Localhost only (secure)</li>
+                            <li><code>--host 0.0.0.0</code>: All network interfaces</li>
+                            <li><code>--port 8000</code>: Default API port</li>
+                            <li><code>--workers 4</code>: Multiple worker processes</li>
+                            <li><code>--reload</code>: Auto-reload on code changes (dev only)</li>
+                        </ul>
+                    </div>
+
+                    <h3>Windows Service Deployment</h3>
+                    <div class="feature-card">
+                        <p>Run backend as Windows Service (always running)</p>
+
+                        <h4>Using NSSM (Non-Sucking Service Manager)</h4>
+                        <pre><code class="language-powershell"># Download NSSM from https://nssm.cc/download
+
+# Install service
+nssm install CurrencyCalculatorAPI "C:\Python311\python.exe"
+nssm set CurrencyCalculatorAPI AppParameters "-m uvicorn app.main:app --host 127.0.0.1 --port 8000"
+nssm set CurrencyCalculatorAPI AppDirectory "C:\path\to\packages\local-backend"
+nssm set CurrencyCalculatorAPI DisplayName "Currency Calculator API"
+nssm set CurrencyCalculatorAPI Description "Backend API for Currency Denomination Calculator"
+
+# Start service
+nssm start CurrencyCalculatorAPI
+
+# Stop service
+nssm stop CurrencyCalculatorAPI
+
+# Remove service
+nssm remove CurrencyCalculatorAPI confirm</code></pre>
+                    </div>
+
+                    <h3>Production Configuration</h3>
+                    <div class="feature-card">
+                        <h4>Environment Variables</h4>
+                        <pre><code class="language-bash"># .env.production
+DATABASE_URL=sqlite:///./currency_calculator_prod.db
+LOG_LEVEL=INFO
+ALLOWED_ORIGINS=http://localhost:5173
+MAX_UPLOAD_SIZE=10485760  # 10MB
+CORS_ENABLED=true</code></pre>
+
+                        <h4>Logging Configuration</h4>
+                        <pre><code class="language-python"># app/config/logging.py
+import logging
+from logging.handlers import RotatingFileHandler
+
+def setup_logging():
+    logger = logging.getLogger()
+    logger.setLevel(logging.INFO)
+    
+    # File handler with rotation
+    file_handler = RotatingFileHandler(
+        'logs/api.log',
+        maxBytes=10*1024*1024,  # 10MB
+        backupCount=5
+    )
+    
+    formatter = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    file_handler.setFormatter(formatter)
+    
+    logger.addHandler(file_handler)</code></pre>
+                    </div>
+                </section>
+
+                <section id="database-management">
+                    <h2>19.3 Database Management</h2>
+
+                    <h3>Backup Strategy</h3>
+                    <div class="feature-card">
+                        <h4>Manual Backup</h4>
+                        <pre><code class="language-powershell"># Backup database file
+$date = Get-Date -Format "yyyyMMdd_HHmmss"
+Copy-Item currency_calculator.db "backups\backup_$date.db"
+
+# Verify backup
+if (Test-Path "backups\backup_$date.db") {
+    Write-Host "Backup created successfully" -ForegroundColor Green
+}</code></pre>
+
+                        <h4>Automated Backup Script</h4>
+                        <p><strong>File:</strong> <code>backup-database.ps1</code></p>
+                        <pre><code class="language-powershell">param(
+    [int]$RetentionDays = 30
+)
+
+$backupDir = "backups"
+$dbFile = "currency_calculator.db"
+$date = Get-Date -Format "yyyyMMdd_HHmmss"
+$backupFile = "$backupDir\backup_$date.db"
+
+# Create backup directory
+if (-not (Test-Path $backupDir)) {
+    New-Item -ItemType Directory -Path $backupDir | Out-Null
+}
+
+# Create backup
+Write-Host "Creating backup..." -ForegroundColor Cyan
+Copy-Item $dbFile $backupFile
+
+# Verify backup
+$originalSize = (Get-Item $dbFile).Length
+$backupSize = (Get-Item $backupFile).Length
+
+if ($originalSize -eq $backupSize) {
+    Write-Host "✓ Backup successful: $backupFile" -ForegroundColor Green
+} else {
+    Write-Host "✗ Backup failed: Size mismatch" -ForegroundColor Red
+    exit 1
+}
+
+# Cleanup old backups
+Write-Host "Cleaning up old backups (retention: $RetentionDays days)..." -ForegroundColor Cyan
+$cutoffDate = (Get-Date).AddDays(-$RetentionDays)
+Get-ChildItem -Path $backupDir -Filter "backup_*.db" | 
+    Where-Object { $_.LastWriteTime -lt $cutoffDate } |
+    ForEach-Object {
+        Remove-Item $_.FullName
+        Write-Host "  Deleted: $($_.Name)" -ForegroundColor Yellow
+    }
+
+Write-Host "✓ Backup process complete" -ForegroundColor Green</code></pre>
+
+                        <h4>Schedule Automated Backup (Windows Task Scheduler)</h4>
+                        <pre><code class="language-powershell"># Create scheduled task (run daily at 2 AM)
+$action = New-ScheduledTaskAction -Execute "PowerShell.exe" `
+    -Argument "-File C:\path\to\backup-database.ps1"
+    
+$trigger = New-ScheduledTaskTrigger -Daily -At 2am
+
+Register-ScheduledTask -TaskName "CurrencyCalculator-Backup" `
+    -Action $action -Trigger $trigger `
+    -Description "Daily database backup for Currency Calculator"</code></pre>
+                    </div>
+
+                    <h3>Database Restore</h3>
+                    <div class="feature-card">
+                        <pre><code class="language-powershell"># Stop backend service
+Stop-Process -Name "python" -Force
+
+# Restore from backup
+$backupFile = "backups\backup_20250115_140000.db"
+Copy-Item $backupFile "currency_calculator.db" -Force
+
+# Restart backend
+python -m uvicorn app.main:app --reload</code></pre>
+                    </div>
+
+                    <h3>Database Migration</h3>
+                    <div class="feature-card">
+                        <p>Using Alembic for schema migrations</p>
+
+                        <pre><code class="language-powershell"># Initialize Alembic
+alembic init migrations
+
+# Create migration
+alembic revision --autogenerate -m "Add new column"
+
+# Apply migration
+alembic upgrade head
+
+# Rollback migration
+alembic downgrade -1</code></pre>
+                    </div>
+                </section>
+
+                <section id="monitoring">
+                    <h2>19.4 Monitoring & Logging</h2>
+
+                    <h3>Log Files</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Log File</th>
+                                <th>Content</th>
+                                <th>Retention</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>logs/api.log</code></td>
+                                <td>API requests, errors</td>
+                                <td>5 files × 10MB</td>
+                            </tr>
+                            <tr>
+                                <td><code>logs/ocr.log</code></td>
+                                <td>OCR processing logs</td>
+                                <td>3 files × 10MB</td>
+                            </tr>
+                            <tr>
+                                <td><code>logs/calculation.log</code></td>
+                                <td>Calculation engine logs</td>
+                                <td>3 files × 10MB</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Health Check System</h3>
+                    <p><strong>File:</strong> <code>health-check.ps1</code></p>
+                    <pre><code class="language-powershell">Write-Host "=== Currency Calculator Health Check ===" -ForegroundColor Cyan
+Write-Host ""
+
+# 1. Check Backend API
+Write-Host "[1/4] Checking Backend API..." -ForegroundColor Yellow
+try {
+    $response = Invoke-RestMethod -Uri "http://localhost:8000/health" -TimeoutSec 5
+    Write-Host "  ✓ Backend: HEALTHY" -ForegroundColor Green
+    Write-Host "    Database: $($response.database)"
+    Write-Host "    Version: $($response.version)"
+} catch {
+    Write-Host "  ✗ Backend: OFFLINE" -ForegroundColor Red
+}
+
+# 2. Check Database
+Write-Host "[2/4] Checking Database..." -ForegroundColor Yellow
+if (Test-Path "currency_calculator.db") {
+    $dbSize = (Get-Item "currency_calculator.db").Length / 1MB
+    Write-Host "  ✓ Database: $($dbSize.ToString('F2')) MB" -ForegroundColor Green
+    
+    if ($dbSize > 50) {
+        Write-Host "    ⚠ WARNING: Database > 50MB (consider cleanup)" -ForegroundColor Yellow
+    }
+} else {
+    Write-Host "  ✗ Database: NOT FOUND" -ForegroundColor Red
+}
+
+# 3. Check Tesseract OCR
+Write-Host "[3/4] Checking Tesseract OCR..." -ForegroundColor Yellow
+try {
+    $tesseractVersion = & tesseract --version 2>&1 | Select-Object -First 1
+    Write-Host "  ✓ Tesseract: $tesseractVersion" -ForegroundColor Green
+} catch {
+    Write-Host "  ✗ Tesseract: NOT FOUND" -ForegroundColor Red
+}
+
+# 4. Check Poppler (PDF processing)
+Write-Host "[4/4] Checking Poppler..." -ForegroundColor Yellow
+try {
+    $popplerVersion = & pdftoppm -v 2>&1 | Select-Object -First 1
+    Write-Host "  ✓ Poppler: $popplerVersion" -ForegroundColor Green
+} catch {
+    Write-Host "  ✗ Poppler: NOT FOUND" -ForegroundColor Red
+}
+
+Write-Host ""
+Write-Host "=== Health Check Complete ===" -ForegroundColor Cyan</code></pre>
+                </section>
+
+                <section id="maintenance">
+                    <h2>19.5 Maintenance Tasks</h2>
+
+                    <h3>Regular Maintenance Checklist</h3>
+                    <div class="feature-card">
+                        <h4>Daily Tasks</h4>
+                        <ul>
+                            <li>☑ Monitor log files for errors</li>
+                            <li>☑ Check database size</li>
+                            <li>☑ Verify backups are running</li>
+                        </ul>
+
+                        <h4>Weekly Tasks</h4>
+                        <ul>
+                            <li>☑ Review backup retention</li>
+                            <li>☑ Test restore procedure</li>
+                            <li>☑ Check disk space</li>
+                            <li>☑ Update dependencies (security patches)</li>
+                        </ul>
+
+                        <h4>Monthly Tasks</h4>
+                        <ul>
+                            <li>☑ Database vacuum (optimize)</li>
+                            <li>☑ Clean up old log files</li>
+                            <li>☑ Review performance metrics</li>
+                            <li>☑ Update Tesseract/Poppler if needed</li>
+                        </ul>
+                    </div>
+
+                    <h3>Database Optimization</h3>
+                    <pre><code class="language-powershell"># SQLite VACUUM (reclaim space)
+sqlite3 currency_calculator.db "VACUUM;"
+
+# Analyze tables (update statistics)
+sqlite3 currency_calculator.db "ANALYZE;"
+
+# Check integrity
+sqlite3 currency_calculator.db "PRAGMA integrity_check;"</code></pre>
+
+                    <h3>Log Cleanup</h3>
+                    <pre><code class="language-powershell"># Remove logs older than 30 days
+$cutoffDate = (Get-Date).AddDays(-30)
+Get-ChildItem -Path "logs" -Filter "*.log*" | 
+    Where-Object { $_.LastWriteTime -lt $cutoffDate } |
+    Remove-Item -Force</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section covers deployment processes: Development build (backend: uvicorn, frontend: npm run dev), Production build (Electron packaging with NSIS/Portable), Backend deployment (local server, Windows Service with NSSM), Database management (backup/restore scripts, automated backups with Task Scheduler, Alembic migrations), Monitoring & logging (rotating file handlers, health check script), Maintenance tasks (daily/weekly/monthly checklists, database optimization, log cleanup).</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

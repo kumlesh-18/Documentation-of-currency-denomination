@@ -1,0 +1,720 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk Upload System - Currency Denomination Calculator</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html" class="active">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Bulk Upload System</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>7. Bulk Upload System Specification</h1>
+
+                <section id="csv-processing">
+                    <h2>7.1 CSV Processing</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/services/csv_processor.py</code></p>
+
+                    <h3>7.1.1 Supported CSV Formats</h3>
+
+                    <div class="feature-card">
+                        <h4>Standard Format (All columns)</h4>
+                        <pre><code class="language-csv">amount,currency,mode
+1000,INR,greedy
+2500,USD,balanced
+500.50,EUR,minimize_large</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Minimal Format (Defaults applied)</h4>
+                        <pre><code class="language-csv">amount,currency
+1000,INR
+2500,USD
+500,EUR</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Ultra-Minimal Format (Smart defaults)</h4>
+                        <pre><code class="language-csv">amount
+1000
+2500
+500</code></pre>
+                        <p class="text-sm text-gray-600"><em>Defaults: currency=INR, mode=greedy</em></p>
+                    </div>
+
+                    <h3>7.1.2 CSV Parser Implementation</h3>
+
+                    <pre><code class="language-python">import csv
+import logging
+from typing import List, Dict
+from decimal import Decimal
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
+class CSVProcessor:
+    """Process CSV files for bulk calculations."""
+    
+    REQUIRED_COLUMNS = {'amount'}
+    OPTIONAL_COLUMNS = {'currency', 'mode'}
+    VALID_COLUMNS = REQUIRED_COLUMNS | OPTIONAL_COLUMNS
+    
+    DEFAULT_CURRENCY = 'INR'
+    DEFAULT_MODE = 'greedy'
+    
+    def process_csv(self, file_path: Path) -> List[Dict]:
+        """
+        Parse CSV file and extract calculation data.
+        
+        Args:
+            file_path: Path to CSV file
+            
+        Returns:
+            List of calculation dictionaries
+            
+        Raises:
+            ValueError: If CSV format is invalid
+        """
+        results = []
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8-sig') as f:
+                # Detect delimiter (support comma and semicolon)
+                sample = f.read(1024)
+                f.seek(0)
+                delimiter = ',' if ',' in sample else ';'
+                
+                reader = csv.DictReader(f, delimiter=delimiter)
+                
+                # Validate headers
+                if not reader.fieldnames:
+                    raise ValueError("CSV file is empty")
+                
+                headers = {h.strip().lower() for h in reader.fieldnames}
+                
+                # Check required columns
+                if 'amount' not in headers:
+                    raise ValueError("CSV must contain 'amount' column")
+                
+                # Process rows
+                for row_num, row in enumerate(reader, start=2):
+                    try:
+                        calc_data = self._parse_row(row, row_num)
+                        results.append(calc_data)
+                    except Exception as e:
+                        logger.error(f"Row {row_num} error: {e}")
+                        results.append({
+                            'row_number': row_num,
+                            'error': str(e),
+                            'status': 'failed'
+                        })
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process CSV: {e}")
+        
+        return results
+    
+    def _parse_row(self, row: Dict, row_number: int) -> Dict:
+        """Parse a single CSV row."""
+        # Extract and clean amount
+        amount_str = row.get('amount', '').strip()
+        if not amount_str:
+            raise ValueError("Amount is required")
+        
+        # Remove common formatting
+        amount_str = amount_str.replace(',', '').replace('$', '').replace('â‚¹', '')
+        
+        try:
+            amount = Decimal(amount_str)
+        except:
+            raise ValueError(f"Invalid amount: {amount_str}")
+        
+        # Validate amount
+        if amount <= 0:
+            raise ValueError("Amount must be greater than 0")
+        
+        # Extract currency (with default)
+        currency = row.get('currency', '').strip().upper()
+        if not currency:
+            currency = self.DEFAULT_CURRENCY
+            logger.info(f"Row {row_number}: Using default currency {currency}")
+        
+        # Extract mode (with default)
+        mode = row.get('mode', '').strip().lower()
+        if not mode:
+            mode = self.DEFAULT_MODE
+            logger.info(f"Row {row_number}: Using default mode {mode}")
+        
+        return {
+            'row_number': row_number,
+            'amount': amount,
+            'currency': currency,
+            'mode': mode,
+            'status': 'pending'
+        }</code></pre>
+
+                    <h3>7.1.3 Edge Cases Handling</h3>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Edge Case</th>
+                                <th>Handling</th>
+                                <th>Code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Empty Rows</td>
+                                <td>Skip silently</td>
+                                <td><code>if not any(row.values()): continue</code></td>
+                            </tr>
+                            <tr>
+                                <td>BOM (Byte Order Mark)</td>
+                                <td>Handle UTF-8 with BOM</td>
+                                <td><code>encoding='utf-8-sig'</code></td>
+                            </tr>
+                            <tr>
+                                <td>Different Delimiters</td>
+                                <td>Auto-detect comma or semicolon</td>
+                                <td><code>delimiter = ',' if ',' in sample else ';'</code></td>
+                            </tr>
+                            <tr>
+                                <td>Currency Symbols in Amount</td>
+                                <td>Strip before parsing</td>
+                                <td><code>amount_str.replace('$', '').replace('â‚¹', '')</code></td>
+                            </tr>
+                            <tr>
+                                <td>Case Sensitivity</td>
+                                <td>Normalize headers and values</td>
+                                <td><code>headers = {h.strip().lower()}</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="pdf-processing">
+                    <h2>7.2 PDF Processing</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/services/pdf_processor.py</code></p>
+
+                    <h3>7.2.1 PDF Text Extraction</h3>
+
+                    <pre><code class="language-python">import fitz  # PyMuPDF
+from typing import Dict, List
+import logging
+
+logger = logging.getLogger(__name__)
+
+class PDFProcessor:
+    """Process PDF files with text extraction and OCR."""
+    
+    def __init__(self):
+        self.ocr_processor = None  # Lazy load
+    
+    async def process_pdf(self, file_path: Path) -> List[Dict]:
+        """
+        Process PDF file (text or scanned).
+        
+        Strategy:
+        1. Try extracting embedded text
+        2. If no text found, use OCR on pages
+        3. Parse extracted content
+        """
+        try:
+            doc = fitz.open(file_path)
+            
+            # Check if PDF has text
+            has_text = self._has_text_content(doc)
+            
+            if has_text:
+                logger.info(f"PDF has text content, extracting...")
+                text = self._extract_text(doc)
+            else:
+                logger.info(f"PDF is scanned, using OCR...")
+                text = await self._extract_with_ocr(doc, file_path)
+            
+            doc.close()
+            
+            # Parse extracted text
+            return self._parse_text_content(text)
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process PDF: {e}")
+    
+    def _has_text_content(self, doc: fitz.Document) -> bool:
+        """Check if PDF contains extractable text."""
+        for page in doc:
+            text = page.get_text().strip()
+            if len(text) > 50:  # Arbitrary threshold
+                return True
+        return False
+    
+    def _extract_text(self, doc: fitz.Document) -> str:
+        """Extract text from all pages."""
+        text_parts = []
+        
+        for page_num, page in enumerate(doc, start=1):
+            text = page.get_text()
+            if text.strip():
+                text_parts.append(f"=== Page {page_num} ===\n{text}")
+        
+        return "\n\n".join(text_parts)</code></pre>
+
+                    <h3>7.2.2 Hybrid PDF Processing</h3>
+
+                    <div class="feature-card">
+                        <h4>Detection Logic</h4>
+                        <pre><code class="language-python">def detect_pdf_type(doc: fitz.Document) -> str:
+    """
+    Detect PDF type.
+    
+    Returns:
+        'text': Has extractable text
+        'scanned': Image-based (needs OCR)
+        'hybrid': Mix of text and images
+    """
+    text_pages = 0
+    image_pages = 0
+    
+    for page in doc:
+        text = page.get_text().strip()
+        images = page.get_images()
+        
+        if len(text) > 100:
+            text_pages += 1
+        elif images:
+            image_pages += 1
+    
+    if text_pages > 0 and image_pages == 0:
+        return 'text'
+    elif image_pages > 0 and text_pages == 0:
+        return 'scanned'
+    else:
+        return 'hybrid'</code></pre>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Hybrid Processing Strategy:</strong>
+                        <ol>
+                            <li>Iterate through each page</li>
+                            <li>Attempt text extraction first</li>
+                            <li>If text insufficient (&lt; 50 chars), convert page to image</li>
+                            <li>Apply OCR to image</li>
+                            <li>Combine results from all pages</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <section id="word-processing">
+                    <h2>7.3 Word Document Processing</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/services/word_processor.py</code></p>
+
+                    <h3>7.3.1 DOCX Extraction</h3>
+
+                    <pre><code class="language-python">from docx import Document
+from pathlib import Path
+from typing import List, Dict
+import logging
+
+logger = logging.getLogger(__name__)
+
+class WordProcessor:
+    """Process Word documents (.docx)."""
+    
+    async def process_word(self, file_path: Path) -> List[Dict]:
+        """Extract text from Word document and parse."""
+        try:
+            doc = Document(file_path)
+            
+            # Extract all text
+            text_parts = []
+            
+            # Extract from paragraphs
+            for para in doc.paragraphs:
+                if para.text.strip():
+                    text_parts.append(para.text)
+            
+            # Extract from tables
+            for table in doc.tables:
+                table_text = self._extract_table(table)
+                if table_text:
+                    text_parts.append(table_text)
+            
+            full_text = "\n".join(text_parts)
+            
+            logger.info(f"Extracted {len(full_text)} characters from Word document")
+            
+            # Parse content
+            from app.services.text_parser import TextParser
+            parser = TextParser()
+            return parser.parse(full_text)
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process Word document: {e}")
+    
+    def _extract_table(self, table) -> str:
+        """Extract text from Word table."""
+        rows = []
+        
+        for row in table.rows:
+            cells = [cell.text.strip() for cell in row.cells]
+            if any(cells):  # Skip empty rows
+                rows.append("\t".join(cells))
+        
+        return "\n".join(rows)</code></pre>
+
+                    <h3>7.3.2 Table Detection & Parsing</h3>
+
+                    <pre><code class="language-python">def parse_table_as_csv(table) -> List[Dict]:
+    """
+    Parse Word table as CSV-like data.
+    
+    Assumes first row is header.
+    """
+    if len(table.rows) < 2:
+        return []
+    
+    # Extract headers
+    headers = [cell.text.strip().lower() for cell in table.rows[0].cells]
+    
+    # Extract data rows
+    results = []
+    for row_num, row in enumerate(table.rows[1:], start=2):
+        row_data = {}
+        for header, cell in zip(headers, row.cells):
+            row_data[header] = cell.text.strip()
+        
+        results.append({
+            'row_number': row_num,
+            **row_data
+        })
+    
+    return results</code></pre>
+                </section>
+
+                <section id="image-processing">
+                    <h2>7.4 Image Processing</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/services/image_processor.py</code></p>
+
+                    <pre><code class="language-python">from PIL import Image
+from pathlib import Path
+from typing import List, Dict
+import logging
+
+logger = logging.getLogger(__name__)
+
+class ImageProcessor:
+    """Process image files for OCR."""
+    
+    def __init__(self):
+        self.ocr_processor = None
+    
+    async def process_image(self, file_path: Path) -> List[Dict]:
+        """Process image file with OCR."""
+        try:
+            # Validate image
+            img = Image.open(file_path)
+            
+            # Preprocess if needed
+            img = self._preprocess_image(img)
+            
+            # Save preprocessed image
+            temp_path = Path(f"/tmp/preprocessed_{file_path.name}")
+            img.save(temp_path)
+            
+            # OCR processing
+            if not self.ocr_processor:
+                from app.services.ocr_processor import OCRProcessor
+                self.ocr_processor = OCRProcessor()
+            
+            text = await self.ocr_processor.process_image(temp_path)
+            
+            # Cleanup
+            temp_path.unlink(missing_ok=True)
+            
+            # Parse text
+            from app.services.text_parser import TextParser
+            parser = TextParser()
+            return parser.parse(text)
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process image: {e}")
+    
+    def _preprocess_image(self, img: Image.Image) -> Image.Image:
+        """
+        Preprocess image for better OCR accuracy.
+        
+        Steps:
+        - Convert to grayscale
+        - Increase contrast
+        - Denoise (if needed)
+        - Resize if too small
+        """
+        # Convert to grayscale
+        if img.mode != 'L':
+            img = img.convert('L')
+        
+        # Resize if too small (OCR works better on larger images)
+        min_width = 1000
+        if img.width < min_width:
+            scale = min_width / img.width
+            new_size = (int(img.width * scale), int(img.height * scale))
+            img = img.resize(new_size, Image.LANCZOS)
+        
+        return img</code></pre>
+                </section>
+
+                <section id="text-parsing">
+                    <h2>7.5 Text Parsing Logic</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/services/text_parser.py</code></p>
+
+                    <h3>7.5.1 Intelligent Format Detection</h3>
+
+                    <pre><code class="language-python">import re
+from decimal import Decimal
+from typing import List, Dict
+import logging
+
+logger = logging.getLogger(__name__)
+
+class TextParser:
+    """Intelligent text parser for extracting calculation data."""
+    
+    # Patterns for amount detection
+    AMOUNT_PATTERNS = [
+        r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)',  # 1,000.00
+        r'(\d+\.\d{2})',  # 1000.00
+        r'(\d+)',  # 1000
+    ]
+    
+    # Currency symbols and codes
+    CURRENCY_SYMBOLS = {
+        'â‚¹': 'INR', 'Rs': 'INR', 'INR': 'INR',
+        '$': 'USD', 'USD': 'USD',
+        'â‚¬': 'EUR', 'EUR': 'EUR',
+        'Â£': 'GBP', 'GBP': 'GBP',
+    }
+    
+    def parse(self, text: str) -> List[Dict]:
+        """
+        Parse text to extract calculation data.
+        
+        Strategies:
+        1. Structured format (CSV-like in text)
+        2. Labeled format ("Amount: 1000, Currency: INR")
+        3. List format ("1000 INR", "2500 USD")
+        4. Plain numbers (with smart defaults)
+        5. Mixed format (best effort)
+        """
+        # Try structured parsing first
+        if self._is_csv_like(text):
+            return self._parse_csv_like(text)
+        
+        # Try labeled format
+        if self._has_labels(text):
+            return self._parse_labeled(text)
+        
+        # Try list format
+        if self._is_list_like(text):
+            return self._parse_list(text)
+        
+        # Fallback: extract all numbers
+        return self._parse_numbers_only(text)</code></pre>
+
+                    <h3>7.5.2 Parsing Strategies (5 Formats)</h3>
+
+                    <div class="feature-card">
+                        <h4>Format 1: CSV-like</h4>
+                        <pre><code>amount,currency,mode
+1000,INR,greedy
+2500,USD,balanced</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Format 2: Labeled</h4>
+                        <pre><code>Amount: 1000
+Currency: INR
+Mode: greedy
+
+Amount: 2500
+Currency: USD
+Mode: balanced</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Format 3: List with Currency</h4>
+                        <pre><code>1000 INR
+2500 USD
+500 EUR</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Format 4: Plain Numbers</h4>
+                        <pre><code>1000
+2500
+500</code></pre>
+                        <p class="text-sm text-gray-600"><em>Smart defaults: INR, greedy</em></p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Format 5: Natural Language (Mixed)</h4>
+                        <pre><code>Please calculate 1000 rupees
+Process $2500 with balanced optimization
+Calculate 500 euros</code></pre>
+                    </div>
+
+                    <h3>7.5.3 Currency Detection Strategies</h3>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Strategy</th>
+                                <th>Pattern</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Currency Symbols</td>
+                                <td>â‚¹, $, â‚¬, Â£ â†’ INR, USD, EUR, GBP</td>
+                                <td><span class="badge badge-success">Highest</span></td>
+                            </tr>
+                            <tr>
+                                <td>3-Letter Codes</td>
+                                <td>INR, USD, EUR, GBP (case-insensitive)</td>
+                                <td><span class="badge badge-primary">High</span></td>
+                            </tr>
+                            <tr>
+                                <td>Currency Names</td>
+                                <td>rupee/rupees â†’ INR, dollar/dollars â†’ USD</td>
+                                <td><span class="badge badge-warning">Medium</span></td>
+                            </tr>
+                            <tr>
+                                <td>Default Fallback</td>
+                                <td>If all strategies fail â†’ INR</td>
+                                <td><span class="badge badge-info">Lowest</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>7.5.4 Mode Detection Keywords</h3>
+
+                    <pre><code class="language-python">MODE_KEYWORDS = {
+    'greedy': ['greedy', 'standard', 'default', 'largest'],
+    'balanced': ['balanced', 'mixed', 'even'],
+    'minimize_large': ['minimize large', 'min large', 'fewer notes'],
+    'minimize_small': ['minimize small', 'min small', 'fewer coins'],
+}</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>âœ“ Section Complete</strong>
+                    <p>This section covers the complete Bulk Upload System including CSV processing, PDF extraction (text + OCR), Word document parsing, image processing, and intelligent text parsing with 5 format support and smart defaults.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/page-navigation.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

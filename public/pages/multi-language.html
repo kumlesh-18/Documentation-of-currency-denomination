@@ -1,0 +1,700 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Language Support - Currency Denomination Calculator</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html" class="active">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Multi</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>10. Multi-Language Support</h1>
+
+                <section id="supported-languages">
+                    <h2>10.1 Supported Languages</h2>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Language</th>
+                                <th>Code</th>
+                                <th>Native Name</th>
+                                <th>Translation Keys</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>English</td>
+                                <td><code>en</code></td>
+                                <td>English</td>
+                                <td>45+</td>
+                                <td><span class="badge badge-success">Complete (Default)</span></td>
+                            </tr>
+                            <tr>
+                                <td>Hindi</td>
+                                <td><code>hi</code></td>
+                                <td>à¤¹à¤¿à¤¨à¥à¤¦à¥€</td>
+                                <td>45+</td>
+                                <td><span class="badge badge-success">Complete</span></td>
+                            </tr>
+                            <tr>
+                                <td>Spanish</td>
+                                <td><code>es</code></td>
+                                <td>EspaÃ±ol</td>
+                                <td>45+</td>
+                                <td><span class="badge badge-success">Complete</span></td>
+                            </tr>
+                            <tr>
+                                <td>French</td>
+                                <td><code>fr</code></td>
+                                <td>FranÃ§ais</td>
+                                <td>45+</td>
+                                <td><span class="badge badge-success">Complete</span></td>
+                            </tr>
+                            <tr>
+                                <td>German</td>
+                                <td><code>de</code></td>
+                                <td>Deutsch</td>
+                                <td>45+</td>
+                                <td><span class="badge badge-success">Complete</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert alert-info">
+                        <strong>Translation Coverage:</strong> 45+ keys Ã— 5 languages = 225+ translations
+                    </div>
+                </section>
+
+                <section id="architecture">
+                    <h2>10.2 Translation System Architecture</h2>
+
+                    <h3>File Structure</h3>
+                    <pre><code>packages/desktop-app/src/
+â”œâ”€â”€ i18n/
+â”‚   â”œâ”€â”€ config.ts           # i18n configuration
+â”‚   â”œâ”€â”€ translations/
+â”‚   â”‚   â”œâ”€â”€ en.json        # English translations
+â”‚   â”‚   â”œâ”€â”€ hi.json        # Hindi translations
+â”‚   â”‚   â”œâ”€â”€ es.json        # Spanish translations
+â”‚   â”‚   â”œâ”€â”€ fr.json        # French translations
+â”‚   â”‚   â””â”€â”€ de.json        # German translations
+â”‚   â””â”€â”€ index.ts           # Export all translations
+â””â”€â”€ contexts/
+    â””â”€â”€ LanguageContext.tsx  # Language state management</code></pre>
+                </section>
+
+                <section id="translation-keys">
+                    <h2>10.3 Translation Keys & Content</h2>
+
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/i18n/translations/en.json</code></p>
+
+                    <h3>Complete English Translation File</h3>
+                    <pre><code class="language-json">{
+  "app": {
+    "title": "Currency Denomination Calculator",
+    "subtitle": "Optimize your cash distribution"
+  },
+  "navigation": {
+    "calculator": "Calculator",
+    "history": "History",
+    "bulkUpload": "Bulk Upload",
+    "settings": "Settings"
+  },
+  "calculator": {
+    "title": "Denomination Calculator",
+    "amountLabel": "Enter Amount",
+    "amountPlaceholder": "Enter amount...",
+    "currencyLabel": "Currency",
+    "modeLabel": "Optimization Mode",
+    "calculateButton": "Calculate",
+    "calculating": "Calculating...",
+    "results": {
+      "title": "Breakdown Results",
+      "totalNotes": "Total Notes",
+      "totalCoins": "Total Coins",
+      "totalDenominations": "Total Denominations",
+      "denomination": "Denomination",
+      "type": "Type",
+      "count": "Count",
+      "totalValue": "Total Value",
+      "copyButton": "Copy to Clipboard",
+      "exportCSV": "Export CSV",
+      "exportJSON": "Export JSON"
+    }
+  },
+  "history": {
+    "title": "Calculation History",
+    "quickAccess": "Quick Access",
+    "fullHistory": "Full History",
+    "filterByCurrency": "Filter by Currency",
+    "dateRange": "Date Range",
+    "clearFilters": "Clear Filters",
+    "noHistory": "No calculations yet",
+    "columns": {
+      "id": "ID",
+      "date": "Date",
+      "amount": "Amount",
+      "currency": "Currency",
+      "mode": "Mode",
+      "denoms": "Denominations",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "View Details",
+      "delete": "Delete",
+      "export": "Export"
+    }
+  },
+  "bulkUpload": {
+    "title": "Bulk Upload & Processing",
+    "downloadTemplate": "Download CSV Template",
+    "dragDrop": "Drag & drop your file here",
+    "orClickBrowse": "or click to browse",
+    "chooseFile": "Choose File",
+    "supportedFormats": "Supported: CSV, PDF, Word, Images",
+    "selectedFile": "Selected File:",
+    "fileFormat": "Format:",
+    "fileSize": "Size:",
+    "removeFile": "Remove File",
+    "saveToHistory": "Save to history",
+    "uploadButton": "Upload & Process",
+    "processing": "Processing Data...",
+    "results": {
+      "processedFile": "Processed File:",
+      "processedAt": "Processed:",
+      "summary": {
+        "total": "Total",
+        "success": "Success",
+        "failed": "Failed",
+        "time": "Time"
+      },
+      "uploadAnother": "Upload Another",
+      "exportCSV": "Export CSV",
+      "exportJSON": "Export JSON"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": {
+      "title": "Language & Region",
+      "label": "Language"
+    },
+    "preferences": {
+      "title": "Default Preferences",
+      "defaultCurrency": "Default Currency",
+      "defaultMode": "Default Optimization Mode",
+      "autoSave": "Auto-save to history"
+    },
+    "dataManagement": {
+      "title": "Data Management",
+      "historyStats": "Total calculations:",
+      "databaseSize": "Database size:",
+      "exportAll": "Export All History",
+      "clearAll": "Clear All History",
+      "resetSettings": "Reset All Settings"
+    },
+    "saveButton": "Save Settings",
+    "resetButton": "Reset"
+  },
+  "currencies": {
+    "INR": "Indian Rupee",
+    "USD": "US Dollar",
+    "EUR": "Euro",
+    "GBP": "British Pound"
+  },
+  "modes": {
+    "greedy": "Greedy (Standard)",
+    "balanced": "Balanced",
+    "minimize_large": "Minimize Large",
+    "minimize_small": "Minimize Small"
+  },
+  "errors": {
+    "amountRequired": "Amount is required",
+    "amountInvalid": "Invalid amount format",
+    "amountTooLarge": "Amount too large (max 15 digits)",
+    "amountNegative": "Amount must be greater than 0",
+    "fileRequired": "Please select a file",
+    "fileInvalid": "Unsupported file type",
+    "fileTooLarge": "File too large",
+    "uploadFailed": "Upload failed. Please try again.",
+    "networkError": "Network error. Please check your connection.",
+    "serverError": "Server error. Please contact support."
+  },
+  "success": {
+    "calculated": "Calculation completed successfully",
+    "saved": "Saved to history",
+    "copied": "Copied to clipboard",
+    "exported": "Exported successfully",
+    "uploaded": "File uploaded successfully",
+    "deleted": "Deleted successfully",
+    "settingsUpdated": "Settings updated"
+  }
+}</code></pre>
+
+                    <h3>Hindi Translation Sample</h3>
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/i18n/translations/hi.json</code></p>
+
+                    <pre><code class="language-json">{
+  "app": {
+    "title": "à¤®à¥à¤¦à¥à¤°à¤¾ à¤®à¥‚à¤²à¥à¤¯à¤µà¤°à¥à¤— à¤•à¥ˆà¤²à¤•à¥à¤²à¥‡à¤Ÿà¤°",
+    "subtitle": "à¤…à¤ªà¤¨à¥‡ à¤¨à¤•à¤¦à¥€ à¤µà¤¿à¤¤à¤°à¤£ à¤•à¥‹ à¤…à¤¨à¥à¤•à¥‚à¤²à¤¿à¤¤ à¤•à¤°à¥‡à¤‚"
+  },
+  "navigation": {
+    "calculator": "à¤•à¥ˆà¤²à¤•à¥à¤²à¥‡à¤Ÿà¤°",
+    "history": "à¤‡à¤¤à¤¿à¤¹à¤¾à¤¸",
+    "bulkUpload": "à¤¬à¤²à¥à¤• à¤…à¤ªà¤²à¥‹à¤¡",
+    "settings": "à¤¸à¥‡à¤Ÿà¤¿à¤‚à¤—à¥à¤¸"
+  },
+  "calculator": {
+    "title": "à¤®à¥‚à¤²à¥à¤¯à¤µà¤°à¥à¤— à¤•à¥ˆà¤²à¤•à¥à¤²à¥‡à¤Ÿà¤°",
+    "amountLabel": "à¤°à¤¾à¤¶à¤¿ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚",
+    "amountPlaceholder": "à¤°à¤¾à¤¶à¤¿ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚...",
+    "currencyLabel": "à¤®à¥à¤¦à¥à¤°à¤¾",
+    "modeLabel": "à¤…à¤¨à¥à¤•à¥‚à¤²à¤¨ à¤®à¥‹à¤¡",
+    "calculateButton": "à¤—à¤£à¤¨à¤¾ à¤•à¤°à¥‡à¤‚",
+    "calculating": "à¤—à¤£à¤¨à¤¾ à¤¹à¥‹ à¤°à¤¹à¥€ à¤¹à¥ˆ..."
+  }
+}</code></pre>
+                </section>
+
+                <section id="language-context">
+                    <h2>10.4 Language Context Implementation</h2>
+
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/contexts/LanguageContext.tsx</code></p>
+
+                    <pre><code class="language-tsx">import React, { createContext, useContext, useState, useEffect } from 'react';
+import en from '../i18n/translations/en.json';
+import hi from '../i18n/translations/hi.json';
+import es from '../i18n/translations/es.json';
+import fr from '../i18n/translations/fr.json';
+import de from '../i18n/translations/de.json';
+
+type Language = 'en' | 'hi' | 'es' | 'fr' | 'de';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+}
+
+const translations = { en, hi, es, fr, de };
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguageState] = useState<Language>('en');
+
+  // Load saved language from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('language') as Language;
+    if (saved && translations[saved]) {
+      setLanguageState(saved);
+    }
+  }, []);
+
+  // Save language changes
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem('language', lang);
+  };
+
+  // Translation function with nested key support
+  const t = (key: string): string => {
+    const keys = key.split('.');
+    let value: any = translations[language];
+
+    for (const k of keys) {
+      value = value?.[k];
+    }
+
+    return value || key; // Return key if translation not found
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within LanguageProvider');
+  }
+  return context;
+};</code></pre>
+                </section>
+
+                <section id="usage-examples">
+                    <h2>10.5 Usage in Components</h2>
+
+                    <h3>Example 1: CalculatorPage.tsx</h3>
+                    <pre><code class="language-tsx">import { useLanguage } from '../contexts/LanguageContext';
+
+const CalculatorPage = () => {
+  const { t } = useLanguage();
+
+  return (
+    <div>
+      <h1>{t('calculator.title')}</h1>
+      
+      <label htmlFor="amount">
+        {t('calculator.amountLabel')}
+      </label>
+      <input
+        id="amount"
+        type="text"
+        placeholder={t('calculator.amountPlaceholder')}
+      />
+      
+      <button onClick={handleCalculate}>
+        {isCalculating ? t('calculator.calculating') : t('calculator.calculateButton')}
+      </button>
+      
+      {results && (
+        <div>
+          <h2>{t('calculator.results.title')}</h2>
+          <p>{t('calculator.results.totalNotes')}: {results.summary.total_notes}</p>
+          <p>{t('calculator.results.totalCoins')}: {results.summary.total_coins}</p>
+        </div>
+      )}
+    </div>
+  );
+};</code></pre>
+
+                    <h3>Example 2: SettingsPage.tsx (Language Selector)</h3>
+                    <pre><code class="language-tsx">const SettingsPage = () => {
+  const { language, setLanguage, t } = useLanguage();
+
+  return (
+    <div>
+      <h2>{t('settings.language.title')}</h2>
+      
+      <select 
+        value={language} 
+        onChange={(e) => setLanguage(e.target.value as Language)}
+      >
+        <option value="en">English</option>
+        <option value="hi">à¤¹à¤¿à¤¨à¥à¤¦à¥€ (Hindi)</option>
+        <option value="es">EspaÃ±ol (Spanish)</option>
+        <option value="fr">FranÃ§ais (French)</option>
+        <option value="de">Deutsch (German)</option>
+      </select>
+      
+      <p className="text-sm text-gray-600 mt-2">
+        {t('settings.language.description')}
+      </p>
+    </div>
+  );
+};</code></pre>
+
+                    <h3>Example 3: BulkUploadPage.tsx (Dynamic Messages)</h3>
+                    <pre><code class="language-tsx">const BulkUploadPage = () => {
+  const { t } = useLanguage();
+  const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+
+  const getStatusMessage = () => {
+    switch (uploadStatus) {
+      case 'uploading':
+        return t('bulkUpload.processing');
+      case 'success':
+        return t('success.uploaded');
+      case 'error':
+        return t('errors.uploadFailed');
+      default:
+        return t('bulkUpload.dragDrop');
+    }
+  };
+
+  return (
+    <div>
+      <h1>{t('bulkUpload.title')}</h1>
+      <p>{getStatusMessage()}</p>
+    </div>
+  );
+};</code></pre>
+
+                    <h3>Example 4: Error Messages</h3>
+                    <pre><code class="language-tsx">const validateAmount = (amount: string) => {
+  const { t } = useLanguage();
+  
+  if (!amount) {
+    return { valid: false, error: t('errors.amountRequired') };
+  }
+  
+  if (isNaN(Number(amount))) {
+    return { valid: false, error: t('errors.amountInvalid') };
+  }
+  
+  if (Number(amount) <= 0) {
+    return { valid: false, error: t('errors.amountNegative') };
+  }
+  
+  if (amount.length > 15) {
+    return { valid: false, error: t('errors.amountTooLarge') };
+  }
+  
+  return { valid: true };
+};</code></pre>
+                </section>
+
+                <section id="app-integration">
+                    <h2>10.6 App-Level Integration</h2>
+
+                    <h3>Wrap App with LanguageProvider</h3>
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/main.tsx</code></p>
+
+                    <pre><code class="language-tsx">import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import { LanguageProvider } from './contexts/LanguageContext';
+import './index.css';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <React.StrictMode>
+    <LanguageProvider>
+      <App />
+    </LanguageProvider>
+  </React.StrictMode>
+);</code></pre>
+                </section>
+
+                <section id="rtl-support">
+                    <h2>10.7 RTL (Right-to-Left) Support</h2>
+
+                    <div class="alert alert-warning">
+                        <strong>Future Enhancement:</strong> Planned for Arabic/Hebrew support
+                    </div>
+
+                    <h3>Planned Implementation</h3>
+                    <pre><code class="language-tsx">const LanguageProvider: React.FC = ({ children }) => {
+  const [language, setLanguage] = useState<Language>('en');
+  
+  // Detect RTL languages
+  const isRTL = ['ar', 'he'].includes(language);
+  
+  useEffect(() => {
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+    document.documentElement.lang = language;
+  }, [isRTL, language]);
+  
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t, isRTL }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};</code></pre>
+
+                    <h3>RTL CSS Support</h3>
+                    <pre><code class="language-css">/* Automatic RTL adjustments */
+[dir="rtl"] .sidebar {
+  right: 0;
+  left: auto;
+}
+
+[dir="rtl"] .text-left {
+  text-align: right;
+}
+
+[dir="rtl"] .ml-2 {
+  margin-left: 0;
+  margin-right: 0.5rem;
+}</code></pre>
+                </section>
+
+                <section id="translation-management">
+                    <h2>10.8 Translation Management</h2>
+
+                    <h3>Adding a New Language</h3>
+                    <div class="feature-card">
+                        <h4>Steps:</h4>
+                        <ol>
+                            <li>Create new translation file: <code>src/i18n/translations/{code}.json</code></li>
+                            <li>Copy structure from <code>en.json</code></li>
+                            <li>Translate all 45+ keys</li>
+                            <li>Import in <code>LanguageContext.tsx</code></li>
+                            <li>Add to <code>Language</code> type and <code>translations</code> object</li>
+                            <li>Add option to language selector in Settings</li>
+                        </ol>
+                    </div>
+
+                    <h3>Translation Validation</h3>
+                    <pre><code class="language-typescript">// Utility to check for missing translations
+function validateTranslations() {
+  const baseKeys = Object.keys(flattenObject(en));
+  const languages = ['hi', 'es', 'fr', 'de'];
+  
+  languages.forEach(lang => {
+    const langKeys = Object.keys(flattenObject(translations[lang]));
+    const missing = baseKeys.filter(key => !langKeys.includes(key));
+    
+    if (missing.length > 0) {
+      console.warn(`Missing translations in ${lang}:`, missing);
+    }
+  });
+}
+
+function flattenObject(obj: any, prefix = ''): Record<string, any> {
+  return Object.keys(obj).reduce((acc, key) => {
+    const fullKey = prefix ? `${prefix}.${key}` : key;
+    
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+      Object.assign(acc, flattenObject(obj[key], fullKey));
+    } else {
+      acc[fullKey] = obj[key];
+    }
+    
+    return acc;
+  }, {} as Record<string, any>);
+}</code></pre>
+                </section>
+
+                <section id="backend-support">
+                    <h2>10.9 Backend Language Support (Future)</h2>
+
+                    <div class="alert alert-info">
+                        <strong>Planned:</strong> Backend API responses can also be localized
+                    </div>
+
+                    <h3>Accept-Language Header</h3>
+                    <pre><code class="language-python"># FastAPI endpoint with language support
+@router.get("/api/v1/metadata")
+async def get_metadata(accept_language: str = Header(default='en')):
+    """Return localized metadata."""
+    language = accept_language[:2]  # Extract language code
+    
+    metadata = {
+        'currencies': get_localized_currencies(language),
+        'modes': get_localized_modes(language)
+    }
+    
+    return metadata
+
+def get_localized_currencies(lang: str) -> Dict:
+    """Get currency names in specified language."""
+    translations = {
+        'en': {'INR': 'Indian Rupee', 'USD': 'US Dollar', ...},
+        'hi': {'INR': 'à¤­à¤¾à¤°à¤¤à¥€à¤¯ à¤°à¥à¤ªà¤¯à¤¾', 'USD': 'à¤…à¤®à¥‡à¤°à¤¿à¤•à¥€ à¤¡à¥‰à¤²à¤°', ...},
+        # ...
+    }
+    
+    return translations.get(lang, translations['en'])</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>âœ“ Section Complete</strong>
+                    <p>This section covers complete multi-language support including 5 languages (45+ keys each = 225+ translations), React Context implementation, nested key support, localStorage persistence, component usage examples, RTL support planning, and translation management utilities.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/page-navigation.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

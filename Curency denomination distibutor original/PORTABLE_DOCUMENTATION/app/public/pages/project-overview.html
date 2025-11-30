@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Overview - Currency Denomination Calculator Documentation</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html" class="active">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Project Overview</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>2. Project Overview</h1>
+
+                <h2>2.1 Problem Statement</h2>
+                
+                <h3>Challenges</h3>
+                <ul>
+                    <li><strong>Manual calculation errors</strong>: Humans make mistakes when counting large amounts of money, especially with multiple denominations</li>
+                    <li><strong>Time-consuming process</strong>: Manually calculating optimal denomination breakdowns for bulk amounts takes significant time</li>
+                    <li><strong>Lack of optimization</strong>: No easy way to find the most efficient combination of notes and coins</li>
+                    <li><strong>Multiple currency support</strong>: Need to handle different currencies with different denominations</li>
+                    <li><strong>Data extraction from documents</strong>: Financial documents contain amounts in various formats (PDFs, images, tables)</li>
+                    <li><strong>Bulk processing requirement</strong>: Processing hundreds of amounts manually is impractical</li>
+                </ul>
+
+                <h3>Solutions</h3>
+                <ul>
+                    <li><strong>Automated calculation</strong>: Software-based denomination calculator with 100% accuracy</li>
+                    <li><strong>Instant results</strong>: Sub-100ms calculation time for amounts up to trillions</li>
+                    <li><strong>Multiple optimization strategies</strong>: Greedy, balanced, minimize large/small modes</li>
+                    <li><strong>Multi-currency engine</strong>: Support for INR, USD, EUR, GBP with extensible architecture</li>
+                    <li><strong>OCR integration</strong>: Extract amounts from scanned documents, PDFs, and images using Tesseract</li>
+                    <li><strong>Bulk upload system</strong>: Process CSV files and documents with hundreds of amounts in seconds</li>
+                </ul>
+
+                <h2>2.2 Technology Stack</h2>
+
+                <h3>Frontend Technologies</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Technology</th>
+                            <th>Version</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Electron</strong></td>
+                            <td>27.0.0+</td>
+                            <td>Desktop application framework</td>
+                        </tr>
+                        <tr>
+                            <td><strong>React</strong></td>
+                            <td>18.2.0</td>
+                            <td>UI component library</td>
+                        </tr>
+                        <tr>
+                            <td><strong>TypeScript</strong></td>
+                            <td>5.2.0</td>
+                            <td>Type-safe JavaScript</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Vite</strong></td>
+                            <td>5.0.0</td>
+                            <td>Build tool and dev server</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tailwind CSS</strong></td>
+                            <td>3.3.0</td>
+                            <td>Utility-first CSS framework</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Lucide React</strong></td>
+                            <td>Latest</td>
+                            <td>Icon library</td>
+                        </tr>
+                        <tr>
+                            <td><strong>React Query</strong></td>
+                            <td>5.0.0</td>
+                            <td>Data fetching and caching</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Backend Technologies</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Technology</th>
+                            <th>Version</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>FastAPI</strong></td>
+                            <td>0.104.0+</td>
+                            <td>Python web framework</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Python</strong></td>
+                            <td>3.9+</td>
+                            <td>Backend language</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SQLite</strong></td>
+                            <td>3.40+</td>
+                            <td>Local database</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SQLAlchemy</strong></td>
+                            <td>2.0.0</td>
+                            <td>ORM (Object-Relational Mapping)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pydantic</strong></td>
+                            <td>2.4.0</td>
+                            <td>Data validation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uvicorn</strong></td>
+                            <td>0.24.0</td>
+                            <td>ASGI server</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>Core Engine Technologies</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Technology</th>
+                            <th>Version</th>
+                            <th>Purpose</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Python Decimal</strong></td>
+                            <td>Built-in</td>
+                            <td>Arbitrary precision arithmetic</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tesseract OCR</strong></td>
+                            <td>5.3.3+</td>
+                            <td>Optical character recognition</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PyMuPDF (fitz)</strong></td>
+                            <td>1.23.0</td>
+                            <td>PDF text extraction</td>
+                        </tr>
+                        <tr>
+                            <td><strong>pdf2image</strong></td>
+                            <td>1.16.0</td>
+                            <td>Convert PDF pages to images</td>
+                        </tr>
+                        <tr>
+                            <td><strong>pytesseract</strong></td>
+                            <td>0.3.10</td>
+                            <td>Python wrapper for Tesseract</td>
+                        </tr>
+                        <tr>
+                            <td><strong>python-docx</strong></td>
+                            <td>1.1.0</td>
+                            <td>Word document processing</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pillow</strong></td>
+                            <td>10.1.0</td>
+                            <td>Image processing</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2>2.3 Project Structure</h2>
+
+                <p>The project follows a monorepo structure with three main packages:</p>
+
+                <pre><code>f:\Curency denomination distibutor original\
+├── packages/
+│   ├── core-engine/           # Python calculation engine
+│   │   ├── __init__.py
+│   │   ├── engine.py          # Main calculation logic (500+ lines)
+│   │   ├── fx_service.py      # Foreign exchange rates
+│   │   ├── optimizer.py       # Optimization strategies
+│   │   ├── models.py          # Data models
+│   │   ├── verify.py          # Engine verification tests
+│   │   ├── test_engine.py     # Unit tests
+│   │   ├── requirements.txt   # Python dependencies
+│   │   └── config/
+│   │       ├── currencies.json
+│   │       └── fx_rates_cache.json
+│   │
+│   ├── desktop-app/           # Electron frontend
+│   │   ├── electron/          # Electron main process
+│   │   │   ├── main.ts        # Main process entry
+│   │   │   ├── preload.ts     # Preload script
+│   │   │   └── window.ts      # Window management
+│   │   ├── src/               # React application
+│   │   │   ├── App.tsx        # Main app component
+│   │   │   ├── main.tsx       # React entry point
+│   │   │   ├── components/    # React components
+│   │   │   │   ├── CalculatorPage.tsx    (450 lines)
+│   │   │   │   ├── HistoryPage.tsx       (380 lines)
+│   │   │   │   ├── BulkUploadPage.tsx    (695 lines)
+│   │   │   │   └── SettingsPage.tsx      (280 lines)
+│   │   │   ├── contexts/      # React contexts
+│   │   │   │   ├── LanguageContext.tsx
+│   │   │   │   └── ThemeContext.tsx
+│   │   │   ├── api/           # API client
+│   │   │   │   └── client.ts  # HTTP client
+│   │   │   ├── types/         # TypeScript types
+│   │   │   └── locales/       # Translation files
+│   │   ├── package.json
+│   │   ├── vite.config.ts
+│   │   ├── tailwind.config.js
+│   │   └── tsconfig.json
+│   │
+│   └── local-backend/         # FastAPI backend
+│       ├── app/
+│       │   ├── main.py        # FastAPI application
+│       │   ├── api/           # API endpoints
+│       │   │   ├── calculations.py     (530 lines)
+│       │   │   ├── bulk.py             (420 lines)
+│       │   │   ├── ocr.py              (350 lines)
+│       │   │   ├── history.py          (280 lines)
+│       │   │   └── settings.py         (150 lines)
+│       │   ├── services/      # Business logic
+│       │   │   ├── ocr_processor.py    (645 lines)
+│       │   │   └── smart_defaults.py   (180 lines)
+│       │   ├── db/            # Database
+│       │   │   ├── database.py
+│       │   │   └── models.py
+│       │   ├── utils/         # Utilities
+│       │   │   └── logger.py
+│       │   └── locales/       # Translation files
+│       │       ├── en.json
+│       │       ├── hi.json
+│       │       ├── es.json
+│       │       ├── fr.json
+│       │       └── de.json
+│       ├── requirements.txt
+│       └── install_dependencies.ps1
+│
+├── check/                     # Installation scripts
+│   ├── install_dependencies.ps1
+│   ├── check_dependencies.ps1
+│   └── start_with_auto_install.ps1
+│
+├── documentation/             # Project documentation
+│   ├── COMPLETE_PROJECT_DOCUMENTATION.md  (8071 lines)
+│   ├── QUICK_REFERENCE.md
+│   ├── BULK_UPLOAD_USER_GUIDE.md
+│   └── OCR_VERIFIED_WORKING.md
+│
+├── README.md                  # Project README
+└── start.ps1                  # Quick start script</code></pre>
+
+                <h3>Key Statistics</h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value">150+</div>
+                        <div class="stat-label">Total Files</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">15,000+</div>
+                        <div class="stat-label">Lines of Code</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Main Packages</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value">25+</div>
+                        <div class="stat-label">Dependencies</div>
+                    </div>
+                </div>
+
+                <h2>2.4 Operating Modes</h2>
+
+                <h3>Desktop Mode (Offline-First)</h3>
+                <ul>
+                    <li><strong>Architecture</strong>: Electron app with embedded FastAPI backend</li>
+                    <li><strong>Data Storage</strong>: Local SQLite database</li>
+                    <li><strong>Network</strong>: No internet required for core functionality</li>
+                    <li><strong>Performance</strong>: Ultra-fast (local processing)</li>
+                    <li><strong>Use Cases</strong>: Banking terminals, accounting offices, offline environments</li>
+                </ul>
+
+                <h3>Web Mode (Future)</h3>
+                <ul>
+                    <li><strong>Architecture</strong>: React SPA with cloud backend</li>
+                    <li><strong>Data Storage</strong>: Cloud database</li>
+                    <li><strong>Network</strong>: Internet required</li>
+                    <li><strong>Performance</strong>: Fast (network latency applies)</li>
+                    <li><strong>Use Cases</strong>: Cross-device access, team collaboration</li>
+                </ul>
+
+                <h3>API Mode (Future)</h3>
+                <ul>
+                    <li><strong>Architecture</strong>: RESTful API endpoints</li>
+                    <li><strong>Data Storage</strong>: Shared or isolated</li>
+                    <li><strong>Authentication</strong>: API key based</li>
+                    <li><strong>Use Cases</strong>: Integration with other systems, third-party access</li>
+                </ul>
+
+                <div class="alert alert-info">
+                    <strong>Current Status:</strong> Desktop Mode is fully implemented and production-ready. Web Mode and API Mode are planned for future releases.
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

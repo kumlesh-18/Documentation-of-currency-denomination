@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Future Enhancements - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html" class="active">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Future Enhancements</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>17. Future Enhancements (Phase 2 & 3)</h1>
+
+                <section id="phase-2">
+                    <h2>Phase 2 (Planned)</h2>
+
+                    <h3>1. Online Mode with Cloud Sync</h3>
+                    <div class="feature-card">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>Cloud database integration (PostgreSQL/MySQL)</li>
+                            <li>Real-time synchronization across devices</li>
+                            <li>Offline-first architecture with sync queue</li>
+                            <li>Conflict resolution for concurrent edits</li>
+                        </ul>
+
+                        <h4>Technology Stack</h4>
+                        <ul>
+                            <li><strong>Backend:</strong> Upgrade to cloud-hosted FastAPI</li>
+                            <li><strong>Database:</strong> PostgreSQL with connection pooling</li>
+                            <li><strong>Sync:</strong> WebSocket for real-time updates</li>
+                            <li><strong>Storage:</strong> AWS S3 or Azure Blob for file uploads</li>
+                        </ul>
+
+                        <h4>Benefits</h4>
+                        <ul>
+                            <li>Access calculations from any device</li>
+                            <li>Automatic backup to cloud</li>
+                            <li>Team collaboration capabilities</li>
+                        </ul>
+                    </div>
+
+                    <h3>2. Multi-User Support</h3>
+                    <div class="feature-card">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>User authentication (email/password)</li>
+                            <li>User profiles and preferences</li>
+                            <li>Role-based access control (Admin, User, Viewer)</li>
+                            <li>Shared workspaces for teams</li>
+                            <li>Calculation sharing with permissions</li>
+                        </ul>
+
+                        <h4>User Roles</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Role</th>
+                                    <th>Permissions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Admin</td>
+                                    <td>Full access, user management, settings</td>
+                                </tr>
+                                <tr>
+                                    <td>User</td>
+                                    <td>Create, edit, delete own calculations</td>
+                                </tr>
+                                <tr>
+                                    <td>Viewer</td>
+                                    <td>Read-only access to shared calculations</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>3. Export to Excel with Formatting</h3>
+                    <div class="feature-card">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>Export to .xlsx format with styling</li>
+                            <li>Multiple sheets (Summary, Breakdown, History)</li>
+                            <li>Charts and visualizations</li>
+                            <li>Custom templates</li>
+                            <li>Batch export for multiple calculations</li>
+                        </ul>
+
+                        <h4>Excel Structure</h4>
+                        <pre><code>Sheet 1: Summary
+├── Amount
+├── Currency
+├── Mode
+├── Total Pieces
+├── Total Notes
+└── Total Coins
+
+Sheet 2: Detailed Breakdown
+├── Denomination
+├── Type (Note/Coin)
+├── Count
+└── Total Value
+
+Sheet 3: History (All Calculations)
+└── Paginated list with all fields</code></pre>
+                    </div>
+
+                    <h3>4. Advanced Analytics Dashboard</h3>
+                    <div class="feature-card">
+                        <h4>Visualizations</h4>
+                        <ul>
+                            <li><strong>Usage Statistics:</strong> Calculations per day/week/month</li>
+                            <li><strong>Currency Distribution:</strong> Pie chart showing currency usage</li>
+                            <li><strong>Mode Preferences:</strong> Bar chart of optimization mode usage</li>
+                            <li><strong>Amount Ranges:</strong> Histogram of calculation amounts</li>
+                            <li><strong>Trend Analysis:</strong> Line graph of calculation volume over time</li>
+                        </ul>
+
+                        <h4>Metrics</h4>
+                        <ul>
+                            <li>Total calculations performed</li>
+                            <li>Most used currency/mode</li>
+                            <li>Average calculation amount</li>
+                            <li>Bulk upload success rate</li>
+                            <li>OCR accuracy rate</li>
+                        </ul>
+                    </div>
+
+                    <h3>5. Custom Currency Support</h3>
+                    <div class="feature-card">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>Add custom currencies with denominations</li>
+                            <li>Define notes and coins for each currency</li>
+                            <li>Save currency configurations</li>
+                            <li>Import/export currency definitions</li>
+                        </ul>
+
+                        <h4>Custom Currency Configuration</h4>
+                        <pre><code class="language-json">{
+  "currency_code": "BTC",
+  "currency_name": "Bitcoin",
+  "symbol": "₿",
+  "notes": [1, 0.5, 0.1, 0.05, 0.01],
+  "coins": [0.001, 0.0001],
+  "decimal_places": 8
+}</code></pre>
+                    </div>
+                </section>
+
+                <section id="phase-3">
+                    <h2>Phase 3 (Future)</h2>
+
+                    <h3>1. Mobile App (iOS/Android)</h3>
+                    <div class="feature-card">
+                        <h4>Technology Stack</h4>
+                        <ul>
+                            <li><strong>Framework:</strong> React Native or Flutter</li>
+                            <li><strong>Features:</strong> All desktop features + mobile-specific</li>
+                            <li><strong>Camera Integration:</strong> Scan bills/receipts directly</li>
+                            <li><strong>Offline Support:</strong> Full offline functionality</li>
+                        </ul>
+
+                        <h4>Mobile-Specific Features</h4>
+                        <ul>
+                            <li>Camera-based OCR (instant scan)</li>
+                            <li>Push notifications for sync updates</li>
+                            <li>Biometric authentication (Face ID, Fingerprint)</li>
+                            <li>Share results via SMS/WhatsApp</li>
+                            <li>Widget for quick calculations</li>
+                        </ul>
+                    </div>
+
+                    <h3>2. Real-Time Exchange Rates</h3>
+                    <div class="feature-card">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>Live currency conversion</li>
+                            <li>Historical exchange rate data</li>
+                            <li>Multi-currency calculations</li>
+                            <li>Auto-update rates daily</li>
+                        </ul>
+
+                        <h4>API Integration</h4>
+                        <pre><code class="language-python"># Exchange rate API integration
+import requests
+
+def get_exchange_rate(from_currency: str, to_currency: str) -> float:
+    """Fetch live exchange rate."""
+    api_url = f"https://api.exchangerate-api.com/v4/latest/{from_currency}"
+    response = requests.get(api_url)
+    data = response.json()
+    return data['rates'][to_currency]
+
+# Example: Convert USD to INR
+rate = get_exchange_rate('USD', 'INR')
+amount_inr = 100 * rate  # 100 USD to INR</code></pre>
+                    </div>
+
+                    <h3>3. Audit Trail & Reporting</h3>
+                    <div class="feature-card">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>Complete audit log of all actions</li>
+                            <li>User activity tracking</li>
+                            <li>Calculation history with timestamps</li>
+                            <li>Export audit reports (PDF, CSV)</li>
+                        </ul>
+
+                        <h4>Audit Log Example</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Timestamp</th>
+                                    <th>User</th>
+                                    <th>Action</th>
+                                    <th>Details</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>2025-01-15 12:00</td>
+                                    <td>user@example.com</td>
+                                    <td>Calculate</td>
+                                    <td>1850 INR (greedy)</td>
+                                </tr>
+                                <tr>
+                                    <td>2025-01-15 12:05</td>
+                                    <td>user@example.com</td>
+                                    <td>Bulk Upload</td>
+                                    <td>100 rows (CSV)</td>
+                                </tr>
+                                <tr>
+                                    <td>2025-01-15 12:10</td>
+                                    <td>admin@example.com</td>
+                                    <td>Export</td>
+                                    <td>History (50 items)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>4. API for Third-Party Integration</h3>
+                    <div class="feature-card">
+                        <h4>Public REST API</h4>
+                        <ul>
+                            <li>API keys for authentication</li>
+                            <li>Rate limiting (1000 requests/hour)</li>
+                            <li>Comprehensive documentation (OpenAPI/Swagger)</li>
+                            <li>Webhooks for event notifications</li>
+                        </ul>
+
+                        <h4>Example API Usage</h4>
+                        <pre><code class="language-bash"># Calculate denomination
+curl -X POST https://api.currencycalculator.com/v1/calculate \
+  -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 1850,
+    "currency": "INR",
+    "mode": "greedy"
+  }'</code></pre>
+                    </div>
+
+                    <h3>5. Plugin System</h3>
+                    <div class="feature-card">
+                        <h4>Features</h4>
+                        <ul>
+                            <li>Custom plugins for extended functionality</li>
+                            <li>Plugin marketplace</li>
+                            <li>API for plugin developers</li>
+                            <li>Sandboxed execution environment</li>
+                        </ul>
+
+                        <h4>Plugin Examples</h4>
+                        <ul>
+                            <li><strong>Tax Calculator:</strong> Calculate taxes on amounts</li>
+                            <li><strong>Currency Converter:</strong> Advanced multi-currency conversion</li>
+                            <li><strong>Receipt Generator:</strong> Generate formatted receipts</li>
+                            <li><strong>Budget Tracker:</strong> Track spending across calculations</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="roadmap">
+                    <h2>Development Roadmap</h2>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Phase</th>
+                                <th>Timeline</th>
+                                <th>Key Features</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Phase 1</td>
+                                <td>Q4 2024</td>
+                                <td>Core features, OCR, Smart Defaults</td>
+                                <td>✅ Complete</td>
+                            </tr>
+                            <tr>
+                                <td>Phase 2</td>
+                                <td>Q1-Q2 2025</td>
+                                <td>Cloud sync, Multi-user, Analytics</td>
+                                <td>📋 Planned</td>
+                            </tr>
+                            <tr>
+                                <td>Phase 3</td>
+                                <td>Q3-Q4 2025</td>
+                                <td>Mobile app, Exchange rates, API</td>
+                                <td>🔮 Future</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Priority Matrix</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Enhancement</th>
+                                <th>Priority</th>
+                                <th>Effort</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cloud Sync</td>
+                                <td>High</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Multi-User</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Excel Export</td>
+                                <td>Medium</td>
+                                <td>Low</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Analytics Dashboard</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Custom Currency</td>
+                                <td>Low</td>
+                                <td>Low</td>
+                                <td>Low</td>
+                            </tr>
+                            <tr>
+                                <td>Mobile App</td>
+                                <td>High</td>
+                                <td>High</td>
+                                <td>Very High</td>
+                            </tr>
+                            <tr>
+                                <td>Exchange Rates</td>
+                                <td>Medium</td>
+                                <td>Low</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Audit Trail</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                                <td>High</td>
+                            </tr>
+                            <tr>
+                                <td>Public API</td>
+                                <td>Low</td>
+                                <td>Medium</td>
+                                <td>Medium</td>
+                            </tr>
+                            <tr>
+                                <td>Plugin System</td>
+                                <td>Low</td>
+                                <td>High</td>
+                                <td>Low</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <div class="alert alert-info">
+                    <strong>ℹ Note</strong>
+                    <p>This roadmap is subject to change based on user feedback and business priorities. Features may be added, removed, or rescheduled as development progresses.</p>
+                </div>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section outlines future enhancements across two phases: Phase 2 (Cloud sync, Multi-user support, Excel export, Analytics dashboard, Custom currencies) and Phase 3 (Mobile app, Real-time exchange rates, Audit trail, Public API, Plugin system). Development roadmap spans Q1 2025 through Q4 2025 with priorities based on impact and effort.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

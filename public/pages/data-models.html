@@ -1,0 +1,606 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Models & Database Schema - Currency Denomination Calculator</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html" class="active">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Data Models & Database Schema</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>11. Data Models & Database Schema</h1>
+
+                <section id="database-technology">
+                    <h2>11.1 Database Technology</h2>
+
+                    <div class="feature-card">
+                        <h3>SQLite 3.x</h3>
+                        <p><strong>Type:</strong> Embedded, serverless database</p>
+                        <p><strong>ORM:</strong> SQLAlchemy 2.x</p>
+                        <p><strong>Location:</strong> <code>./currency_calculator.db</code> (local file)</p>
+                    </div>
+
+                    <h3>Advantages</h3>
+                    <ul>
+                        <li>âœ“ Zero configuration</li>
+                        <li>âœ“ No server required</li>
+                        <li>âœ“ Fully offline</li>
+                        <li>âœ“ File-based (easy backup)</li>
+                        <li>âœ“ ACID compliant</li>
+                        <li>âœ“ Cross-platform</li>
+                        <li>âœ“ Fast for local operations</li>
+                    </ul>
+                </section>
+
+                <section id="database-schema">
+                    <h2>11.2 Complete Database Schema</h2>
+
+                    <h3>11.2.1 Calculations Table</h3>
+
+                    <pre><code class="language-sql">CREATE TABLE calculations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount DECIMAL(20, 2) NOT NULL,
+    currency VARCHAR(3) NOT NULL,
+    mode VARCHAR(20) NOT NULL,
+    breakdown TEXT NOT NULL,  -- JSON string
+    summary TEXT NOT NULL,     -- JSON string
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    
+    -- Indexes for performance
+    INDEX idx_currency (currency),
+    INDEX idx_timestamp (timestamp DESC),
+    INDEX idx_amount (amount)
+);</code></pre>
+
+                    <h4>SQLAlchemy Model</h4>
+                    <pre><code class="language-python">from sqlalchemy import Column, Integer, String, DateTime, Text, Numeric, Index
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+
+Base = declarative_base()
+
+class Calculation(Base):
+    __tablename__ = "calculations"
+    
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    amount = Column(Numeric(precision=20, scale=2), nullable=False, index=True)
+    currency = Column(String(3), nullable=False, index=True)
+    mode = Column(String(20), nullable=False)
+    breakdown = Column(Text, nullable=False)  # JSON: List[{denomination, type, count, total_value}]
+    summary = Column(Text, nullable=False)     # JSON: {total_notes, total_coins, total_denominations}
+    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False, index=True)
+    
+    # Composite indexes
+    __table_args__ = (
+        Index('idx_currency_timestamp', 'currency', 'timestamp'),
+    )
+    
+    def __repr__(self):
+        return f"<Calculation(id={self.id}, amount={self.amount}, currency={self.currency})>"</code></pre>
+
+                    <h4>Column Details</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>id</code></td>
+                                <td>INTEGER</td>
+                                <td>Auto-incrementing primary key</td>
+                                <td>1, 2, 3, ...</td>
+                            </tr>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>DECIMAL(20,2)</td>
+                                <td>Original amount calculated</td>
+                                <td>1234.56</td>
+                            </tr>
+                            <tr>
+                                <td><code>currency</code></td>
+                                <td>VARCHAR(3)</td>
+                                <td>Currency code (indexed)</td>
+                                <td>INR, USD, EUR, GBP</td>
+                            </tr>
+                            <tr>
+                                <td><code>mode</code></td>
+                                <td>VARCHAR(20)</td>
+                                <td>Optimization mode used</td>
+                                <td>greedy, balanced, minimize_large, minimize_small</td>
+                            </tr>
+                            <tr>
+                                <td><code>breakdown</code></td>
+                                <td>TEXT (JSON)</td>
+                                <td>Denomination breakdown details</td>
+                                <td>[{"denomination": 500, "count": 2, ...}]</td>
+                            </tr>
+                            <tr>
+                                <td><code>summary</code></td>
+                                <td>TEXT (JSON)</td>
+                                <td>Summary statistics</td>
+                                <td>{"total_notes": 5, "total_coins": 3}</td>
+                            </tr>
+                            <tr>
+                                <td><code>timestamp</code></td>
+                                <td>DATETIME</td>
+                                <td>Creation time (indexed, descending)</td>
+                                <td>2025-11-27 10:30:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>11.2.2 Settings Table</h3>
+
+                    <pre><code class="language-sql">CREATE TABLE settings (
+    id INTEGER PRIMARY KEY DEFAULT 1,  -- Single row table
+    theme VARCHAR(10) DEFAULT 'light' NOT NULL,
+    language VARCHAR(2) DEFAULT 'en' NOT NULL,
+    default_currency VARCHAR(3) DEFAULT 'INR' NOT NULL,
+    default_mode VARCHAR(20) DEFAULT 'greedy' NOT NULL,
+    auto_save_history BOOLEAN DEFAULT 1 NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    
+    -- Ensure only one settings row
+    CHECK (id = 1)
+);</code></pre>
+
+                    <h4>SQLAlchemy Model</h4>
+                    <pre><code class="language-python">class Settings(Base):
+    __tablename__ = "settings"
+    
+    id = Column(Integer, primary_key=True, default=1)
+    theme = Column(String(10), default="light", nullable=False)
+    language = Column(String(2), default="en", nullable=False)
+    default_currency = Column(String(3), default="INR", nullable=False)
+    default_mode = Column(String(20), default="greedy", nullable=False)
+    auto_save_history = Column(Boolean, default=True, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    
+    def __repr__(self):
+        return f"<Settings(theme={self.theme}, language={self.language})>"</code></pre>
+
+                    <h4>Column Details</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Options</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>id</code></td>
+                                <td>INTEGER</td>
+                                <td>1</td>
+                                <td>Always 1 (single row)</td>
+                            </tr>
+                            <tr>
+                                <td><code>theme</code></td>
+                                <td>VARCHAR(10)</td>
+                                <td>light</td>
+                                <td>light, dark, system</td>
+                            </tr>
+                            <tr>
+                                <td><code>language</code></td>
+                                <td>VARCHAR(2)</td>
+                                <td>en</td>
+                                <td>en, hi, es, fr, de</td>
+                            </tr>
+                            <tr>
+                                <td><code>default_currency</code></td>
+                                <td>VARCHAR(3)</td>
+                                <td>INR</td>
+                                <td>INR, USD, EUR, GBP</td>
+                            </tr>
+                            <tr>
+                                <td><code>default_mode</code></td>
+                                <td>VARCHAR(20)</td>
+                                <td>greedy</td>
+                                <td>greedy, balanced, minimize_large, minimize_small</td>
+                            </tr>
+                            <tr>
+                                <td><code>auto_save_history</code></td>
+                                <td>BOOLEAN</td>
+                                <td>TRUE</td>
+                                <td>TRUE, FALSE</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="sample-queries">
+                    <h2>11.3 Sample Data & Queries</h2>
+
+                    <h3>Common Queries</h3>
+
+                    <div class="feature-card">
+                        <h4>1. Get Latest Calculations</h4>
+                        <pre><code class="language-python"># Get last 10 calculations
+recent = db.query(Calculation)\
+    .order_by(Calculation.timestamp.desc())\
+    .limit(10)\
+    .all()</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>2. Filter by Currency</h4>
+                        <pre><code class="language-python"># Get all INR calculations
+inr_calcs = db.query(Calculation)\
+    .filter(Calculation.currency == 'INR')\
+    .order_by(Calculation.timestamp.desc())\
+    .all()</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>3. Paginated History</h4>
+                        <pre><code class="language-python">def get_paginated_history(page: int = 1, per_page: int = 50):
+    offset = (page - 1) * per_page
+    
+    results = db.query(Calculation)\
+        .order_by(Calculation.timestamp.desc())\
+        .offset(offset)\
+        .limit(per_page)\
+        .all()
+    
+    total = db.query(Calculation).count()
+    
+    return {
+        'items': results,
+        'total': total,
+        'page': page,
+        'pages': (total + per_page - 1) // per_page
+    }</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>4. Statistics by Currency</h4>
+                        <pre><code class="language-python">from sqlalchemy import func
+
+# Total calculations by currency
+stats = db.query(
+    Calculation.currency,
+    func.count(Calculation.id).label('count'),
+    func.sum(Calculation.amount).label('total_amount')
+)\
+    .group_by(Calculation.currency)\
+    .all()
+
+# Output:
+# [('INR', 150, Decimal('450000.00')),
+#  ('USD', 50, Decimal('125000.00')),
+#  ...]</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>5. Date Range Filter</h4>
+                        <pre><code class="language-python">from datetime import datetime, timedelta
+
+# Last 7 days
+start_date = datetime.utcnow() - timedelta(days=7)
+
+recent_week = db.query(Calculation)\
+    .filter(Calculation.timestamp >= start_date)\
+    .order_by(Calculation.timestamp.desc())\
+    .all()</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>6. Delete Calculation</h4>
+                        <pre><code class="language-python"># Delete by ID
+calc = db.query(Calculation).filter(Calculation.id == 42).first()
+if calc:
+    db.delete(calc)
+    db.commit()</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>7. Clear All History</h4>
+                        <pre><code class="language-python"># Delete all calculations
+db.query(Calculation).delete()
+db.commit()</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>8. Get Settings</h4>
+                        <pre><code class="language-python"># Always returns single row
+settings = db.query(Settings).first()
+
+if not settings:
+    # Initialize with defaults
+    settings = Settings(
+        id=1,
+        theme="light",
+        language="en",
+        default_currency="INR",
+        default_mode="greedy",
+        auto_save_history=True
+    )
+    db.add(settings)
+    db.commit()</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>9. Update Settings</h4>
+                        <pre><code class="language-python">settings = db.query(Settings).first()
+settings.theme = "dark"
+settings.language = "hi"
+db.commit()</code></pre>
+                    </div>
+                </section>
+
+                <section id="database-initialization">
+                    <h2>11.4 Database Initialization</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/db/database.py</code></p>
+
+                    <pre><code class="language-python">from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from app.db.models import Base, Settings
+
+# Create engine
+DATABASE_URL = "sqlite:///./currency_calculator.db"
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},  # SQLite specific
+    echo=False  # Set True for SQL logging
+)
+
+# Create all tables
+Base.metadata.create_all(bind=engine)
+
+# Session factory
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+# Dependency for FastAPI
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+
+# Initialize default settings
+def init_database():
+    """Initialize database with default settings."""
+    db = SessionLocal()
+    
+    try:
+        # Check if settings exist
+        if not db.query(Settings).first():
+            default_settings = Settings(
+                id=1,
+                theme="light",
+                language="en",
+                default_currency="INR",
+                default_mode="greedy",
+                auto_save_history=True
+            )
+            db.add(default_settings)
+            db.commit()
+            print("âœ“ Default settings initialized")
+    finally:
+        db.close()
+
+# Call on startup
+init_database()</code></pre>
+                </section>
+
+                <section id="json-structure">
+                    <h2>11.5 JSON Field Structures</h2>
+
+                    <h3>Breakdown JSON Format</h3>
+                    <pre><code class="language-json">[
+  {
+    "denomination": 500,
+    "type": "note",
+    "count": 3,
+    "total_value": 1500
+  },
+  {
+    "denomination": 200,
+    "type": "note",
+    "count": 1,
+    "total_value": 200
+  },
+  {
+    "denomination": 50,
+    "type": "note",
+    "count": 1,
+    "total_value": 50
+  },
+  {
+    "denomination": 5,
+    "type": "coin",
+    "count": 2,
+    "total_value": 10
+  }
+]</code></pre>
+
+                    <h3>Summary JSON Format</h3>
+                    <pre><code class="language-json">{
+  "total_notes": 5,
+  "total_coins": 2,
+  "total_denominations": 4
+}</code></pre>
+                </section>
+
+                <section id="backup-restore">
+                    <h2>11.6 Backup & Restore</h2>
+
+                    <h3>Manual Backup</h3>
+                    <pre><code class="language-powershell"># Simple file copy
+Copy-Item currency_calculator.db -Destination backup_$(Get-Date -Format 'yyyyMMdd_HHmmss').db</code></pre>
+
+                    <h3>Automated Backup Script</h3>
+                    <pre><code class="language-python">import shutil
+from datetime import datetime
+from pathlib import Path
+
+def backup_database():
+    """Create timestamped database backup."""
+    db_path = Path("currency_calculator.db")
+    
+    if not db_path.exists():
+        print("Database not found")
+        return
+    
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    backup_path = Path(f"backups/currency_calculator_{timestamp}.db")
+    backup_path.parent.mkdir(exist_ok=True)
+    
+    shutil.copy2(db_path, backup_path)
+    print(f"âœ“ Backup created: {backup_path}")
+
+# Schedule daily backups
+if __name__ == "__main__":
+    backup_database()</code></pre>
+
+                    <h3>Export to CSV</h3>
+                    <pre><code class="language-python">import csv
+from app.db.database import SessionLocal
+from app.db.models import Calculation
+
+def export_to_csv(output_file: str):
+    """Export all calculations to CSV."""
+    db = SessionLocal()
+    
+    try:
+        calcs = db.query(Calculation).order_by(Calculation.timestamp.desc()).all()
+        
+        with open(output_file, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            
+            # Header
+            writer.writerow(['ID', 'Amount', 'Currency', 'Mode', 'Timestamp', 'Breakdown', 'Summary'])
+            
+            # Data
+            for calc in calcs:
+                writer.writerow([
+                    calc.id,
+                    calc.amount,
+                    calc.currency,
+                    calc.mode,
+                    calc.timestamp,
+                    calc.breakdown,
+                    calc.summary
+                ])
+        
+        print(f"âœ“ Exported {len(calcs)} calculations to {output_file}")
+    finally:
+        db.close()</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>âœ“ Section Complete</strong>
+                    <p>This section covers complete database schema including SQLite setup, 2 tables (Calculations, Settings), SQLAlchemy models, 9 common query examples, initialization scripts, JSON structures, and backup/restore utilities.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/page-navigation.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

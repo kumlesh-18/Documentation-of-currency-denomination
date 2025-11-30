@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Sign In - Currency Denomination Documentation</title>
+    <link rel="stylesheet" href="/css/login.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <!-- Login Card -->
+        <div class="login-card">
+            <!-- Logo/Brand Section -->
+            <div class="login-brand">
+                <div class="login-logo">
+                    <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="40" cy="40" r="40" fill="#7C72E8"/>
+                        <path d="M40 25C37.6131 25 35.3239 25.9482 33.636 27.636C31.9482 29.3239 31 31.6131 31 34V40H29C28.4696 40 27.9609 40.2107 27.5858 40.5858C27.2107 40.9609 27 41.4696 27 42V51C27 51.5304 27.2107 52.0391 27.5858 52.4142C27.9609 52.7893 28.4696 53 29 53H51C51.5304 53 52.0391 52.7893 52.4142 52.4142C52.7893 52.0391 53 51.5304 53 51V42C53 41.4696 52.7893 40.9609 52.4142 40.5858C52.0391 40.2107 51.5304 40 51 40H49V34C49 31.6131 48.0518 29.3239 46.364 27.636C44.6761 25.9482 42.3869 25 40 25ZM34 34C34 32.4087 34.6321 30.8826 35.7574 29.7574C36.8826 28.6321 38.4087 28 40 28C41.5913 28 43.1174 28.6321 44.2426 29.7574C45.3679 30.8826 46 32.4087 46 34V40H34V34Z" fill="white"/>
+                    </svg>
+                </div>
+                <h1 class="login-title">Welcome Back</h1>
+                <p class="login-subtitle">Sign in to continue</p>
+            </div>
+
+            <!-- Alert Messages -->
+            <div id="alert" class="login-alert" style="display: none;"></div>
+
+            <!-- Login Form -->
+            <form id="loginForm" class="login-form" novalidate>
+                <!-- Password Field -->
+                <div class="form-field">
+                    <label for="password" class="form-label">Password</label>
+                    <div class="input-wrapper">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            name="password" 
+                            class="form-input" 
+                            placeholder="Enter your password"
+                            autocomplete="current-password"
+                            aria-label="Password"
+                            required
+                        >
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-login" id="loginBtn">
+                    <span id="btnText">Access Documentation</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const loginForm = document.getElementById('loginForm');
+        const passwordInput = document.getElementById('password');
+        const loginBtn = document.getElementById('loginBtn');
+        const btnText = document.getElementById('btnText');
+        const alertBox = document.getElementById('alert');
+
+        function showAlert(message, type = 'error') {
+            alertBox.className = `login-alert login-alert--${type}`;
+            alertBox.innerHTML = `
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    ${type === 'error' 
+                        ? '<path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="1.5"/><path d="M10 6V10M10 14H10.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+                        : '<path d="M10 18C14.4183 18 18 14.4183 18 10C18 5.58172 14.4183 2 10 2C5.58172 2 2 5.58172 2 10C2 14.4183 5.58172 18 10 18Z" stroke="currentColor" stroke-width="1.5"/><path d="M13 8L9 12L7 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>'
+                    }
+                </svg>
+                <span>${message}</span>
+            `;
+            alertBox.style.display = 'flex';
+            
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+            }, 5000);
+        }
+
+        function setLoading(isLoading) {
+            loginBtn.disabled = isLoading;
+            
+            if (isLoading) {
+                btnText.innerHTML = '<span class="loading-spinner"></span>Authenticating...';
+            } else {
+                btnText.textContent = 'Access Documentation';
+            }
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const password = passwordInput.value.trim();
+            
+            if (!password) {
+                showAlert('Please enter a password');
+                passwordInput.focus();
+                return;
+            }
+
+            setLoading(true);
+
+            try {
+                const response = await fetch('/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'same-origin',
+                    body: JSON.stringify({ password }),
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    showAlert('Login successful! Redirecting...', 'success');
+                    setTimeout(() => {
+                        window.location.href = data.redirect || '/index.html';
+                    }, 1000);
+                } else {
+                    showAlert(data.message || 'Invalid password. Please try again.');
+                    setLoading(false);
+                    passwordInput.value = '';
+                    passwordInput.focus();
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Connection error. Please check your network and try again.');
+                setLoading(false);
+            }
+        });
+
+        // Focus password input on load
+        window.addEventListener('load', () => {
+            passwordInput.focus();
+        });
+
+        // Prevent back button after logout
+        window.history.pushState(null, '', window.location.href);
+        window.onpopstate = function() {
+            window.history.pushState(null, '', window.location.href);
+        };
+    </script>
+</body>
+</html>

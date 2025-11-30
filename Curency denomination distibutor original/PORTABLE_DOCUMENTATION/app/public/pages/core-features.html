@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Core Features - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html" class="active">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Core Features</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>4. Core Features & Functionalities</h1>
+                
+                <!-- Section 4.1: Denomination Calculation Engine -->
+                <section id="calculation-engine">
+                    <h2>4.1 Denomination Calculation Engine</h2>
+                    
+                    <h3>4.1.1 Core Requirements</h3>
+                    <p>The calculation engine is the heart of the system and has the following strict requirements:</p>
+                    
+                    <ul>
+                        <li><strong>MUST</strong> use arbitrary precision arithmetic (Decimal type)</li>
+                        <li><strong>MUST NOT</strong> have rounding errors or precision loss</li>
+                        <li><strong>MUST</strong> complete calculations in &lt; 100ms for amounts up to 1 trillion</li>
+                        <li><strong>MUST</strong> support 4 base currencies: INR, USD, EUR, GBP</li>
+                        <li><strong>MUST</strong> return breakdown with notes + coins separately</li>
+                    </ul>
+
+                    <h4>Input Specification</h4>
+                    <pre><code class="language-typescript">interface CalculationRequest {
+  amount: string;              // Required - "1000" or "1000.50"
+  currency: string;            // Required - "INR" | "USD" | "EUR" | "GBP"
+  optimization_mode?: string;  // Optional - default: "greedy"
+  save_to_history?: boolean;   // Optional - default: true
+}</code></pre>
+
+                    <h4>Output Specification</h4>
+                    <pre><code class="language-typescript">interface CalculationResponse {
+  amount: string;
+  currency: string;
+  optimization_mode: string;
+  total_notes: number;
+  total_coins: number;
+  total_denominations: number;
+  breakdowns: DenominationBreakdown[];
+  calculation_time_ms: number;
+  saved_to_history: boolean;
+  calculation_id?: number;
+}
+
+interface DenominationBreakdown {
+  denomination: number;
+  type: "note" | "coin";
+  count: number;
+  total_value: string;
+}</code></pre>
+
+                    <h4>Example Calculation</h4>
+                    <pre><code class="language-json">{
+  "amount": "50000",
+  "currency": "INR",
+  "optimization_mode": "greedy",
+  "total_notes": 25,
+  "total_coins": 0,
+  "total_denominations": 1,
+  "breakdowns": [
+    {
+      "denomination": 2000,
+      "type": "note",
+      "count": 25,
+      "total_value": "50000"
+    }
+  ],
+  "calculation_time_ms": 2.4,
+  "saved_to_history": true,
+  "calculation_id": 42
+}</code></pre>
+
+                    <h3>4.1.2 Currency Support</h3>
+                    
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Currency</th>
+                                <th>Code</th>
+                                <th>Symbol</th>
+                                <th>Notes</th>
+                                <th>Coins</th>
+                                <th>Smallest Unit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Indian Rupee</td>
+                                <td><span class="badge badge-primary">INR</span></td>
+                                <td>₹</td>
+                                <td>2000, 500, 200, 100, 50, 20, 10</td>
+                                <td>10, 5, 2, 1</td>
+                                <td>0.01 (paisa)</td>
+                            </tr>
+                            <tr>
+                                <td>US Dollar</td>
+                                <td><span class="badge badge-primary">USD</span></td>
+                                <td>$</td>
+                                <td>100, 50, 20, 10, 5, 2, 1</td>
+                                <td>1, 0.50, 0.25, 0.10, 0.05, 0.01</td>
+                                <td>0.01 (cent)</td>
+                            </tr>
+                            <tr>
+                                <td>Euro</td>
+                                <td><span class="badge badge-primary">EUR</span></td>
+                                <td>€</td>
+                                <td>500, 200, 100, 50, 20, 10, 5</td>
+                                <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
+                                <td>0.01 (cent)</td>
+                            </tr>
+                            <tr>
+                                <td>British Pound</td>
+                                <td><span class="badge badge-primary">GBP</span></td>
+                                <td>£</td>
+                                <td>50, 20, 10, 5</td>
+                                <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
+                                <td>0.01 (penny)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Currency Configuration</h4>
+                    <p><strong>Location:</strong> <code>packages/core-engine/config/currencies.json</code></p>
+                    
+                    <pre><code class="language-json">{
+  "INR": {
+    "name": "Indian Rupee",
+    "symbol": "₹",
+    "code": "INR",
+    "notes": [2000, 500, 200, 100, 50, 20, 10],
+    "coins": [10, 5, 2, 1],
+    "decimal_places": 2,
+    "smallest_unit": 0.01
+  }
+}</code></pre>
+
+                    <h4>Adding New Currency</h4>
+                    <ol>
+                        <li>Add configuration to <code>currencies.json</code></li>
+                        <li>Add FX rate to <code>fx_rates_cache.json</code></li>
+                        <li>Update TypeScript types if needed</li>
+                        <li>No code changes required (configuration-driven)</li>
+                    </ol>
+
+                    <h3>4.1.3 Optimization Modes</h3>
+
+                    <div class="feature-card">
+                        <h4>Mode 1: Greedy (Default)</h4>
+                        <ul>
+                            <li><strong>Goal:</strong> Minimize total number of notes + coins</li>
+                            <li><strong>Algorithm:</strong> Always use largest denomination first</li>
+                            <li><strong>Use Case:</strong> Default mode for most scenarios</li>
+                            <li><strong>Performance:</strong> O(n) where n = number of denominations</li>
+                        </ul>
+                        
+                        <p><strong>Example:</strong></p>
+                        <pre><code>Amount: ₹50,000
+Result: 25 × ₹2000 = ₹50,000
+Total: 25 denominations</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Mode 2: Balanced</h4>
+                        <ul>
+                            <li><strong>Goal:</strong> Even distribution across denominations</li>
+                            <li><strong>Algorithm:</strong> Distribute amount more evenly</li>
+                            <li><strong>Use Case:</strong> When you want variety in denominations</li>
+                            <li><strong>Performance:</strong> O(n)</li>
+                        </ul>
+                        
+                        <p><strong>Example:</strong></p>
+                        <pre><code>Amount: ₹50,000
+Result:
+  10 × ₹2000 = ₹20,000
+  10 × ₹500  = ₹5,000
+  ... (more balanced)</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Mode 3: Minimize Large</h4>
+                        <ul>
+                            <li><strong>Goal:</strong> Use fewer large denominations</li>
+                            <li><strong>Algorithm:</strong> Prefer smaller notes/coins</li>
+                            <li><strong>Use Case:</strong> When large denominations are scarce</li>
+                            <li><strong>Performance:</strong> O(n)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Mode 4: Minimize Small</h4>
+                        <ul>
+                            <li><strong>Goal:</strong> Use fewer small denominations</li>
+                            <li><strong>Algorithm:</strong> Prefer larger notes/coins</li>
+                            <li><strong>Use Case:</strong> When small denominations are scarce</li>
+                            <li><strong>Performance:</strong> O(n)</li>
+                        </ul>
+                    </div>
+
+                    <h3>4.1.4 Large Number Handling</h3>
+                    
+                    <p><strong>Requirement:</strong> System MUST handle extremely large amounts without errors</p>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Amount</th>
+                                <th>Description</th>
+                                <th>Expected Behavior</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1,000</td>
+                                <td>One thousand</td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                            </tr>
+                            <tr>
+                                <td>1,00,000</td>
+                                <td>One lakh</td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                            </tr>
+                            <tr>
+                                <td>1,00,00,000</td>
+                                <td>One crore</td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                            </tr>
+                            <tr>
+                                <td>1,00,00,00,000</td>
+                                <td>One hundred crore</td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                            </tr>
+                            <tr>
+                                <td>10,00,00,00,000</td>
+                                <td>One thousand crore (10 billion)</td>
+                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
+                            </tr>
+                            <tr>
+                                <td>1,00,00,00,00,000</td>
+                                <td>One lakh crore (1 trillion)</td>
+                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
+                            </tr>
+                            <tr>
+                                <td>10,00,00,00,00,000</td>
+                                <td>Ten lakh crore (10 trillion)</td>
+                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Implementation</h4>
+                    <pre><code class="language-python">from decimal import Decimal, getcontext
+
+# Set high precision
+getcontext().prec = 50
+
+def calculate_denominations(amount: str, currency: str):
+    # Convert to Decimal for arbitrary precision
+    amount_decimal = Decimal(amount)
+    
+    # No overflow, no rounding errors
+    # Works for any size amount</code></pre>
+
+                    <p><strong>Verification:</strong></p>
+                    <pre><code class="language-bash"># Test file: packages/core-engine/test_engine.py
+pytest test_engine.py::test_extreme_large_amounts</code></pre>
+                </section>
+
+                <!-- Section 4.2: History Management -->
+                <section id="history-management">
+                    <h2>4.2 History Management</h2>
+
+                    <h3>4.2.1 Full History</h3>
+                    
+                    <p><strong>Feature:</strong> Store all calculations with complete details</p>
+
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>✓ <strong>MUST</strong> store unlimited calculations (SQLite has no practical limit)</li>
+                        <li>✓ <strong>MUST</strong> support pagination (default 50 per page)</li>
+                        <li>✓ <strong>MUST</strong> support filtering by currency, date range</li>
+                        <li>✓ <strong>MUST</strong> support sorting by date, amount</li>
+                        <li>✓ <strong>MUST</strong> allow individual deletion</li>
+                        <li>✓ <strong>MUST</strong> allow batch deletion (all, by filter)</li>
+                    </ul>
+
+                    <h4>Database Schema</h4>
+                    <pre><code class="language-sql">CREATE TABLE calculations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount TEXT NOT NULL,
+    currency TEXT NOT NULL,
+    optimization_mode TEXT,
+    total_notes INTEGER,
+    total_coins INTEGER,
+    total_denominations INTEGER,
+    breakdown JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    calculation_time_ms REAL
+);</code></pre>
+
+                    <h4>API Endpoints</h4>
+                    <pre><code class="language-http">GET    /api/v1/history?page=1&amp;limit=50&amp;currency=INR&amp;sort=date_desc
+GET    /api/v1/history/{id}
+DELETE /api/v1/history/{id}
+DELETE /api/v1/history/all
+GET    /api/v1/history/stats</code></pre>
+
+                    <h3>4.2.2 Quick Access (Last 10)</h3>
+                    
+                    <p><strong>Feature:</strong> Show last 10 calculations in sidebar for quick reference</p>
+
+                    <p><strong>Requirements:</strong></p>
+                    <ul>
+                        <li>✓ <strong>MUST</strong> show last 10 calculations chronologically</li>
+                        <li>✓ <strong>MUST</strong> update in real-time when new calculation made</li>
+                        <li>✓ <strong>MUST</strong> allow click to view full details</li>
+                        <li>✓ <strong>MUST</strong> show: amount, currency, date, total denominations</li>
+                    </ul>
+
+                    <p><strong>UI Location:</strong> Left sidebar in History page</p>
+
+                    <h4>Implementation</h4>
+                    <pre><code class="language-typescript">const { data: quickAccess } = useQuery({
+  queryKey: ['history', 'quick-access'],
+  queryFn: () => api.getQuickAccessHistory(),
+  refetchInterval: false,
+  staleTime: Infinity
+});</code></pre>
+                </section>
+
+                <!-- Section 4.3: Bulk Upload System -->
+                <section id="bulk-upload">
+                    <h2>4.3 Bulk Upload System</h2>
+
+                    <h3>4.3.1 Supported File Formats</h3>
+
+                    <div class="feature-card">
+                        <h4>📄 CSV Files (.csv)</h4>
+                        <ul>
+                            <li><strong>Method:</strong> Direct parsing</li>
+                            <li><strong>Max Size:</strong> 10 MB</li>
+                            <li><strong>Encoding:</strong> UTF-8, UTF-16, ASCII</li>
+                            <li><strong>Separators:</strong> Comma (,), Semicolon (;), Tab (\t)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📕 PDF Files (.pdf)</h4>
+                        <ul>
+                            <li><strong>Method:</strong> PyMuPDF (text) + Tesseract OCR (scanned)</li>
+                            <li><strong>Max Size:</strong> 50 MB</li>
+                            <li><strong>Types:</strong> Text-based PDFs, Scanned PDFs, Mixed</li>
+                            <li><strong>Pages:</strong> All pages processed</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>📘 Word Documents (.docx, .doc)</h4>
+                        <ul>
+                            <li><strong>Method:</strong> python-docx</li>
+                            <li><strong>Max Size:</strong> 10 MB</li>
+                            <li><strong>Extraction:</strong> Paragraphs + Tables</li>
+                            <li><strong>Format:</strong> DOCX (preferred), DOC (legacy support)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>🖼️ Image Files</h4>
+                        <ul>
+                            <li><strong>Formats:</strong> .jpg, .jpeg, .png, .tiff, .tif, .bmp, .gif, .webp</li>
+                            <li><strong>Method:</strong> Tesseract OCR</li>
+                            <li><strong>Max Size:</strong> 50 MB</li>
+                            <li><strong>Resolution:</strong> Minimum 150 DPI recommended</li>
+                        </ul>
+                    </div>
+
+                    <h3>4.3.2 CSV Format Specification</h3>
+
+                    <h4>Standard Format</h4>
+                    <pre><code class="language-csv">amount,currency,optimization_mode
+1000,INR,greedy
+250.50,USD,balanced
+500,EUR,minimize_large</code></pre>
+
+                    <h4>Minimal Format (with smart defaults)</h4>
+                    <pre><code class="language-csv">amount,currency
+1000,INR
+250.50,USD</code></pre>
+
+                    <h4>Ultra-Minimal (defaults: currency=INR, mode=greedy)</h4>
+                    <pre><code class="language-csv">amount
+1000
+2500
+5000</code></pre>
+
+                    <h4>With Headers (optional)</h4>
+                    <pre><code class="language-csv">Amount,Currency,Optimization Mode
+1000,INR,greedy
+250.50,USD,balanced</code></pre>
+
+                    <h4>Flexible Separators</h4>
+                    <pre><code class="language-csv">1000,INR,greedy
+1000;INR;greedy
+1000	INR	greedy</code></pre>
+
+                    <h3>4.3.3 Upload Process</h3>
+
+                    <div class="alert alert-info">
+                        <strong>Step 1: File Selection</strong>
+                        <ul>
+                            <li>Drag &amp; drop OR click to browse</li>
+                            <li>File validation (type, size, content)</li>
+                            <li>Preview of selected file</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Step 2: Validation</strong>
+                        <pre><code class="language-typescript">validateFile(file: File): string | null {
+  // Check extension
+  if (!supportedExtensions.includes(fileExtension)) {
+    return "Unsupported file format";
+  }
+  
+  // Check size
+  if (file.size > maxSize) {
+    return "File too large";
+  }
+  
+  // Check if empty
+  if (file.size === 0) {
+    return "File is empty";
+  }
+  
+  return null; // Valid
+}</code></pre>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Step 3: Upload &amp; Processing</strong>
+                        <pre><code>[Client]  → FormData creation → HTTP POST /api/calculations/bulk-upload
+[Server]  → File type detection → Route to processor
+[Processor] → Extract rows → Parse each line
+[Parser]  → Apply smart defaults → Validate data
+[Engine]  → Calculate each row → Collect results
+[Response] → Return summary + details</code></pre>
+                    </div>
+
+                    <div class="alert alert-info">
+                        <strong>Step 4: Results Display</strong>
+                        <ul>
+                            <li>Summary cards (Total, Successful, Failed, Time)</li>
+                            <li>Detailed results table</li>
+                            <li>Export options (CSV, JSON)</li>
+                            <li>Error messages for failed rows</li>
+                        </ul>
+                    </div>
+
+                    <h3>4.3.4 Smart Defaults</h3>
+
+                    <div class="feature-card">
+                        <h4>Default Currency: INR</h4>
+                        <ul>
+                            <li><strong>Applied when:</strong> No currency specified in row</li>
+                            <li><strong>Configurable:</strong> Yes (in <code>ocr_processor.py</code>)</li>
+                            <li><strong>Fallback Order:</strong> Specified → System Default</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Default Mode: greedy</h4>
+                        <ul>
+                            <li><strong>Applied when:</strong> No mode specified in row</li>
+                            <li><strong>Configurable:</strong> Yes (in <code>ocr_processor.py</code>)</li>
+                            <li><strong>Fallback Order:</strong> Specified → System Default</li>
+                        </ul>
+                    </div>
+
+                    <h4>Examples</h4>
+                    <pre><code class="language-plaintext">Input: "5000"
+Output: amount=5000, currency=INR, mode=greedy
+
+Input: "5000 USD"
+Output: amount=5000, currency=USD, mode=greedy
+
+Input: "5000, EUR, balanced"
+Output: amount=5000, currency=EUR, mode=balanced</code></pre>
+                </section>
+
+                <!-- Section 4.4: OCR System -->
+                <section id="ocr-system">
+                    <h2>4.4 OCR System</h2>
+
+                    <h3>4.4.1 Tesseract Integration</h3>
+
+                    <p><strong>Version:</strong> 5.3.3+ (latest stable)</p>
+                    <p><strong>Installation:</strong> Automatic via <code>install_dependencies.ps1</code></p>
+                    <p><strong>Location:</strong> <code>%LOCALAPPDATA%\CurrencyDistributor\Tesseract-OCR\</code></p>
+                    <p><strong>Languages:</strong> English (eng) by default</p>
+
+                    <h4>Configuration</h4>
+                    <pre><code class="language-python"># tesseract_config.py
+TESSERACT_CONFIG = {
+    'lang': 'eng',
+    'config': '--psm 6 --oem 3',
+    'nice': 0
+}
+
+# PSM Modes:
+# 0 = Orientation and script detection (OSD) only
+# 1 = Automatic page segmentation with OSD
+# 3 = Fully automatic page segmentation (default)
+# 6 = Assume a single uniform block of text
+# 11 = Sparse text. Find as much text as possible
+
+# OEM Modes:
+# 0 = Legacy engine only
+# 1 = Neural nets LSTM engine only
+# 2 = Legacy + LSTM engines
+# 3 = Default, based on what is available</code></pre>
+
+                    <h4>Usage</h4>
+                    <pre><code class="language-python">import pytesseract
+from PIL import Image
+
+image = Image.open('test_bulk_image.png')
+text = pytesseract.image_to_string(image, config='--psm 6')</code></pre>
+
+                    <h3>4.4.2 PDF Processing</h3>
+
+                    <h4>Text-Based PDFs</h4>
+                    <pre><code class="language-python">import fitz  # PyMuPDF
+
+def _process_pdf_text(file_path: str) -> str:
+    doc = fitz.open(file_path)
+    text = ""
+    for page in doc:
+        text += page.get_text()
+    return text</code></pre>
+
+                    <h4>Scanned PDFs</h4>
+                    <pre><code class="language-python">from pdf2image import convert_from_path
+import pytesseract
+
+def _process_scanned_pdf(file_path: str) -> str:
+    images = convert_from_path(file_path, dpi=300)
+    text = ""
+    for image in images:
+        text += pytesseract.image_to_string(image)
+    return text</code></pre>
+
+                    <h4>Auto-Detection</h4>
+                    <pre><code class="language-python">def _process_pdf(file_path: str) -> str:
+    # Try text extraction first
+    text = _process_pdf_text(file_path)
+    
+    # If mostly empty, use OCR
+    if len(text.strip()) &lt; 50:
+        text = _process_scanned_pdf(file_path)
+    
+    return text</code></pre>
+
+                    <h3>4.4.3 Intelligent Text Parsing</h3>
+
+                    <p><strong>Format Detection:</strong> The parser automatically detects and handles multiple formats:</p>
+
+                    <h4>Format 1: CSV-like</h4>
+                    <pre><code>125.50, USD, greedy
+250, EUR, balanced</code></pre>
+
+                    <h4>Format 2: Pipe-separated</h4>
+                    <pre><code>125.50 | USD | greedy
+250 | EUR | balanced</code></pre>
+
+                    <h4>Format 3: Tabular</h4>
+                    <pre><code>Amount    Currency    Mode
+125.50    USD         greedy
+250       EUR         balanced</code></pre>
+
+                    <h4>Format 4: Natural Language</h4>
+                    <pre><code>Amount: 125.50 Currency: USD Mode: greedy
+Total is 250 in EUR with balanced optimization</code></pre>
+
+                    <h4>Format 5: Mixed</h4>
+                    <pre><code>125.50 USD greedy
+250 EUR
+500</code></pre>
+
+                    <h4>Parsing Logic</h4>
+                    <pre><code class="language-python">def _parse_line(self, line: str, line_number: int) -> Optional[Dict]:
+    # Extract amount (required)
+    amount = self._smart_extract_amount(line)
+    if not amount:
+        return None
+    
+    # Extract currency (optional → defaults to INR)
+    currency = self._smart_extract_currency(line)
+    if not currency:
+        currency = self.default_currency
+    
+    # Extract mode (optional → defaults to greedy)
+    mode = self._smart_extract_mode(line)
+    if not mode:
+        mode = self.default_mode
+    
+    return {
+        'row_number': line_number,
+        'amount': amount,
+        'currency': currency,
+        'optimization_mode': mode
+    }</code></pre>
+
+                    <h3>4.4.4 Currency Detection</h3>
+
+                    <h4>Strategy 1: Currency Symbols</h4>
+                    <pre><code class="language-python">if '₹' in text or 'rs.' in text.lower():
+    return 'INR'
+if '$' in text:
+    return 'USD'
+if '€' in text:
+    return 'EUR'
+if '£' in text:
+    return 'GBP'</code></pre>
+
+                    <h4>Strategy 2: Currency Names</h4>
+                    <pre><code class="language-python">currency_map = {
+    'rupee': 'INR', 'rupees': 'INR', 'rs': 'INR',
+    'dollar': 'USD', 'dollars': 'USD',
+    'euro': 'EUR', 'euros': 'EUR',
+    'pound': 'GBP', 'pounds': 'GBP'
+}</code></pre>
+
+                    <h4>Strategy 3: 3-Letter Codes</h4>
+                    <pre><code class="language-python">match = re.search(r'\b([A-Z]{3})\b', text.upper())
+if match and match.group(1) not in ['THE', 'AND', 'FOR', ...]:
+    return match.group(1)</code></pre>
+
+                    <h4>Strategy 4: Default Fallback</h4>
+                    <pre><code class="language-python">if not currency:
+    currency = 'INR'  # System default</code></pre>
+                </section>
+
+                <!-- Section 4.5: Export & Copy Features -->
+                <section id="export-features">
+                    <h2>4.5 Export & Copy Features</h2>
+
+                    <h3>4.5.1 CSV Export</h3>
+
+                    <h4>Single Calculation</h4>
+                    <pre><code class="language-csv">Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Breakdown
+50000,INR,greedy,25,0,1,"25 × ₹2000 = ₹50000"</code></pre>
+
+                    <h4>Bulk Upload Results</h4>
+                    <pre><code class="language-csv">Row Number,Status,Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Error
+1,success,1000,INR,greedy,2,0,2,
+2,success,250.50,USD,balanced,8,3,11,
+3,error,,,,,,,Invalid amount format</code></pre>
+
+                    <h4>Implementation</h4>
+                    <pre><code class="language-typescript">handleExportCSV() {
+  const headers = ['Row', 'Status', 'Amount', 'Currency', ...];
+  const rows = results.map(row => [
+    row.row_number,
+    row.status,
+    row.amount,
+    ...
+  ]);
+  
+  const csv = [headers, ...rows]
+    .map(row => row.map(cell => `"${cell}"`).join(','))
+    .join('\n');
+  
+  downloadFile(csv, 'results.csv', 'text/csv');
+}</code></pre>
+
+                    <h3>4.5.2 JSON Export</h3>
+
+                    <h4>Format</h4>
+                    <pre><code class="language-json">{
+  "export_date": "2025-11-25T10:30:00Z",
+  "total_rows": 4,
+  "successful": 3,
+  "failed": 1,
+  "results": [
+    {
+      "row_number": 1,
+      "status": "success",
+      "amount": "1000",
+      "currency": "INR",
+      "breakdown": [...]
+    }
+  ]
+}</code></pre>
+
+                    <h3>4.5.3 Copy to Clipboard</h3>
+
+                    <h4>Format</h4>
+                    <pre><code class="language-plaintext">Bulk Upload Results
+===================
+Total Rows: 4
+Successful: 3
+Failed: 1
+Processing Time: 0.12s
+
+Detailed Results:
+Row 1: ✓ 1000 INR → 2 denominations
+Row 2: ✓ 250.50 USD → 11 denominations
+Row 3: ✗ Invalid amount format</code></pre>
+
+                    <h4>Implementation</h4>
+                    <pre><code class="language-typescript">async handleCopy() {
+  const text = formatResults(uploadResult);
+  await navigator.clipboard.writeText(text);
+  showNotification('Copied to clipboard!');
+}</code></pre>
+                </section>
+
+                <!-- Section 4.6: Multi-Language Support -->
+                <section id="multi-language">
+                    <h2>4.6 Multi-Language Support</h2>
+
+                    <h3>4.6.1 Supported Languages</h3>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Language</th>
+                                <th>Code</th>
+                                <th>Status</th>
+                                <th>Translations</th>
+                                <th>Completeness</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>English</td>
+                                <td><span class="badge badge-primary">en</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td>45+ keys</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>Hindi</td>
+                                <td><span class="badge badge-primary">hi</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td>45+ keys</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>Spanish</td>
+                                <td><span class="badge badge-primary">es</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td>45+ keys</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>French</td>
+                                <td><span class="badge badge-primary">fr</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td>45+ keys</td>
+                                <td>100%</td>
+                            </tr>
+                            <tr>
+                                <td>German</td>
+                                <td><span class="badge badge-primary">de</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td>45+ keys</td>
+                                <td>100%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>4.6.2 Translation System</h3>
+
+                    <p><strong>Backend:</strong></p>
+                    <ul>
+                        <li><strong>Location:</strong> <code>packages/local-backend/app/locales/</code></li>
+                        <li><strong>Format:</strong> JSON files (<code>en.json</code>, <code>hi.json</code>, etc.)</li>
+                        <li><strong>API:</strong> <code>/api/v1/translations/{language_code}</code></li>
+                    </ul>
+
+                    <p><strong>Frontend:</strong></p>
+                    <ul>
+                        <li><strong>Context:</strong> <code>LanguageContext.tsx</code></li>
+                        <li><strong>Hook:</strong> <code>useLanguage()</code></li>
+                        <li><strong>Function:</strong> <code>t('key', params)</code></li>
+                    </ul>
+
+                    <h4>Example</h4>
+                    <pre><code class="language-typescript">const { t, setLanguage } = useLanguage();
+
+// Simple translation
+&lt;h1&gt;{t('settings.title')}&lt;/h1&gt;
+
+// With parameters
+&lt;p&gt;{t('history.showing', { count: 10 })}&lt;/p&gt;
+
+// Change language
+setLanguage('hi');</code></pre>
+
+                    <h3>4.6.3 Translation File Structure</h3>
+
+                    <pre><code class="language-json">{
+  "app": {
+    "title": "Currency Denomination Distributor",
+    "subtitle": "Calculate optimal denomination breakdowns"
+  },
+  "nav": {
+    "calculator": "Calculator",
+    "history": "History",
+    "settings": "Settings",
+    "bulkUpload": "Bulk Upload"
+  },
+  "calculator": {
+    "title": "Denomination Calculator",
+    "amount": "Amount",
+    "currency": "Currency",
+    "mode": "Optimization Mode",
+    "calculate": "Calculate"
+  }
+}</code></pre>
+                </section>
+
+                <!-- Section 4.7: Dark Mode -->
+                <section id="dark-mode">
+                    <h2>4.7 Dark Mode</h2>
+
+                    <h3>4.7.1 Theme System</h3>
+
+                    <p><strong>Themes:</strong></p>
+                    <ul>
+                        <li><code>light</code> - Light background, dark text</li>
+                        <li><code>dark</code> - Dark background, light text</li>
+                        <li><code>system</code> - Follow OS preference (future)</li>
+                    </ul>
+
+                    <h4>Implementation</h4>
+                    <pre><code class="language-typescript">// ThemeContext.tsx
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+  
+  useEffect(() => {
+    // Apply theme to document
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
+  
+  return (
+    &lt;ThemeContext.Provider value={{ theme, setTheme }}&gt;
+      {children}
+    &lt;/ThemeContext.Provider&gt;
+  );
+};</code></pre>
+
+                    <h4>Tailwind Configuration</h4>
+                    <pre><code class="language-javascript">// tailwind.config.js
+module.exports = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        dark: {
+          bg: '#1a1a1a',
+          surface: '#2d2d2d',
+          border: '#404040'
+        }
+      }
+    }
+  }
+};</code></pre>
+
+                    <h4>CSS Classes</h4>
+                    <pre><code class="language-css">/* Light mode */
+.bg-white dark:bg-gray-800
+.text-gray-900 dark:text-gray-100
+.border-gray-200 dark:border-gray-700
+
+/* Dark mode */
+.dark .bg-white { background-color: #2d2d2d; }
+.dark .text-gray-900 { color: #f3f4f6; }</code></pre>
+
+                    <h3>4.7.2 Persistence</h3>
+
+                    <h4>Backend</h4>
+                    <pre><code class="language-sql">CREATE TABLE user_settings (
+    id INTEGER PRIMARY KEY,
+    theme TEXT DEFAULT 'light',
+    language TEXT DEFAULT 'en'
+);</code></pre>
+
+                    <h4>API</h4>
+                    <pre><code class="language-http">GET  /api/v1/settings → {theme: 'dark', language: 'en'}
+PUT  /api/v1/settings → {theme: 'dark'}</code></pre>
+
+                    <h4>Startup</h4>
+                    <pre><code class="language-typescript">// Load saved theme on app start
+useEffect(() => {
+  api.getSettings().then(settings => {
+    setTheme(settings.theme);
+  });
+}, []);</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section covers all 7 core features: Calculation Engine, History Management, Bulk Upload, OCR System, Export Features, Multi-Language Support, and Dark Mode.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

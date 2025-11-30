@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Specifications - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html" class="active">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>API Specifications</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>12. Complete API Reference</h1>
+
+                <section id="base-url">
+                    <h2>12.1 Base URL</h2>
+
+                    <div class="feature-card">
+                        <p><strong>Local Development:</strong> <code>http://localhost:8000</code></p>
+                        <p><strong>Base Path:</strong> <code>/api/v1</code></p>
+                        <p><strong>Content-Type:</strong> <code>application/json</code></p>
+                    </div>
+                </section>
+
+                <section id="calculate-endpoint">
+                    <h2>12.2 Calculate Endpoint</h2>
+
+                    <div class="alert alert-info">
+                        <strong>POST</strong> <code>/api/v1/calculate</code>
+                        <p>Calculate denomination breakdown for a given amount</p>
+                    </div>
+
+                    <h3>Request Body</h3>
+                    <pre><code class="language-json">{
+  "amount": 1850.50,
+  "currency": "INR",
+  "mode": "greedy"
+}</code></pre>
+
+                    <h3>Request Parameters</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Validation</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>amount</code></td>
+                                <td>Decimal</td>
+                                <td>✓</td>
+                                <td>&gt; 0, ≤ 1 trillion</td>
+                                <td>Amount to calculate</td>
+                            </tr>
+                            <tr>
+                                <td><code>currency</code></td>
+                                <td>String</td>
+                                <td>✓</td>
+                                <td>INR | USD | EUR | GBP</td>
+                                <td>Currency code</td>
+                            </tr>
+                            <tr>
+                                <td><code>mode</code></td>
+                                <td>String</td>
+                                <td>✓</td>
+                                <td>greedy | balanced | minimize_large | minimize_small</td>
+                                <td>Optimization mode</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>cURL Example</h3>
+                    <pre><code class="language-bash">curl -X POST http://localhost:8000/api/v1/calculate \
+  -H "Content-Type: application/json" \
+  -d '{"amount": 1850.50, "currency": "INR", "mode": "greedy"}'</code></pre>
+
+                    <h3>Response (200 OK)</h3>
+                    <pre><code class="language-json">{
+  "amount": 1850.5,
+  "currency": "INR",
+  "mode": "greedy",
+  "breakdown": [
+    {
+      "denomination": 500,
+      "type": "note",
+      "count": 3,
+      "total_value": 1500
+    },
+    {
+      "denomination": 200,
+      "type": "note",
+      "count": 1,
+      "total_value": 200
+    },
+    {
+      "denomination": 100,
+      "type": "note",
+      "count": 1,
+      "total_value": 100
+    },
+    {
+      "denomination": 50,
+      "type": "note",
+      "count": 1,
+      "total_value": 50
+    },
+    {
+      "denomination": 0.5,
+      "type": "coin",
+      "count": 1,
+      "total_value": 0.5
+    }
+  ],
+  "summary": {
+    "total_pieces": 7,
+    "total_notes": 6,
+    "total_coins": 1,
+    "total_denominations": 5
+  },
+  "timestamp": "2025-11-27T10:30:00Z",
+  "calculation_id": 123
+}</code></pre>
+
+                    <h3>Error Responses</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Code</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-danger">400</span></td>
+                                <td>VALIDATION_ERROR</td>
+                                <td>Invalid request parameters</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-warning">422</span></td>
+                                <td>UNPROCESSABLE_ENTITY</td>
+                                <td>Validation failed (Pydantic)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">500</span></td>
+                                <td>CALCULATION_FAILED</td>
+                                <td>Engine processing error</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="bulk-upload-endpoint">
+                    <h2>12.3 Bulk Upload Endpoint</h2>
+
+                    <div class="alert alert-info">
+                        <strong>POST</strong> <code>/api/v1/bulk/upload</code>
+                        <p>Process bulk upload files (CSV, PDF, Word, Images)</p>
+                    </div>
+
+                    <h3>Request (Multipart Form Data)</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Required</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>file</code></td>
+                                <td>File</td>
+                                <td>✓</td>
+                                <td>CSV, PDF, DOCX, or Image file</td>
+                            </tr>
+                            <tr>
+                                <td><code>save_to_history</code></td>
+                                <td>Boolean</td>
+                                <td></td>
+                                <td>Save results (default: true)</td>
+                            </tr>
+                            <tr>
+                                <td><code>default_currency</code></td>
+                                <td>String</td>
+                                <td></td>
+                                <td>Smart default (default: INR)</td>
+                            </tr>
+                            <tr>
+                                <td><code>default_mode</code></td>
+                                <td>String</td>
+                                <td></td>
+                                <td>Smart default (default: greedy)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>cURL Example</h3>
+                    <pre><code class="language-bash">curl -X POST http://localhost:8000/api/v1/bulk/upload \
+  -F "file=@test.csv" \
+  -F "save_to_history=true"</code></pre>
+
+                    <h3>Response (200 OK)</h3>
+                    <pre><code class="language-json">{
+  "filename": "test.csv",
+  "total_rows": 100,
+  "successful_rows": 98,
+  "failed_rows": 2,
+  "processing_time_seconds": 0.45,
+  "results": [
+    {
+      "row_number": 1,
+      "status": "success",
+      "amount": 1000,
+      "currency": "INR",
+      "mode": "greedy",
+      "calculation_id": 124,
+      "breakdown": [...]
+    },
+    {
+      "row_number": 2,
+      "status": "failed",
+      "error": "Invalid amount"
+    }
+  ]
+}</code></pre>
+                </section>
+
+                <section id="history-endpoints">
+                    <h2>12.4 History Endpoints</h2>
+
+                    <h3>GET /api/v1/history</h3>
+                    <p>Get paginated calculation history</p>
+
+                    <h4>Query Parameters</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Parameter</th>
+                                <th>Type</th>
+                                <th>Default</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>page</code></td>
+                                <td>Integer</td>
+                                <td>1</td>
+                                <td>Page number (min: 1)</td>
+                            </tr>
+                            <tr>
+                                <td><code>per_page</code></td>
+                                <td>Integer</td>
+                                <td>50</td>
+                                <td>Items per page (max: 200)</td>
+                            </tr>
+                            <tr>
+                                <td><code>currency</code></td>
+                                <td>String</td>
+                                <td></td>
+                                <td>Filter by currency</td>
+                            </tr>
+                            <tr>
+                                <td><code>start_date</code></td>
+                                <td>DateTime</td>
+                                <td></td>
+                                <td>Filter from date (ISO 8601)</td>
+                            </tr>
+                            <tr>
+                                <td><code>end_date</code></td>
+                                <td>DateTime</td>
+                                <td></td>
+                                <td>Filter to date (ISO 8601)</td>
+                            </tr>
+                            <tr>
+                                <td><code>sort_by</code></td>
+                                <td>String</td>
+                                <td>timestamp</td>
+                                <td>timestamp | amount</td>
+                            </tr>
+                            <tr>
+                                <td><code>sort_order</code></td>
+                                <td>String</td>
+                                <td>desc</td>
+                                <td>asc | desc</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Example Request</h4>
+                    <pre><code class="language-bash">curl "http://localhost:8000/api/v1/history?page=1&per_page=10&currency=INR"</code></pre>
+
+                    <h4>Response (200 OK)</h4>
+                    <pre><code class="language-json">{
+  "items": [
+    {
+      "id": 123,
+      "amount": 1850.5,
+      "currency": "INR",
+      "mode": "greedy",
+      "breakdown": [...],
+      "summary": {...},
+      "timestamp": "2025-11-27T10:30:00Z"
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "per_page": 10,
+    "total_items": 150,
+    "total_pages": 15,
+    "has_next": true,
+    "has_prev": false
+  }
+}</code></pre>
+
+                    <h3>DELETE /api/v1/history/{id}</h3>
+                    <p>Delete a specific calculation</p>
+
+                    <h4>Example Request</h4>
+                    <pre><code class="language-bash">curl -X DELETE http://localhost:8000/api/v1/history/123</code></pre>
+
+                    <h4>Response (200 OK)</h4>
+                    <pre><code class="language-json">{
+  "message": "Calculation deleted successfully",
+  "id": 123
+}</code></pre>
+
+                    <h3>DELETE /api/v1/history/clear</h3>
+                    <p>Delete all calculations (requires confirmation)</p>
+
+                    <h4>Request Body</h4>
+                    <pre><code class="language-json">{
+  "confirm": true
+}</code></pre>
+
+                    <h4>Response (200 OK)</h4>
+                    <pre><code class="language-json">{
+  "message": "All history cleared",
+  "deleted_count": 150
+}</code></pre>
+                </section>
+
+                <section id="settings-endpoints">
+                    <h2>12.5 Settings Endpoints</h2>
+
+                    <h3>GET /api/v1/settings</h3>
+                    <p>Get current user settings</p>
+
+                    <h4>Response (200 OK)</h4>
+                    <pre><code class="language-json">{
+  "theme": "dark",
+  "language": "en",
+  "default_currency": "INR",
+  "default_mode": "greedy",
+  "auto_save_history": true,
+  "updated_at": "2025-11-27T10:00:00Z"
+}</code></pre>
+
+                    <h3>PUT /api/v1/settings</h3>
+                    <p>Update user settings</p>
+
+                    <h4>Request Body</h4>
+                    <pre><code class="language-json">{
+  "theme": "dark",
+  "language": "hi",
+  "default_currency": "USD",
+  "default_mode": "balanced",
+  "auto_save_history": false
+}</code></pre>
+
+                    <h4>Response (200 OK)</h4>
+                    <pre><code class="language-json">{
+  "message": "Settings updated successfully",
+  "settings": {
+    "theme": "dark",
+    "language": "hi",
+    "default_currency": "USD",
+    "default_mode": "balanced",
+    "auto_save_history": false,
+    "updated_at": "2025-11-27T10:35:00Z"
+  }
+}</code></pre>
+
+                    <h3>POST /api/v1/settings/reset</h3>
+                    <p>Reset all settings to defaults</p>
+
+                    <h4>Response (200 OK)</h4>
+                    <pre><code class="language-json">{
+  "message": "Settings reset to defaults",
+  "settings": {
+    "theme": "light",
+    "language": "en",
+    "default_currency": "INR",
+    "default_mode": "greedy",
+    "auto_save_history": true
+  }
+}</code></pre>
+                </section>
+
+                <section id="error-format">
+                    <h2>12.6 Error Response Format</h2>
+
+                    <h3>Standard Error Structure</h3>
+                    <pre><code class="language-json">{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Amount must be greater than 0",
+    "field": "amount",
+    "timestamp": "2025-11-27T10:40:00Z"
+  }
+}</code></pre>
+
+                    <h3>Error Codes</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Code</th>
+                                <th>HTTP Status</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>VALIDATION_ERROR</code></td>
+                                <td>400</td>
+                                <td>Request validation failed</td>
+                            </tr>
+                            <tr>
+                                <td><code>INVALID_AMOUNT</code></td>
+                                <td>400</td>
+                                <td>Amount validation failed</td>
+                            </tr>
+                            <tr>
+                                <td><code>INVALID_CURRENCY</code></td>
+                                <td>400</td>
+                                <td>Unsupported currency</td>
+                            </tr>
+                            <tr>
+                                <td><code>INVALID_MODE</code></td>
+                                <td>400</td>
+                                <td>Unsupported mode</td>
+                            </tr>
+                            <tr>
+                                <td><code>INVALID_FILE</code></td>
+                                <td>400</td>
+                                <td>File validation failed</td>
+                            </tr>
+                            <tr>
+                                <td><code>CALCULATION_NOT_FOUND</code></td>
+                                <td>404</td>
+                                <td>Calculation ID not found</td>
+                            </tr>
+                            <tr>
+                                <td><code>CALCULATION_FAILED</code></td>
+                                <td>500</td>
+                                <td>Engine processing error</td>
+                            </tr>
+                            <tr>
+                                <td><code>DATABASE_ERROR</code></td>
+                                <td>500</td>
+                                <td>Database operation failed</td>
+                            </tr>
+                            <tr>
+                                <td><code>OCR_PROCESSING_ERROR</code></td>
+                                <td>500</td>
+                                <td>OCR failed</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="health-check">
+                    <h2>12.7 Health Check Endpoint</h2>
+
+                    <div class="alert alert-info">
+                        <strong>GET</strong> <code>/health</code>
+                        <p>Check API health status</p>
+                    </div>
+
+                    <h3>Response (200 OK)</h3>
+                    <pre><code class="language-json">{
+  "status": "healthy",
+  "timestamp": "2025-11-27T10:45:00Z",
+  "database": "connected",
+  "version": "1.0.0",
+  "uptime_seconds": 3600
+}</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section covers complete API specifications including Calculate, Bulk Upload, History, and Settings endpoints with request/response schemas, validation rules, error codes, and cURL examples.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

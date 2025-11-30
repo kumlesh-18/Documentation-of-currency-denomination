@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Functional Logic - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html" class="active">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Backend Functional Logic</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>6. Backend Functional Logic</h1>
+
+                <section id="fastapi-structure">
+                    <h2>6.1 FastAPI Application Structure</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/main.py</code></p>
+
+                    <h3>Application Initialization</h3>
+                    <pre><code class="language-python">from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.api import calculations, bulk, ocr, history, settings
+from app.db.database import engine, Base
+
+# Create tables
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title="Currency Denomination Calculator API",
+    version="1.0.0",
+    description="Local backend for denomination calculations"
+)
+
+# CORS configuration (Electron app)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "app://"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(calculations.router, prefix="/api/v1", tags=["calculations"])
+app.include_router(bulk.router, prefix="/api/v1", tags=["bulk"])
+app.include_router(ocr.router, prefix="/api/v1", tags=["ocr"])
+app.include_router(history.router, prefix="/api/v1", tags=["history"])
+app.include_router(settings.router, prefix="/api/v1", tags=["settings"])</code></pre>
+                </section>
+
+                <section id="api-endpoints">
+                    <h2>6.2 Complete API Endpoints</h2>
+
+                    <h3>6.2.1 Calculations Endpoints</h3>
+                    <p><strong>File:</strong> <code>packages/local-backend/app/api/calculations.py</code> (530+ lines)</p>
+
+                    <h4>POST /api/v1/calculate</h4>
+                    <p><strong>Purpose:</strong> Calculate denomination breakdown for a single amount</p>
+
+                    <div class="feature-card">
+                        <h5>Request Schema</h5>
+                        <pre><code class="language-python">class CalculationRequest(BaseModel):
+    amount: Decimal = Field(..., gt=0, description="Amount to calculate")
+    currency: str = Field(..., pattern="^(INR|USD|EUR|GBP)$")
+    mode: str = Field(
+        default="greedy",
+        pattern="^(greedy|balanced|minimize_large|minimize_small)$"
+    )
+    save_to_history: bool = Field(default=True)</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>Response Schema</h5>
+                        <pre><code class="language-python">class CalculationResponse(BaseModel):
+    calculation_id: int
+    amount: Decimal
+    currency: str
+    mode: str
+    breakdown: List[DenominationItem]
+    summary: Summary
+    timestamp: datetime
+
+class DenominationItem(BaseModel):
+    denomination: Decimal
+    type: str  # "note" or "coin"
+    count: int
+    total_value: Decimal
+
+class Summary(BaseModel):
+    total_notes: int
+    total_coins: int
+    total_denominations: int</code></pre>
+                    </div>
+
+                    <h4>Business Logic Implementation</h4>
+                    <pre><code class="language-python">@router.post("/calculate", response_model=CalculationResponse)
+async def calculate(
+    request: CalculationRequest,
+    db: Session = Depends(get_db)
+):
+    # 1. Validate amount (additional business rules)
+    if request.amount > Decimal("999999999999999"):
+        raise HTTPException(400, "Amount too large")
+    
+    # 2. Initialize engine
+    engine = DenominationEngine()
+    
+    # 3. Calculate breakdown
+    result = engine.calculate(
+        amount=request.amount,
+        currency=request.currency,
+        mode=request.mode
+    )
+    
+    # 4. Save to history if requested
+    if request.save_to_history:
+        calculation = Calculation(
+            amount=request.amount,
+            currency=request.currency,
+            mode=request.mode,
+            breakdown=json.dumps(result['breakdown']),
+            summary=json.dumps(result['summary']),
+            timestamp=datetime.utcnow()
+        )
+        db.add(calculation)
+        db.commit()
+        db.refresh(calculation)
+        calculation_id = calculation.id
+    else:
+        calculation_id = -1  # Not saved
+    
+    # 5. Return response
+    return CalculationResponse(
+        calculation_id=calculation_id,
+        amount=request.amount,
+        currency=request.currency,
+        mode=request.mode,
+        breakdown=result['breakdown'],
+        summary=result['summary'],
+        timestamp=datetime.utcnow()
+    )</code></pre>
+
+                    <h4>Error Responses</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Status Code</th>
+                                <th>Response</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge badge-danger">400</span></td>
+                                <td><code>{"detail": "Amount must be greater than 0"}</code></td>
+                                <td>Bad Request</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-warning">422</span></td>
+                                <td><code>{"detail": [{"loc": ["body", "currency"], "msg": "string does not match regex"}]}</code></td>
+                                <td>Validation Error</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge badge-danger">500</span></td>
+                                <td><code>{"detail": "Calculation engine error"}</code></td>
+                                <td>Internal Error</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>POST /api/v1/calculate-batch</h4>
+                    <p><strong>Purpose:</strong> Calculate multiple amounts in one request</p>
+
+                    <pre><code class="language-python">class BatchCalculationRequest(BaseModel):
+    items: List[CalculationRequest] = Field(..., max_items=1000)
+
+class BatchCalculationResponse(BaseModel):
+    results: List[CalculationResponse]
+    summary: BatchSummary
+
+class BatchSummary(BaseModel):
+    total_items: int
+    successful: int
+    failed: int
+    total_time_seconds: float</code></pre>
+
+                    <h3>6.2.2 Bulk Upload Endpoints</h3>
+                    <p><strong>File:</strong> <code>packages/local-backend/app/api/bulk.py</code></p>
+
+                    <h4>POST /api/v1/bulk/upload</h4>
+                    <p><strong>Purpose:</strong> Process bulk upload files (CSV, PDF, Word, Images)</p>
+
+                    <div class="alert alert-info">
+                        <strong>Request:</strong> Multipart form data
+                        <ul>
+                            <li><code>file</code>: UploadFile (required)</li>
+                            <li><code>save_to_history</code>: boolean (optional, default: true)</li>
+                        </ul>
+                    </div>
+
+                    <h4>File Validation</h4>
+                    <pre><code class="language-python"># Size limits
+MAX_FILE_SIZE = {
+    'csv': 10 * 1024 * 1024,      # 10 MB
+    'pdf': 50 * 1024 * 1024,      # 50 MB
+    'docx': 10 * 1024 * 1024,     # 10 MB
+    'image': 50 * 1024 * 1024,    # 50 MB
+}
+
+# Extension validation
+ALLOWED_EXTENSIONS = {
+    'csv': ['.csv'],
+    'pdf': ['.pdf'],
+    'word': ['.docx', '.doc'],
+    'image': ['.jpg', '.jpeg', '.png', '.tiff', '.bmp']
+}
+
+def validate_file(file: UploadFile) -> str:
+    # Check extension
+    ext = Path(file.filename).suffix.lower()
+    file_type = None
+    
+    for type_name, exts in ALLOWED_EXTENSIONS.items():
+        if ext in exts:
+            file_type = type_name
+            break
+    
+    if not file_type:
+        raise HTTPException(400, f"Unsupported file type: {ext}")
+    
+    # Check size
+    file.file.seek(0, 2)  # Seek to end
+    size = file.file.tell()
+    file.file.seek(0)  # Reset
+    
+    if size > MAX_FILE_SIZE[file_type]:
+        raise HTTPException(400, f"File too large")
+    
+    if size == 0:
+        raise HTTPException(400, "File is empty")
+    
+    return file_type</code></pre>
+
+                    <h4>Processing Logic</h4>
+                    <pre><code class="language-python">@router.post("/bulk/upload", response_model=BulkUploadResponse)
+async def bulk_upload(
+    file: UploadFile = File(...),
+    save_to_history: bool = Form(default=True),
+    db: Session = Depends(get_db)
+):
+    # 1. Validate file
+    file_type = validate_file(file)
+    
+    # 2. Save temporary file
+    temp_path = Path(f"/tmp/{file.filename}")
+    with temp_path.open("wb") as f:
+        shutil.copyfileobj(file.file, f)
+    
+    try:
+        # 3. Route to appropriate processor
+        if file_type == 'csv':
+            data = process_csv(temp_path)
+        elif file_type == 'pdf':
+            data = await process_pdf_ocr(temp_path)
+        elif file_type == 'word':
+            data = process_word(temp_path)
+        elif file_type == 'image':
+            data = await process_image_ocr(temp_path)
+        
+        # 4. Perform calculations
+        results = []
+        for row in data:
+            try:
+                calc_result = await calculate(
+                    CalculationRequest(**row),
+                    db
+                )
+                results.append({
+                    'status': 'success',
+                    'row_number': row['row_number'],
+                    'result': calc_result
+                })
+            except Exception as e:
+                results.append({
+                    'status': 'failed',
+                    'row_number': row['row_number'],
+                    'error': str(e)
+                })
+        
+        # 5. Compute summary
+        successful = sum(1 for r in results if r['status'] == 'success')
+        
+        return BulkUploadResponse(
+            filename=file.filename,
+            total_rows=len(results),
+            successful_rows=successful,
+            failed_rows=len(results) - successful,
+            results=results
+        )
+    
+    finally:
+        # 6. Cleanup
+        temp_path.unlink(missing_ok=True)</code></pre>
+
+                    <h3>6.2.3 History Endpoints</h3>
+
+                    <h4>GET /api/v1/history</h4>
+                    <p><strong>Purpose:</strong> Get paginated calculation history</p>
+
+                    <div class="feature-card">
+                        <h5>Query Parameters</h5>
+                        <ul>
+                            <li><code>page</code>: int (default=1, min=1)</li>
+                            <li><code>per_page</code>: int (default=50, min=1, max=200)</li>
+                            <li><code>currency</code>: string (optional, one of INR|USD|EUR|GBP)</li>
+                            <li><code>start_date</code>: datetime (optional)</li>
+                            <li><code>end_date</code>: datetime (optional)</li>
+                            <li><code>sort_by</code>: string (default="timestamp", one of timestamp|amount)</li>
+                            <li><code>sort_order</code>: string (default="desc", one of asc|desc)</li>
+                        </ul>
+                    </div>
+
+                    <h4>Business Logic</h4>
+                    <pre><code class="language-python">@router.get("/history", response_model=HistoryResponse)
+async def get_history(
+    page: int = 1,
+    per_page: int = 50,
+    currency: Optional[str] = None,
+    sort_by: str = "timestamp",
+    sort_order: str = "desc",
+    db: Session = Depends(get_db)
+):
+    # 1. Build query
+    query = db.query(Calculation)
+    
+    # 2. Apply filters
+    if currency:
+        query = query.filter(Calculation.currency == currency)
+    
+    # 3. Apply sorting
+    if sort_by == "timestamp":
+        order_col = Calculation.timestamp
+    elif sort_by == "amount":
+        order_col = Calculation.amount
+    
+    if sort_order == "desc":
+        query = query.order_by(order_col.desc())
+    else:
+        query = query.order_by(order_col.asc())
+    
+    # 4. Count total
+    total_items = query.count()
+    
+    # 5. Paginate
+    offset = (page - 1) * per_page
+    items = query.offset(offset).limit(per_page).all()
+    
+    # 6. Format response
+    total_pages = (total_items + per_page - 1) // per_page
+    
+    return HistoryResponse(
+        items=items,
+        pagination=Pagination(
+            page=page,
+            per_page=per_page,
+            total_items=total_items,
+            total_pages=total_pages,
+            has_next=page < total_pages,
+            has_prev=page > 1
+        )
+    )</code></pre>
+
+                    <h4>DELETE /api/v1/history/{id}</h4>
+                    <p><strong>Purpose:</strong> Delete a specific calculation</p>
+
+                    <h4>DELETE /api/v1/history/clear</h4>
+                    <p><strong>Purpose:</strong> Delete all calculations (requires confirmation)</p>
+
+                    <h3>6.2.4 Settings Endpoints</h3>
+
+                    <h4>GET /api/v1/settings</h4>
+                    <p><strong>Response Schema:</strong></p>
+                    <pre><code class="language-python">class SettingsResponse(BaseModel):
+    theme: str  # "light", "dark", "system"
+    language: str  # "en", "hi", "es", "fr", "de"
+    default_currency: str  # "INR", "USD", "EUR", "GBP"
+    default_mode: str  # "greedy", "balanced", etc.
+    auto_save_history: bool</code></pre>
+
+                    <h4>PUT /api/v1/settings</h4>
+                    <p><strong>Purpose:</strong> Update user settings</p>
+
+                    <h4>POST /api/v1/settings/reset</h4>
+                    <p><strong>Purpose:</strong> Reset all settings to defaults</p>
+                </section>
+
+                <section id="error-handling">
+                    <h2>6.3 Error Handling Strategy</h2>
+
+                    <h3>Global Exception Handler</h3>
+                    <pre><code class="language-python">from fastapi import Request, status
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content={
+            "detail": exc.errors(),
+            "body": exc.body
+        }
+    )
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "detail": exc.detail
+        }
+    )
+
+@app.exception_handler(Exception)
+async def generic_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled exception: {exc}", exc_info=True)
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={
+            "detail": "Internal server error"
+        }
+    )</code></pre>
+
+                    <h3>Custom Exceptions</h3>
+                    <pre><code class="language-python">class CalculationEngineError(Exception):
+    """Raised when denomination engine fails"""
+    pass
+
+class OCRProcessingError(Exception):
+    """Raised when OCR processing fails"""
+    pass
+
+class FileValidationError(Exception):
+    """Raised when file validation fails"""
+    pass</code></pre>
+                </section>
+
+                <section id="logging">
+                    <h2>6.4 Logging Configuration</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/utils/logger.py</code></p>
+
+                    <pre><code class="language-python">import logging
+from logging.handlers import RotatingFileHandler
+
+def setup_logger():
+    """Configure application-wide logging."""
+    logger = logging.getLogger("currency_calculator")
+    logger.setLevel(logging.INFO)
+    
+    # Console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_format = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    console_handler.setFormatter(console_format)
+    
+    # File handler (rotating)
+    file_handler = RotatingFileHandler(
+        'logs/app.log',
+        maxBytes=10 * 1024 * 1024,  # 10 MB
+        backupCount=5
+    )
+    file_handler.setLevel(logging.DEBUG)
+    file_format = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s'
+    )
+    file_handler.setFormatter(file_format)
+    
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+    
+    return logger
+
+logger = setup_logger()</code></pre>
+
+                    <h4>Usage in Endpoints</h4>
+                    <pre><code class="language-python">from app.utils.logger import logger
+
+@router.post("/calculate")
+async def calculate(request: CalculationRequest, db: Session = Depends(get_db)):
+    logger.info(f"Calculation request: amount={request.amount}, currency={request.currency}")
+    
+    try:
+        result = engine.calculate(...)
+        logger.info(f"Calculation successful: id={calc_id}")
+        return result
+    except Exception as e:
+        logger.error(f"Calculation failed: {e}", exc_info=True)
+        raise HTTPException(500, "Calculation failed")</code></pre>
+                </section>
+
+                <section id="database-models">
+                    <h2>6.5 Database Models</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/db/models.py</code></p>
+
+                    <pre><code class="language-python">from sqlalchemy import Column, Integer, String, DateTime, Text, Boolean, Numeric
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+
+Base = declarative_base()
+
+class Calculation(Base):
+    __tablename__ = "calculations"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    amount = Column(Numeric(precision=20, scale=2), nullable=False)
+    currency = Column(String(3), nullable=False, index=True)
+    mode = Column(String(20), nullable=False)
+    breakdown = Column(Text, nullable=False)  # JSON string
+    summary = Column(Text, nullable=False)  # JSON string
+    timestamp = Column(DateTime, default=datetime.utcnow, index=True)
+
+class Settings(Base):
+    __tablename__ = "settings"
+    
+    id = Column(Integer, primary_key=True)
+    theme = Column(String(10), default="light")
+    language = Column(String(2), default="en")
+    default_currency = Column(String(3), default="INR")
+    default_mode = Column(String(20), default="greedy")
+    auto_save_history = Column(Boolean, default=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)</code></pre>
+
+                    <h3>Database Connection</h3>
+                    <pre><code class="language-python"># app/db/database.py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+DATABASE_URL = "sqlite:///./currency_calculator.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}  # SQLite specific
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()</code></pre>
+                </section>
+
+                <section id="validation">
+                    <h2>6.6 Validation Business Rules</h2>
+
+                    <h3>Amount Validation</h3>
+                    <pre><code class="language-python">def validate_amount(amount: Decimal) -> None:
+    """Validate amount follows business rules."""
+    if amount <= 0:
+        raise ValueError("Amount must be greater than 0")
+    
+    if amount > Decimal("999999999999999"):  # 15 digits
+        raise ValueError("Amount too large (max 15 digits)")
+    
+    # Check decimal places
+    if amount.as_tuple().exponent < -2:
+        raise ValueError("Amount can have maximum 2 decimal places")</code></pre>
+
+                    <h3>Currency Validation</h3>
+                    <pre><code class="language-python">SUPPORTED_CURRENCIES = {"INR", "USD", "EUR", "GBP"}
+
+def validate_currency(currency: str) -> None:
+    """Validate currency is supported."""
+    if currency not in SUPPORTED_CURRENCIES:
+        raise ValueError(f"Unsupported currency: {currency}")</code></pre>
+
+                    <h3>Mode Validation</h3>
+                    <pre><code class="language-python">SUPPORTED_MODES = {"greedy", "balanced", "minimize_large", "minimize_small"}
+
+def validate_mode(mode: str) -> None:
+    """Validate optimization mode is supported."""
+    if mode not in SUPPORTED_MODES:
+        raise ValueError(f"Unsupported mode: {mode}")</code></pre>
+                </section>
+
+                <section id="data-transformation">
+                    <h2>6.7 Data Transformation Logic</h2>
+
+                    <h3>Breakdown to Summary</h3>
+                    <pre><code class="language-python">def calculate_summary(breakdown: List[Dict]) -> Dict:
+    """Calculate summary statistics from breakdown."""
+    total_notes = sum(
+        item['count'] for item in breakdown
+        if item['type'] == 'note'
+    )
+    
+    total_coins = sum(
+        item['count'] for item in breakdown
+        if item['type'] == 'coin'
+    )
+    
+    total_denominations = len([
+        item for item in breakdown
+        if item['count'] > 0
+    ])
+    
+    return {
+        'total_notes': total_notes,
+        'total_coins': total_coins,
+        'total_denominations': total_denominations
+    }</code></pre>
+
+                    <h3>JSON Serialization</h3>
+                    <pre><code class="language-python">import json
+from decimal import Decimal
+
+class DecimalEncoder(json.JSONEncoder):
+    """Custom JSON encoder for Decimal types."""
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        return super().default(obj)
+
+# Usage
+json_string = json.dumps(breakdown, cls=DecimalEncoder)</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section covers complete backend functional logic including FastAPI structure, all API endpoints, error handling, logging, database models, validation rules, and data transformation.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

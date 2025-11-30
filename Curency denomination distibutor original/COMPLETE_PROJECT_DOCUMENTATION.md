@@ -1,0 +1,8070 @@
+Ã¯Â»Â¿# Currency Denomination Distributor - Complete Project Documentation
+
+**Document Version:** 1.0.0  
+**Last Updated:** November 25, 2025  
+**Document Type:** Software Requirements Specification (SRS) + Implementation Manual + Developer Onboarding + Bug Log + Feature Roadmap  
+**Status:** Production-Ready Foundation Complete  
+
+---
+
+## ÃƒÂ°Ã…Â¸Ã¢Â€ÂœÃ¢Â€Â¹ Table of Contents
+
+1. [Executive Summary](#1-executive-summary)
+2. [Project Overview](#2-project-overview)
+3. [System Architecture](#3-system-architecture)
+4. [Core Features & Functionalities](#4-core-features--functionalities)
+5. [UI/UX Requirements](#5-uiux-requirements)
+6. [Backend Functional Logic](#6-backend-functional-logic)
+7. [Bulk Upload System Specification](#7-bulk-upload-system-specification)
+8. [OCR System Implementation](#8-ocr-system-implementation)
+9. [Smart Defaults & Intelligent Extraction](#9-smart-defaults--intelligent-extraction)
+10. [Multi-Language Support](#10-multi-language-support)
+11. [Data Models & Database Schema](#11-data-models--database-schema)
+12. [API Specifications](#12-api-specifications)
+13. [Calculation Engine Logic](#13-calculation-engine-logic)
+14. [Error Handling & Validation](#14-error-handling--validation)
+15. [Dependencies & Installation](#15-dependencies--installation)
+16. [Known Issues & Fixes History](#16-known-issues--fixes-history)
+17. [Testing & Quality Assurance](#17-testing--quality-assurance)
+18. [Performance Requirements](#18-performance-requirements)
+19. [Deployment & Operations](#19-deployment--operations)
+20. [Future Enhancements](#20-future-enhancements)
+21. [Acceptance Criteria](#21-acceptance-criteria)
+
+---
+
+## 1. Executive Summary
+
+### 1.1 Project Purpose
+
+The **Currency Denomination Distributor** is an enterprise-grade, multi-platform application designed to calculate optimal currency denomination breakdowns for amounts ranging from small values to **extremely large amounts (tens of lakh crores - 10^13 and beyond)**.
+
+### 1.2 Key Objectives
+
+ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ **Accuracy**: Handle arbitrary precision arithmetic without rounding errors  
+ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ **Performance**: Process large amounts (1 trillion+) in milliseconds  
+ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ **Usability**: Intuitive UI with dark mode, multi-language support  
+ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ **Offline-First**: Core functionality works without internet connection  
+ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ **Scalability**: Designed for enterprise deployment with cloud sync  
+ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ **Extensibility**: Plugin-ready architecture for new currencies and features  
+
+### 1.3 Target Users
+
+- **Banking Institutions**: ATM cash management, branch operations
+- **Currency Exchange Centers**: Denomination planning and optimization
+- **Retail Businesses**: Cash drawer reconciliation, daily closing
+- **Accounting Firms**: Multi-currency cash flow analysis
+- **Individual Users**: Personal finance, currency conversion planning
+
+### 1.4 Current Status (November 25, 2025)
+
+**Phase 1 Complete:**
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Core denomination engine (100% functional)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Desktop application with Electron + React
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Local backend API (FastAPI + SQLite)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Multi-currency support (INR, USD, EUR, GBP)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Bulk upload with OCR support (CSV, PDF, Word, Images)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Smart defaults & intelligent extraction
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Multi-language support (EN, HI, ES, FR, DE)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Dark mode & theming
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Export functionality (CSV, JSON)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ History management
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Automated installation system
+
+**Phase 2 (Planned):**
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cloud backend with PostgreSQL
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Mobile application (React Native)
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Public REST API with authentication
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cross-device synchronization
+
+**Phase 3 (Future):**
+- ÃƒÂ¢Ã‚ÂÃ‚Â³ AI-powered insights (Google Gemini integration)
+- ÃƒÂ¢Ã‚ÂÃ‚Â³ Analytics dashboard
+- ÃƒÂ¢Ã‚ÂÃ‚Â³ Advanced export formats (Excel, PDF)
+- ÃƒÂ¢Ã‚ÂÃ‚Â³ Voice input support
+
+---
+
+## 2. Project Overview
+
+### 2.1 Problem Statement
+
+**Challenge**: Traditional denomination calculators fail to handle:
+1. Extremely large amounts (lakh crores, trillions)
+2. Multiple currencies with different denomination sets
+3. Optimization strategies beyond simple greedy algorithms
+4. Batch processing of multiple calculations
+5. Offline operation requirements
+6. Multi-language support for global users
+
+**Solution**: A comprehensive system that:
+- Uses arbitrary precision arithmetic
+- Supports configurable currency denomination sets
+- Implements multiple optimization algorithms
+- Provides bulk upload with OCR support
+- Works offline-first with optional cloud sync
+- Supports 5+ languages with extensible translation system
+
+### 2.2 Technology Stack
+
+#### Frontend Applications
+
+| Component | Technology | Version | Purpose |
+|-----------|-----------|---------|---------|
+| Desktop App | Electron | 27.x | Cross-platform desktop application |
+| UI Framework | React | 18.x | Component-based UI development |
+| Styling | Tailwind CSS | 3.x | Utility-first CSS framework |
+| State Management | React Context | Built-in | Global state management |
+| Build Tool | Vite | 5.x | Fast build and hot reload |
+| Icons | Lucide React | Latest | Consistent icon set |
+| Type Safety | TypeScript | 5.x | Static type checking |
+
+#### Backend Services
+
+| Component | Technology | Version | Purpose |
+|-----------|-----------|---------|---------|
+| API Framework | FastAPI | 0.104+ | Modern Python web framework |
+| Database (Local) | SQLite | 3.x | Embedded database for offline mode |
+| ORM | SQLAlchemy | 2.x | Database abstraction layer |
+| OCR Engine | Tesseract | 5.3.3+ | Optical character recognition |
+| PDF Processing | PyMuPDF | 1.23.0+ | PDF text extraction |
+| Image Processing | Pillow | 10.0.0+ | Image manipulation |
+| PDF to Image | pdf2image | 1.16.0+ | Convert PDF pages to images |
+| Poppler | Poppler Utils | 24.08.0+ | PDF rendering backend |
+| Word Processing | python-docx | 1.1.0+ | DOCX file parsing |
+
+#### Core Engine
+
+| Component | Technology | Version | Purpose |
+|-----------|-----------|---------|---------|
+| Core Logic | Pure Python | 3.11+ | Framework-agnostic calculation engine |
+| Precision Math | Decimal | Built-in | Arbitrary precision arithmetic |
+| Data Validation | Pydantic | 2.x | Data modeling and validation |
+
+### 2.3 Project Structure
+
+```
+currency-denomination-system/
+ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ packages/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ core-engine/              # Pure Python denomination logic
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ __init__.py
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ engine.py            # Main calculation engine (387 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ models.py            # Data models (242 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ optimizer.py         # Optimization strategies (267 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ fx_service.py        # Currency conversion (234 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test_engine.py       # Comprehensive tests (238 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ verify.py            # Verification script
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ requirements.txt     # Python dependencies
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ config/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ currencies.json  # Currency configurations
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ fx_rates_cache.json
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ desktop-app/             # Electron + React application
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ electron/            # Electron main process
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ src/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ components/      # React components
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ CalculatorPage.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ HistoryPage.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ SettingsPage.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ BulkUploadPage.tsx (695 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ Layout.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ contexts/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ ThemeContext.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ LanguageContext.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ services/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ api.ts       # API client
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ App.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ main.tsx
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ index.html
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ package.json
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ vite.config.ts
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ tailwind.config.js
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ tsconfig.json
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ local-backend/           # FastAPI offline backend
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ app/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ main.py          # FastAPI application (142 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ config.py        # Configuration (48 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ database.py      # SQLite models (104 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ api/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ calculations.py (530+ lines with bulk upload)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ history.py   (192 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ export.py    (118 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ settings.py  (142 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ translations.py (87 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ services/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ ocr_processor.py (383 lines - REBUILT)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ locales/         # Translation files
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ en.json      # English
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ hi.json      # Hindi
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ es.json      # Spanish
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ fr.json      # French
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ de.json      # German
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ data/                # SQLite database location
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ exports/             # Exported files
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ requirements.txt     # Python dependencies
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ start.ps1            # PowerShell startup script
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ START_BACKEND.bat    # Windows batch startup
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš       ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ install_dependencies.ps1  # Auto-installer
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš
+ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ check/                       # Dependency checkers
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ check_dependencies.ps1
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ install_dependencies.ps1
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš
+ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ docs/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ ARCHITECTURE.md          # Technical architecture (823 lines)
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš
+ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test files/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test_bulk_upload.csv
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test_bulk.pdf
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test_bulk_image.png
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test_smart_defaults.txt
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test_smart_extraction.py
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš
+ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ scripts/
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test-bulk-upload.ps1
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test-ocr-files.ps1
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ test-smart-defaults.ps1
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš   ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ health-check.ps1
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€Âš
+ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ start.ps1                    # Main startup script
+ÃƒÂ¢Ã¢Â€ÂÃ…Â“ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ docker-compose.yml           # Docker configuration
+ÃƒÂ¢Ã¢Â€ÂÃ¢Â€ÂÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ÃƒÂ¢Ã¢Â€ÂÃ¢Â‚Â¬ README.md                    # Main documentation
+
+Total Files: 150+
+Total Code: 15,000+ lines
+Documentation: 30+ markdown files
+```
+
+### 2.4 Operating Modes
+
+#### 2.4.1 Offline Mode (Current - Phase 1)
+
+**Architecture:**
+```
+User ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ Electron UI ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ Local FastAPI Backend ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ SQLite DB ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ Core Engine
+```
+
+**Available Features:**
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Single denomination calculations
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Bulk CSV/PDF/Image uploads with OCR
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Multi-currency support (INR, USD, EUR, GBP)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Local history management (unlimited + quick access last 10)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Dark mode & theme persistence
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Export to CSV/JSON
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Multi-language UI (5 languages)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Offline operation (no internet required)
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Chart visualizations
+- ÃƒÂ¢Ã…Â“Ã¢Â€Â¦ Settings persistence
+
+**Limitations:**
+- ÃƒÂ¢Ã‚ÂÃ…Â’ No live exchange rates (uses cached rates)
+- ÃƒÂ¢Ã‚ÂÃ…Â’ No AI-powered explanations
+- ÃƒÂ¢Ã‚ÂÃ…Â’ No cross-device synchronization
+- ÃƒÂ¢Ã‚ÂÃ…Â’ No multi-user support
+
+#### 2.4.2 Online Mode (Planned - Phase 2)
+
+**Architecture:**
+```
+User ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ Desktop/Mobile/Web ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ Cloud API ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ PostgreSQL + Redis
+                                      ÃƒÂ¢Ã¢Â€Â Ã¢Â€Âœ
+                          External APIs (FX Rates, Gemini)
+                                      ÃƒÂ¢Ã¢Â€Â Ã¢Â€Âœ
+                              Core Engine ÃƒÂ¢Ã¢Â€Â Ã¢Â€Â™ Response
+```
+
+**Additional Features:**
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Live exchange rates from external APIs
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž AI-powered explanations (Google Gemini)
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cross-device synchronization
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Multi-user authentication
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Public REST API with rate limiting
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Analytics dashboard
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Cloud backups
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Shared calculations
+- ÃƒÂ°Ã…Â¸Ã¢Â€ÂÃ¢Â€Âž Team collaboration features
+
+---
+
+
+## 3. System Architecture
+
+### 3.1 Architecture Patterns
+
+#### 3.1.1 Layered Architecture
+
+The system follows a strict **4-layer architecture**:
+
+**Layer 1: Presentation Layer**
+- Electron Desktop Application (React + TypeScript + Tailwind CSS)
+- Responsibilities:
+  * User interface rendering
+  * User input validation
+  * State management (React Context)
+  * API communication
+  * Local storage management
+  * Dark mode theming
+  * Multi-language display
+
+**Layer 2: Application/API Layer**
+- FastAPI Backend Service
+- Responsibilities:
+  * RESTful API endpoints
+  * Request validation (Pydantic)
+  * Business logic orchestration
+  * Authentication & authorization (future)
+  * Rate limiting (future)
+  * Logging & monitoring
+  * File upload handling
+  * OCR processing coordination
+
+**Layer 3: Domain/Core Services Layer**
+- Pure Python Core Engine
+- Responsibilities:
+  * Denomination calculation algorithms
+  * Currency conversion logic
+  * Optimization strategies
+  * FX rate management
+  * Data models & validation
+  * Alternative generation
+  * Mathematical operations
+
+**Layer 4: Infrastructure Layer**
+- SQLite Database
+- File System
+- External Dependencies (Tesseract, Poppler)
+- Responsibilities:
+  * Data persistence
+  * File storage
+  * OCR services
+  * PDF processing
+  * Configuration management
+
+#### 3.1.2 Repository Pattern
+
+**Purpose**: Separate data access logic from business logic
+
+**Implementation**:
+`python
+# database.py - SQLAlchemy Models
+class Calculation(Base):
+    __tablename__ = 'calculations'
+    id = Column(Integer, primary_key=True)
+    amount = Column(String, nullable=False)
+    currency = Column(String, nullable=False)
+    # ... other fields
+
+# api/calculations.py - Repository methods
+def save_calculation_to_history(db: Session, calculation_data: dict):
+    calc = Calculation(**calculation_data)
+    db.add(calc)
+    db.commit()
+    return calc
+
+def get_calculation_by_id(db: Session, calc_id: int):
+    return db.query(Calculation).filter(Calculation.id == calc_id).first()
+`
+
+**Benefits**:
+- Database implementation can be swapped (SQLite  PostgreSQL)
+- Easy to mock for testing
+- Clear separation of concerns
+
+#### 3.1.3 Service Pattern
+
+**Purpose**: Encapsulate business logic in reusable services
+
+**Example - OCR Processor Service**:
+`python
+class OCRProcessor:
+    def __init__(self, default_currency='INR', default_mode='greedy'):
+        self.supported_image_formats = {'.jpg', '.jpeg', '.png', ...}
+        self.default_currency = default_currency
+        self.default_mode = default_mode
+    
+    def process_file(self, file_path: str) -> List[Dict]:
+        # Determine file type
+        # Route to appropriate processor
+        # Extract structured data
+        # Return parsed rows
+`
+
+#### 3.1.4 Strategy Pattern
+
+**Purpose**: Implement different optimization algorithms
+
+**Implementation**:
+`python
+# optimizer.py
+class OptimizationStrategy:
+    def optimize(self, breakdown: Dict) -> Dict:
+        raise NotImplementedError
+
+class GreedyStrategy(OptimizationStrategy):
+    def optimize(self, breakdown: Dict) -> Dict:
+        # Greedy algorithm implementation
+        pass
+
+class BalancedStrategy(OptimizationStrategy):
+    def optimize(self, breakdown: Dict) -> Dict:
+        # Balanced distribution implementation
+        pass
+
+# Usage
+strategy = GreedyStrategy() if mode == 'greedy' else BalancedStrategy()
+optimized = strategy.optimize(breakdown)
+`
+
+### 3.2 Data Flow Diagrams
+
+#### 3.2.1 Single Calculation Flow
+
+\\\
+[User Input] 
+    
+[Electron UI - CalculatorPage.tsx]
+     (validates input)
+[API Call - api.calculate()]
+     (HTTP POST /api/v1/calculate)
+[FastAPI Endpoint - calculations.py]
+     (parse request, validate)
+[Core Engine - engine.py]
+     (calculate_denominations)
+[Return Breakdown]
+    
+[Save to Database] (if save_to_history=true)
+    
+[Return Response to UI]
+    
+[Display Results + Update History]
+\\\
+
+#### 3.2.2 Bulk Upload Flow
+
+\\\
+[File Selection - BulkUploadPage.tsx]
+    
+[File Validation]
+     (Check format, size)
+[FormData Creation]
+     (multipart/form-data)
+[HTTP POST /api/calculations/bulk-upload]
+    
+[FastAPI Endpoint - calculations.py:bulk_upload()]
+    
+[File Type Detection]
+    
+
+  CSV         PDF           Word           Image      
+  Parser      Processor     Processor      Processor  
+
+                                               
+[OCRProcessor.process_file()]
+    
+[Extract Rows: amount, currency, mode]
+    
+[Smart Defaults Applied]
+     (currencyINR, modegreedy if missing)
+[For Each Row:]
+    
+[Core Engine - calculate_denominations()]
+    
+[Collect Results]
+    
+[Save to Database] (optional)
+    
+[Return Bulk Response]
+    
+[Display Results Table + Summary Stats]
+\\\
+
+#### 3.2.3 OCR Processing Flow (Detailed)
+
+\\\
+[Image/PDF File Upload]
+    
+[OCRProcessor.__init__]
+    
+[File Extension Check]
+    
+
+  Image File        PDF File        Word File        
+  (.jpg/.png)       (.pdf)          (.docx)          
+
+                                            
+[_process_image]  [_process_pdf]    [_process_word]
+                                            
+                            
+                                          
+            [Text PDF]    [Scanned PDF]     
+                                          
+            [PyMuPDF]    [pdf2image +       
+             extract      Tesseract]        
+                                          
+    
+                   
+         [Raw Text Content]
+                   
+         [_parse_text_to_rows]
+                   
+         [Split into lines]
+                   
+         [For each line:]
+                   
+         [_parse_line]
+                   
+    
+                                 
+[_smart_extract_  [_smart_extract_  [_smart_extract_
+ amount]           currency]         mode]
+                                 
+[Apply Smart Defaults if Missing]
+    
+[Return Structured Row Data]
+    
+[Continue to Calculation Engine]
+\\\
+
+### 3.3 Component Interaction Diagram
+
+\\\
+
+                        FRONTEND (Electron + React)           
+                                                               
+        
+   Calculator       History         Bulk Upload       
+   Page             Page            Page              
+        
+                                                          
+                        
+                                                             
+                                               
+                      API Client                            
+                      (api.ts)                              
+                                               
+
+                             HTTP/REST
+
+                                                              
+                                                
+                      FastAPI                                
+                      Main App                               
+                                                
+                                                              
+                      
+                                                           
+         
+  Calculations      History         Settings          
+  API               API             API               
+         
+                                                          
+                 
+                                                             
+                                              
+   OCR                                                      
+   Processor    [Tesseract][Images]                  
+   Service      [PyMuPDF][PDFs]                    
+                [python-docx][Word]                    
+                                              
+                                                             
+
+          
+
+                                                              
+                              
+     Core                   SQLite                       
+     Engine                 Database                     
+    (Python)                                             
+                              
+                                                            
+  [Denomination             [Calculations                    
+   Calculations]             History                         
+                             Settings]                        
+
+\\\
+
+---
+
+
+## 4. Core Features & Functionalities
+
+### 4.1 Denomination Calculation Engine
+
+#### 4.1.1 Basic Calculation
+
+**Feature**: Calculate optimal denomination breakdown for any amount
+
+**Requirements**:
+-  **MUST** handle amounts from 0.01 to 10^15 (quadrillion) and beyond
+-  **MUST** use arbitrary precision arithmetic (Decimal type)
+-  **MUST NOT** have rounding errors or precision loss
+-  **MUST** complete calculations in < 100ms for amounts up to 1 trillion
+-  **MUST** support 4 base currencies: INR, USD, EUR, GBP
+-  **MUST** return breakdown with notes + coins separately
+
+**Input Specification**:
+```typescript
+interface CalculationRequest {
+  amount: string;              // Required - "1000" or "1000.50"
+  currency: string;            // Required - "INR" | "USD" | "EUR" | "GBP"
+  optimization_mode?: string;  // Optional - default: "greedy"
+  save_to_history?: boolean;   // Optional - default: true
+}
+```
+
+**Output Specification**:
+```typescript
+interface CalculationResponse {
+  amount: string;
+  currency: string;
+  optimization_mode: string;
+  total_notes: number;
+  total_coins: number;
+  total_denominations: number;
+  breakdowns: DenominationBreakdown[];
+  calculation_time_ms: number;
+  saved_to_history: boolean;
+  calculation_id?: number;
+}
+
+interface DenominationBreakdown {
+  denomination: number;
+  type: "note" | "coin";
+  count: number;
+  total_value: string;
+}
+```
+
+**Example**:
+```json
+{
+  "amount": "50000",
+  "currency": "INR",
+  "optimization_mode": "greedy",
+  "total_notes": 25,
+  "total_coins": 0,
+  "total_denominations": 1,
+  "breakdowns": [
+    {
+      "denomination": 2000,
+      "type": "note",
+      "count": 25,
+      "total_value": "50000"
+    }
+  ],
+  "calculation_time_ms": 2.4,
+  "saved_to_history": true,
+  "calculation_id": 42
+}
+```
+
+#### 4.1.2 Currency Support
+
+**Supported Currencies**:
+
+| Currency | Code | Symbol | Notes | Coins | Smallest Unit |
+|----------|------|--------|-------|-------|---------------|
+| Indian Rupee | INR | ? | 2000, 500, 200, 100, 50, 20, 10 | 10, 5, 2, 1 | 0.01 (paisa) |
+| US Dollar | USD | $ | 100, 50, 20, 10, 5, 2, 1 | 1, 0.50, 0.25, 0.10, 0.05, 0.01 | 0.01 (cent) |
+| Euro | EUR |  | 500, 200, 100, 50, 20, 10, 5 | 2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01 | 0.01 (cent) |
+| British Pound | GBP |  | 50, 20, 10, 5 | 2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01 | 0.01 (penny) |
+
+**Currency Configuration**:
+Location: `packages/core-engine/config/currencies.json`
+
+```json
+{
+  "INR": {
+    "name": "Indian Rupee",
+    "symbol": "?",
+    "code": "INR",
+    "notes": [2000, 500, 200, 100, 50, 20, 10],
+    "coins": [10, 5, 2, 1],
+    "decimal_places": 2,
+    "smallest_unit": 0.01
+  }
+}
+```
+
+**Adding New Currency**:
+1. Add configuration to `currencies.json`
+2. Add FX rate to `fx_rates_cache.json`
+3. Update TypeScript types if needed
+4. No code changes required (configuration-driven)
+
+#### 4.1.3 Optimization Modes
+
+**Mode 1: Greedy (Default)**
+- **Goal**: Minimize total number of notes + coins
+- **Algorithm**: Always use largest denomination first
+- **Use Case**: Default mode for most scenarios
+- **Performance**: O(n) where n = number of denominations
+
+**Example**:
+```
+Amount: ?50,000
+Result: 25  ?2000 = ?50,000
+Total: 25 denominations
+```
+
+**Mode 2: Balanced**
+- **Goal**: Even distribution across denominations
+- **Algorithm**: Distribute amount more evenly
+- **Use Case**: When you want variety in denominations
+- **Performance**: O(n)
+
+**Example**:
+```
+Amount: ?50,000
+Result:
+  10  ?2000 = ?20,000
+  10  ?500  = ?5,000
+  ... (more balanced)
+```
+
+**Mode 3: Minimize Large**
+- **Goal**: Use fewer large denominations
+- **Algorithm**: Prefer smaller notes/coins
+- **Use Case**: When large denominations are scarce
+- **Performance**: O(n)
+
+**Mode 4: Minimize Small**
+- **Goal**: Use fewer small denominations
+- **Algorithm**: Prefer larger notes/coins
+- **Use Case**: When small denominations are scarce
+- **Performance**: O(n)
+
+#### 4.1.4 Large Number Handling
+
+**Requirement**: System MUST handle extremely large amounts without errors
+
+**Test Cases**:
+
+| Amount | Description | Expected Behavior |
+|--------|-------------|-------------------|
+| 1,000 | One thousand |  Standard calculation |
+| 1,00,000 | One lakh |  Standard calculation |
+| 1,00,00,000 | One crore |  Standard calculation |
+| 1,00,00,00,000 | One hundred crore |  Standard calculation |
+| 10,00,00,00,000 | One thousand crore (10 billion) |  Handle correctly |
+| 1,00,00,00,00,000 | One lakh crore (1 trillion) |  Handle correctly |
+| 10,00,00,00,00,000 | Ten lakh crore (10 trillion) |  Handle correctly |
+
+**Implementation**:
+```python
+from decimal import Decimal, getcontext
+
+# Set high precision
+getcontext().prec = 50
+
+def calculate_denominations(amount: str, currency: str):
+    # Convert to Decimal for arbitrary precision
+    amount_decimal = Decimal(amount)
+    
+    # No overflow, no rounding errors
+    # Works for any size amount
+```
+
+**Verification**:
+```bash
+# Test file: packages/core-engine/test_engine.py
+pytest test_engine.py::test_extreme_large_amounts
+```
+
+### 4.2 History Management
+
+#### 4.2.1 Full History
+
+**Feature**: Store all calculations with complete details
+
+**Requirements**:
+-  **MUST** store unlimited calculations (SQLite has no practical limit)
+-  **MUST** support pagination (default 50 per page)
+-  **MUST** support filtering by currency, date range
+-  **MUST** support sorting by date, amount
+-  **MUST** allow individual deletion
+-  **MUST** allow batch deletion (all, by filter)
+
+**Database Schema**:
+```sql
+CREATE TABLE calculations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount TEXT NOT NULL,
+    currency TEXT NOT NULL,
+    optimization_mode TEXT,
+    total_notes INTEGER,
+    total_coins INTEGER,
+    total_denominations INTEGER,
+    breakdown JSON,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    calculation_time_ms REAL
+);
+```
+
+**API Endpoints**:
+```
+GET    /api/v1/history?page=1&limit=50&currency=INR&sort=date_desc
+GET    /api/v1/history/{id}
+DELETE /api/v1/history/{id}
+DELETE /api/v1/history/all
+GET    /api/v1/history/stats
+```
+
+#### 4.2.2 Quick Access (Last 10)
+
+**Feature**: Show last 10 calculations in sidebar for quick reference
+
+**Requirements**:
+-  **MUST** show last 10 calculations chronologically
+-  **MUST** update in real-time when new calculation made
+-  **MUST** allow click to view full details
+-  **MUST** show: amount, currency, date, total denominations
+
+**UI Location**: Left sidebar in History page
+
+**Implementation**:
+```typescript
+const { data: quickAccess } = useQuery({
+  queryKey: ['history', 'quick-access'],
+  queryFn: () => api.getQuickAccessHistory(),
+  refetchInterval: false,
+  staleTime: Infinity
+});
+```
+
+### 4.3 Bulk Upload System
+
+#### 4.3.1 Supported File Formats
+
+**CSV Files** (`.csv`)
+- **Method**: Direct parsing
+- **Max Size**: 10 MB
+- **Encoding**: UTF-8, UTF-16, ASCII
+- **Separators**: Comma (`,`), Semicolon (`;`), Tab (`\t`)
+
+**PDF Files** (`.pdf`)
+- **Method**: PyMuPDF (text) + Tesseract OCR (scanned)
+- **Max Size**: 50 MB
+- **Types**: Text-based PDFs, Scanned PDFs, Mixed
+- **Pages**: All pages processed
+
+**Word Documents** (`.docx`, `.doc`)
+- **Method**: python-docx
+- **Max Size**: 10 MB
+- **Extraction**: Paragraphs + Tables
+- **Format**: DOCX (preferred), DOC (legacy support)
+
+**Image Files**
+- **Formats**: `.jpg`, `.jpeg`, `.png`, `.tiff`, `.tif`, `.bmp`, `.gif`, `.webp`
+- **Method**: Tesseract OCR
+- **Max Size**: 50 MB
+- **Resolution**: Minimum 150 DPI recommended
+
+#### 4.3.2 CSV Format Specification
+
+**Standard Format**:
+```csv
+amount,currency,optimization_mode
+1000,INR,greedy
+250.50,USD,balanced
+500,EUR,minimize_large
+```
+
+**Minimal Format** (with smart defaults):
+```csv
+amount,currency
+1000,INR
+250.50,USD
+```
+
+**Ultra-Minimal** (defaults: currency=INR, mode=greedy):
+```csv
+amount
+1000
+2500
+5000
+```
+
+**With Headers** (optional):
+```csv
+Amount,Currency,Optimization Mode
+1000,INR,greedy
+250.50,USD,balanced
+```
+
+**Flexible Separators**:
+```csv
+1000,INR,greedy
+1000;INR;greedy
+1000INRgreedy
+```
+
+#### 4.3.3 Upload Process
+
+**Step 1: File Selection**
+- Drag & drop OR click to browse
+- File validation (type, size, content)
+- Preview of selected file
+
+**Step 2: Validation**
+```typescript
+validateFile(file: File): string | null {
+  // Check extension
+  if (!supportedExtensions.includes(fileExtension)) {
+    return "Unsupported file format";
+  }
+  
+  // Check size
+  if (file.size > maxSize) {
+    return "File too large";
+  }
+  
+  // Check if empty
+  if (file.size === 0) {
+    return "File is empty";
+  }
+  
+  return null; // Valid
+}
+```
+
+**Step 3: Upload & Processing**
+```
+[Client]  FormData creation  HTTP POST /api/calculations/bulk-upload
+[Server]  File type detection  Route to processor
+[Processor]  Extract rows  Parse each line
+[Parser]  Apply smart defaults  Validate data
+[Engine]  Calculate each row  Collect results
+[Response]  Return summary + details
+```
+
+**Step 4: Results Display**
+- Summary cards (Total, Successful, Failed, Time)
+- Detailed results table
+- Export options (CSV, JSON)
+- Error messages for failed rows
+
+#### 4.3.4 Smart Defaults
+
+**Default Currency: INR**
+- Applied when: No currency specified in row
+- Configurable: Yes (in `ocr_processor.py`)
+- Fallback Order: Specified  System Default
+
+**Default Mode: greedy**
+- Applied when: No mode specified in row
+- Configurable: Yes (in `ocr_processor.py`)
+- Fallback Order: Specified  System Default
+
+**Examples**:
+```
+Input: "5000"
+Output: amount=5000, currency=INR, mode=greedy
+
+Input: "5000 USD"
+Output: amount=5000, currency=USD, mode=greedy
+
+Input: "5000, EUR, balanced"
+Output: amount=5000, currency=EUR, mode=balanced
+```
+
+### 4.4 OCR System
+
+#### 4.4.1 Tesseract Integration
+
+**Version**: 5.3.3+ (latest stable)
+
+**Installation**: Automatic via `install_dependencies.ps1`
+
+**Location**: `%LOCALAPPDATA%\CurrencyDistributor\Tesseract-OCR\`
+
+**Languages**: English (eng) by default
+
+**Configuration**:
+```python
+# tesseract_config.py
+TESSERACT_CONFIG = {
+    'lang': 'eng',
+    'config': '--psm 6 --oem 3',
+    'nice': 0
+}
+
+# PSM Modes:
+# 0 = Orientation and script detection (OSD) only
+# 1 = Automatic page segmentation with OSD
+# 3 = Fully automatic page segmentation (default)
+# 6 = Assume a single uniform block of text
+# 11 = Sparse text. Find as much text as possible
+
+# OEM Modes:
+# 0 = Legacy engine only
+# 1 = Neural nets LSTM engine only
+# 2 = Legacy + LSTM engines
+# 3 = Default, based on what is available
+```
+
+**Usage**:
+```python
+import pytesseract
+from PIL import Image
+
+image = Image.open('test_bulk_image.png')
+text = pytesseract.image_to_string(image, config='--psm 6')
+```
+
+#### 4.4.2 PDF Processing
+
+**Text-Based PDFs**:
+```python
+import fitz  # PyMuPDF
+
+def _process_pdf_text(file_path: str) -> str:
+    doc = fitz.open(file_path)
+    text = ""
+    for page in doc:
+        text += page.get_text()
+    return text
+```
+
+**Scanned PDFs**:
+```python
+from pdf2image import convert_from_path
+import pytesseract
+
+def _process_scanned_pdf(file_path: str) -> str:
+    images = convert_from_path(file_path, dpi=300)
+    text = ""
+    for image in images:
+        text += pytesseract.image_to_string(image)
+    return text
+```
+
+**Auto-Detection**:
+```python
+def _process_pdf(file_path: str) -> str:
+    # Try text extraction first
+    text = _process_pdf_text(file_path)
+    
+    # If mostly empty, use OCR
+    if len(text.strip()) < 50:
+        text = _process_scanned_pdf(file_path)
+    
+    return text
+```
+
+#### 4.4.3 Intelligent Text Parsing
+
+**Format Detection**:
+The parser automatically detects and handles multiple formats:
+
+**Format 1: CSV-like**
+```
+125.50, USD, greedy
+250, EUR, balanced
+```
+
+**Format 2: Pipe-separated**
+```
+125.50 | USD | greedy
+250 | EUR | balanced
+```
+
+**Format 3: Tabular**
+```
+Amount    Currency    Mode
+125.50    USD         greedy
+250       EUR         balanced
+```
+
+**Format 4: Natural Language**
+```
+Amount: 125.50 Currency: USD Mode: greedy
+Total is 250 in EUR with balanced optimization
+```
+
+**Format 5: Mixed**
+```
+125.50 USD greedy
+250 EUR
+500
+```
+
+**Parsing Logic**:
+```python
+def _parse_line(self, line: str, line_number: int) -> Optional[Dict]:
+    # Extract amount (required)
+    amount = self._smart_extract_amount(line)
+    if not amount:
+        return None
+    
+    # Extract currency (optional  defaults to INR)
+    currency = self._smart_extract_currency(line)
+    if not currency:
+        currency = self.default_currency
+    
+    # Extract mode (optional  defaults to greedy)
+    mode = self._smart_extract_mode(line)
+    if not mode:
+        mode = self.default_mode
+    
+    return {
+        'row_number': line_number,
+        'amount': amount,
+        'currency': currency,
+        'optimization_mode': mode
+    }
+```
+
+#### 4.4.4 Currency Detection
+
+**Strategy 1: Currency Symbols**
+```python
+if '?' in text or 'rs.' in text.lower():
+    return 'INR'
+if '$' in text:
+    return 'USD'
+if '' in text:
+    return 'EUR'
+if '' in text:
+    return 'GBP'
+```
+
+**Strategy 2: Currency Names**
+```python
+currency_map = {
+    'rupee': 'INR', 'rupees': 'INR', 'rs': 'INR',
+    'dollar': 'USD', 'dollars': 'USD',
+    'euro': 'EUR', 'euros': 'EUR',
+    'pound': 'GBP', 'pounds': 'GBP'
+}
+```
+
+**Strategy 3: 3-Letter Codes**
+```python
+match = re.search(r'\b([A-Z]{3})\b', text.upper())
+if match and match.group(1) not in ['THE', 'AND', 'FOR', ...]:
+    return match.group(1)
+```
+
+**Strategy 4: Default Fallback**
+```python
+if not currency:
+    currency = 'INR'  # System default
+```
+
+### 4.5 Export & Copy Features
+
+#### 4.5.1 CSV Export
+
+**Single Calculation**:
+```csv
+Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Breakdown
+50000,INR,greedy,25,0,1,"25  ?2000 = ?50000"
+```
+
+**Bulk Upload Results**:
+```csv
+Row Number,Status,Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Error
+1,success,1000,INR,greedy,2,0,2,
+2,success,250.50,USD,balanced,8,3,11,
+3,error,,,,,,,Invalid amount format
+```
+
+**Implementation**:
+```typescript
+handleExportCSV() {
+  const headers = ['Row', 'Status', 'Amount', 'Currency', ...];
+  const rows = results.map(row => [
+    row.row_number,
+    row.status,
+    row.amount,
+    ...
+  ]);
+  
+  const csv = [headers, ...rows]
+    .map(row => row.map(cell => `"${cell}"`).join(','))
+    .join('\n');
+  
+  downloadFile(csv, 'results.csv', 'text/csv');
+}
+```
+
+#### 4.5.2 JSON Export
+
+**Format**:
+```json
+{
+  "export_date": "2025-11-25T10:30:00Z",
+  "total_rows": 4,
+  "successful": 3,
+  "failed": 1,
+  "results": [
+    {
+      "row_number": 1,
+      "status": "success",
+      "amount": "1000",
+      "currency": "INR",
+      "breakdown": [...]
+    }
+  ]
+}
+```
+
+#### 4.5.3 Copy to Clipboard
+
+**Format**:
+```
+Bulk Upload Results
+===================
+Total Rows: 4
+Successful: 3
+Failed: 1
+Processing Time: 0.12s
+
+Detailed Results:
+Row 1:  1000 INR  2 denominations
+Row 2:  250.50 USD  11 denominations
+Row 3:  Invalid amount format
+```
+
+**Implementation**:
+```typescript
+async handleCopy() {
+  const text = formatResults(uploadResult);
+  await navigator.clipboard.writeText(text);
+  showNotification('Copied to clipboard!');
+}
+```
+
+### 4.6 Multi-Language Support
+
+#### 4.6.1 Supported Languages
+
+| Language | Code | Status | Translations | Completeness |
+|----------|------|--------|--------------|--------------|
+| English | en |  Complete | 45+ keys | 100% |
+| Hindi | hi |  Complete | 45+ keys | 100% |
+| Spanish | es |  Complete | 45+ keys | 100% |
+| French | fr |  Complete | 45+ keys | 100% |
+| German | de |  Complete | 45+ keys | 100% |
+
+#### 4.6.2 Translation System
+
+**Backend**:
+- Location: `packages/local-backend/app/locales/`
+- Format: JSON files (`en.json`, `hi.json`, etc.)
+- API: `/api/v1/translations/{language_code}`
+
+**Frontend**:
+- Context: `LanguageContext.tsx`
+- Hook: `useLanguage()`
+- Function: `t('key', params)`
+
+**Example**:
+```typescript
+const { t, setLanguage } = useLanguage();
+
+// Simple translation
+<h1>{t('settings.title')}</h1>
+
+// With parameters
+<p>{t('history.showing', { count: 10 })}</p>
+
+// Change language
+setLanguage('hi');
+```
+
+#### 4.6.3 Translation File Structure
+
+```json
+{
+  "app": {
+    "title": "Currency Denomination Distributor",
+    "subtitle": "Calculate optimal denomination breakdowns"
+  },
+  "nav": {
+    "calculator": "Calculator",
+    "history": "History",
+    "settings": "Settings",
+    "bulkUpload": "Bulk Upload"
+  },
+  "calculator": {
+    "title": "Denomination Calculator",
+    "amount": "Amount",
+    "currency": "Currency",
+    "mode": "Optimization Mode",
+    "calculate": "Calculate"
+  }
+}
+```
+
+### 4.7 Dark Mode
+
+#### 4.7.1 Theme System
+
+**Themes**:
+- `light` - Light background, dark text
+- `dark` - Dark background, light text
+- `system` - Follow OS preference (future)
+
+**Implementation**:
+```typescript
+// ThemeContext.tsx
+export const ThemeProvider = ({ children }) => {
+  const [theme, setTheme] = useState('light');
+  
+  useEffect(() => {
+    // Apply theme to document
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+  }, [theme]);
+  
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+```
+
+**Tailwind Configuration**:
+```javascript
+// tailwind.config.js
+module.exports = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        dark: {
+          bg: '#1a1a1a',
+          surface: '#2d2d2d',
+          border: '#404040'
+        }
+      }
+    }
+  }
+};
+```
+
+**CSS Classes**:
+```css
+/* Light mode */
+.bg-white dark:bg-gray-800
+.text-gray-900 dark:text-gray-100
+.border-gray-200 dark:border-gray-700
+
+/* Dark mode */
+.dark .bg-white { background-color: #2d2d2d; }
+.dark .text-gray-900 { color: #f3f4f6; }
+```
+
+#### 4.7.2 Persistence
+
+**Backend**:
+```sql
+CREATE TABLE user_settings (
+    id INTEGER PRIMARY KEY,
+    theme TEXT DEFAULT 'light',
+    language TEXT DEFAULT 'en'
+);
+```
+
+**API**:
+```
+GET  /api/v1/settings  {theme: 'dark', language: 'en'}
+PUT  /api/v1/settings  {theme: 'dark'}
+```
+
+**Startup**:
+```typescript
+// Load saved theme on app start
+useEffect(() => {
+  api.getSettings().then(settings => {
+    setTheme(settings.theme);
+  });
+}, []);
+```
+
+---
+
+
+## 5. UI/UX Requirements
+
+### 5.1 Calculator Page
+
+#### 5.1.1 Layout Specification
+
+**Component**: `packages/desktop-app/src/components/CalculatorPage.tsx`
+
+**Layout Structure**:
+```
+
+  Calculator Page                                         
+   
+    Input Section (Card)                               
+       
+     Amount Input (Large)                           
+     Placeholder: "Enter amount..."                 
+       
+           
+     Currency        Optimization Mode           
+     Dropdown        Dropdown                    
+           
+       
+     [Calculate Button] - Full Width, Blue          
+       
+   
+                                                          
+   
+    Results Section (Conditional - After Calculation) 
+       
+     Summary Cards (3 columns)                      
+     Total Notes | Total Coins | Total Denoms      
+       
+       
+     Breakdown Table                                
+     Denomination | Type | Count | Total Value     
+       
+       
+     Action Buttons: Copy | Export CSV             
+       
+   
+
+```
+
+**Required Elements**:
+
+1. **Amount Input Field**
+   - Type: `number` or `text` (validated)
+   - Validation: Positive numbers only, max 15 digits
+   - Placeholder: "Enter amount..."
+   - Auto-focus: Yes (on page load)
+   - Clear button: Yes
+   - Format: Allow comma separators (e.g., 1,000,000)
+
+2. **Currency Dropdown**
+   - Options: INR, USD, EUR, GBP
+   - Default: INR
+   - Display: `{code} - {name}` (e.g., "INR - Indian Rupee")
+   - Icons: Currency symbols (?, $, , )
+
+3. **Optimization Mode Dropdown**
+   - Options: greedy, balanced, minimize_large, minimize_small
+   - Default: greedy
+   - Display: Capitalized with description
+   - Tooltips: Explanation of each mode
+
+4. **Calculate Button**
+   - Style: Primary blue, full-width
+   - States: Normal, Hover, Disabled, Loading
+   - Loading: Show spinner when calculating
+   - Keyboard: Enter key triggers calculation
+
+5. **Results Display** (Conditional)
+   - Show only after successful calculation
+   - Animate entrance (fade in)
+   - Summary cards with icons
+   - Sortable breakdown table
+   - Copy/Export buttons
+
+**Color Scheme**:
+```css
+/* Light Mode */
+--bg-primary: #ffffff
+--bg-secondary: #f9fafb
+--text-primary: #111827
+--text-secondary: #6b7280
+--border: #e5e7eb
+--button-primary: #2563eb
+--success: #10b981
+--error: #ef4444
+
+/* Dark Mode */
+--bg-primary: #1f2937
+--bg-secondary: #111827
+--text-primary: #f9fafb
+--text-secondary: #9ca3af
+--border: #374151
+--button-primary: #3b82f6
+--success: #34d399
+--error: #f87171
+```
+
+**Responsive Breakpoints**:
+- Mobile: < 640px (single column)
+- Tablet: 640px - 1024px (2 columns)
+- Desktop: > 1024px (3 columns)
+
+#### 5.1.2 Input Validation Rules
+
+**Amount Field**:
+```typescript
+interface ValidationRules {
+  required: true;
+  min: 0.01;
+  max: 999999999999999; // 15 digits
+  pattern: /^\d+(\.\d{1,2})?$/; // Optional 2 decimal places
+  errorMessages: {
+    required: "Amount is required";
+    min: "Amount must be greater than 0";
+    max: "Amount too large (max 15 digits)";
+    pattern: "Invalid amount format";
+  }
+}
+```
+
+**Real-time Validation**:
+- Validate on blur
+- Show error message below input
+- Disable calculate button if invalid
+- Clear error on valid input
+
+**Edge Cases**:
+```typescript
+// Test cases that MUST be handled
+testCases = [
+  { input: "0", expected: "error", message: "Amount must be > 0" },
+  { input: "-100", expected: "error", message: "Negative not allowed" },
+  { input: "abc", expected: "error", message: "Not a number" },
+  { input: "1.234", expected: "error", message: "Max 2 decimals" },
+  { input: "1e10", expected: "error", message: "Scientific notation not allowed in UI" },
+  { input: "1,000", expected: "valid", value: "1000" }, // Allow commas
+  { input: "0.01", expected: "valid", value: "0.01" }, // Min valid
+  { input: "999999999999999", expected: "valid", value: "999999999999999" } // Max valid
+];
+```
+
+#### 5.1.3 User Interaction Flow
+
+**Happy Path**:
+```
+1. User lands on Calculator page
+2. Amount field auto-focused
+3. User types amount: "50000"
+4. User selects currency: "INR" (default selected)
+5. User selects mode: "greedy" (default selected)
+6. User clicks "Calculate" button OR presses Enter
+7. Button shows loading state (spinner)
+8. API request sent
+9. Results appear with animation (< 100ms)
+10. Summary cards + breakdown table displayed
+11. User can copy or export results
+12. User can modify inputs and recalculate
+```
+
+**Error Path**:
+```
+1. User enters invalid amount: "abc"
+2. Error message appears: "Invalid amount format"
+3. Calculate button disabled
+4. User corrects input: "5000"
+5. Error clears, button enabled
+6. User clicks Calculate
+7. API returns error (e.g., server down)
+8. Error notification shown
+9. Results section remains hidden
+10. User can retry
+```
+
+#### 5.1.4 Accessibility Requirements
+
+**MUST HAVE**:
+-  ARIA labels on all form inputs
+-  Keyboard navigation (Tab, Shift+Tab, Enter)
+-  Focus indicators (visible outline)
+-  Screen reader announcements for results
+-  Error messages associated with inputs (aria-describedby)
+-  Sufficient color contrast (WCAG AA minimum)
+-  Focus trap in modals (if any)
+
+**Example**:
+```tsx
+<input
+  type="text"
+  id="amount"
+  aria-label="Enter amount to calculate"
+  aria-required="true"
+  aria-invalid={hasError}
+  aria-describedby={hasError ? "amount-error" : undefined}
+/>
+{hasError && (
+  <div id="amount-error" role="alert">
+    {errorMessage}
+  </div>
+)}
+```
+
+### 5.2 History Page
+
+#### 5.2.1 Layout Specification
+
+**Component**: `packages/desktop-app/src/components/HistoryPage.tsx`
+
+**Layout**:
+```
+
+     
+  Quick           Full History                       
+  Access               
+  (Sidebar)        Filter Bar                      
+                   Currency | Date Range           
+  Last 10              
+  Calcs                
+                   History Table                   
+  1. 50000         ID | Date | Amount | Cur       
+     INR           ... paginated rows ...         
+     Today             
+                       
+  2. 1000          Pagination                      
+     USD           << < 1 2 3 > >>                 
+     Today             
+                                                      
+  ...                                                 
+     
+
+```
+
+**Required Features**:
+
+1. **Quick Access Sidebar**
+   - Show last 10 calculations
+   - Display: Amount, Currency, Date (relative)
+   - Click: Load full details in main area
+   - Scroll: Fixed position
+   - Update: Real-time when new calc made
+
+2. **Filter Bar**
+   - Currency filter (All, INR, USD, EUR, GBP)
+   - Date range picker
+   - Clear filters button
+   - Active filter count badge
+
+3. **History Table**
+   - Columns: ID, Date, Amount, Currency, Mode, Total Denoms, Actions
+   - Sortable: By Date (default desc), Amount
+   - Searchable: By amount
+   - Selectable: Checkbox for batch delete
+   - Actions: View, Delete
+
+4. **Pagination**
+   - Items per page: 50 (default), 100, 200
+   - Page controls: First, Previous, Numbers, Next, Last
+   - Total count displayed
+   - URL param sync (optional)
+
+#### 5.2.2 Data Loading & Caching
+
+**Strategy**: React Query with caching
+
+```typescript
+const { data, isLoading, error, refetch } = useQuery({
+  queryKey: ['history', page, filters],
+  queryFn: () => api.getHistory(page, filters),
+  staleTime: 5 * 60 * 1000, // 5 minutes
+  cacheTime: 10 * 60 * 1000, // 10 minutes
+  keepPreviousData: true, // Smooth pagination
+});
+```
+
+**Loading States**:
+- Initial load: Full skeleton loader
+- Pagination: Show previous data + loading spinner
+- Refetch: Subtle loading indicator
+- Empty state: "No calculations yet" message
+
+**Error States**:
+- Network error: Retry button
+- Server error: Contact support message
+- Empty results: "No matches" with clear filters button
+
+### 5.3 Bulk Upload Page
+
+#### 5.3.1 Complete UI Specification
+
+**File**: `packages/desktop-app/src/components/BulkUploadPage.tsx` (695 lines)
+
+**Layout Phases**:
+
+**Phase 1: Upload (Idle)**
+```
+
+ Bulk Upload & Processing                      
+                                                
+   
+  [Download CSV Template]                    
+   
+                                                
+   
+    Drag & Drop Area                       
+                                             
+   Drag & drop your file here               
+   or click to browse                       
+                                             
+   [Choose File]                            
+   
+                                                
+ Supported: CSV, PDF, Word, Images             
+                                                
+  Save to history                             
+ [Upload & Process] (disabled)                 
+
+```
+
+**Phase 2: File Selected**
+```
+
+   
+    Selected File:                         
+    test_bulk_upload.csv                   
+   Format: CSV  Size: 1.25 KB              
+   [Remove File]                             
+   
+                                                
+  Save to history                             
+ [Upload & Process] (enabled, blue)            
+
+```
+
+**Phase 3: Processing**
+```
+
+   
+    Processing Data...                     
+                                             
+    test_bulk_upload.csv                  
+   CSV  1.25 KB                            
+                                             
+   [Spinner Animation]                       
+   Extracting and calculating...             
+   
+
+```
+
+**Phase 4: Results**
+```
+
+   
+  Processed File:                            
+   test_bulk_upload.csv                    
+  Format: CSV  Size: 1.25 KB               
+  Processed: Nov 25, 2025 10:30 AM          
+   
+                                                
+               
+  TotalSuccessFailed  Time                
+   10     9     1    0.12s               
+               
+                                                
+ [Upload Another] [Export CSV] [Export JSON]   
+                                                
+   
+  Results Table                              
+  Row | Status | Amount | Currency | ...    
+   1          1000      INR            
+   2          2500      USD            
+   3                            Err    
+   
+
+```
+
+#### 5.3.2 File Type Icons
+
+**MUST Display Different Icons**:
+```typescript
+getFileIcon(fileName: string) {
+  if (fileName.endsWith('.csv'))
+    return <FileSpreadsheet className="h-8 w-8 text-green-500" />;
+  if (fileName.endsWith('.pdf'))
+    return <FileText className="h-8 w-8 text-red-500" />;
+  if (fileName.match(/\.(docx|doc)$/))
+    return <FileText className="h-8 w-8 text-blue-500" />;
+  if (fileName.match(/\.(jpg|jpeg|png|...)$/))
+    return <FileImage className="h-8 w-8 text-purple-500" />;
+  return <FileText className="h-8 w-8 text-gray-500" />;
+}
+```
+
+#### 5.3.3 Drag & Drop Behavior
+
+**Visual States**:
+```css
+/* Default */
+.drop-zone {
+  border: 2px dashed #d1d5db;
+  background: #ffffff;
+}
+
+/* Hover */
+.drop-zone:hover {
+  border-color: #9ca3af;
+}
+
+/* Active (dragging over) */
+.drop-zone.drag-active {
+  border: 2px dashed #3b82f6;
+  background: #eff6ff;
+}
+
+/* Dark mode */
+.dark .drop-zone {
+  border-color: #4b5563;
+  background: #1f2937;
+}
+
+.dark .drop-zone.drag-active {
+  border-color: #60a5fa;
+  background: #1e3a8a;
+}
+```
+
+**Event Handlers**:
+```typescript
+const handleDrag = (e: React.DragEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  
+  if (e.type === "dragenter" || e.type === "dragover") {
+    setDragActive(true);
+  } else if (e.type === "dragleave") {
+    setDragActive(false);
+  }
+};
+
+const handleDrop = (e: React.DragEvent) => {
+  e.preventDefault();
+  e.stopPropagation();
+  setDragActive(false);
+  
+  if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+    handleFileSelect(e.dataTransfer.files[0]);
+  }
+};
+```
+
+#### 5.3.4 File Validation UI
+
+**Real-time Feedback**:
+```
+ Invalid file type
+   Please upload CSV, PDF, Word, or Image files
+
+ File too large
+   Maximum size: 50MB for images/PDFs, 10MB for others
+   Your file: 75MB
+
+ File is empty
+   The selected file contains no data
+
+ test_bulk_upload.csv
+   Valid CSV file  1.25 KB  Ready to upload
+```
+
+#### 5.3.5 Results Table Specification
+
+**Columns** (must display exactly):
+
+| Column | Width | Content | Sortable |
+|--------|-------|---------|----------|
+| Row # | 80px | Row number from file | No |
+| Status | 100px |  Success /  Failed icon + text | Yes |
+| Amount | 120px | Formatted number | Yes |
+| Currency | 100px | 3-letter code + symbol | No |
+| Mode | 150px | Optimization mode name | No |
+| Denoms | 100px | Total denomination count | Yes |
+| Details | 200px | Error message OR "View breakdown" link | No |
+
+**Row Colors**:
+```css
+/* Success row */
+.row-success {
+  background: #f0fdf4; /* light green */
+}
+
+/* Error row */
+.row-error {
+  background: #fef2f2; /* light red */
+}
+
+/* Hover */
+.row:hover {
+  background: #f9fafb;
+}
+
+/* Dark mode */
+.dark .row-success {
+  background: #064e3b20;
+}
+
+.dark .row-error {
+  background: #7f1d1d20;
+}
+```
+
+### 5.4 Settings Page
+
+#### 5.4.1 Layout Specification
+
+**Component**: `packages/desktop-app/src/components/SettingsPage.tsx`
+
+**Sections**:
+
+1. **Appearance**
+   ```
+   
+    Appearance                      
+                                    
+    Theme                           
+     Light   Dark   System      
+                                    
+    [Save Settings]                 
+   
+   ```
+
+2. **Language & Region**
+   ```
+   
+    Language & Region               
+                                    
+    Language                        
+    [English ]                     
+      - English                     
+      - ??? (Hindi)              
+      - EspaÃƒÂ±ol (Spanish)           
+      - FranÃƒÂ§ais (French)           
+      - Deutsch (German)            
+                                    
+    [Save Settings]                 
+   
+   ```
+
+3. **Default Preferences**
+   ```
+   
+    Default Preferences             
+                                    
+    Default Currency                
+    [INR ]                         
+                                    
+    Default Optimization Mode       
+    [Greedy ]                      
+                                    
+    Auto-save to history            
+     Enabled                       
+                                    
+    [Save Settings] [Reset]         
+   
+   ```
+
+4. **Data Management**
+   ```
+   
+    Data Management                 
+                                    
+    History                         
+    Total calculations: 1,234       
+    Database size: 5.2 MB           
+                                    
+    [Export All History]            
+    [Clear All History] (red)       
+                                    
+    [Reset All Settings]            
+   
+   ```
+
+#### 5.4.2 Settings Persistence
+
+**Flow**:
+```
+User changes setting
+  
+State updated (React)
+  
+"Save Settings" button clicked
+  
+API call: PUT /api/v1/settings
+  
+Database updated (SQLite)
+  
+Success notification shown
+  
+UI reflects new settings
+```
+
+**Immediate Apply** (no save needed):
+- Theme change (instant preview)
+- Language change (instant UI update)
+
+**Requires Save**:
+- Default currency
+- Default mode
+- Auto-save preference
+
+#### 5.4.3 Confirmation Dialogs
+
+**MUST Confirm Before**:
+
+1. **Clear All History**
+   ```
+     Clear All History?
+   
+   This will permanently delete all 1,234 calculations
+   from your history. This action cannot be undone.
+   
+   [Cancel]  [Delete All History]
+   ```
+
+2. **Reset All Settings**
+   ```
+     Reset All Settings?
+   
+   This will restore all settings to their default values:
+    Theme: Light
+    Language: English
+    Currency: INR
+    Mode: Greedy
+    Auto-save: Enabled
+   
+   Your calculation history will NOT be affected.
+   
+   [Cancel]  [Reset Settings]
+   ```
+
+### 5.5 Common UI Components
+
+#### 5.5.1 Navigation Bar
+
+**Requirements**:
+- Fixed at top
+- Logo + App title on left
+- Navigation tabs in center
+- Theme toggle on right
+- Active tab highlighted
+- Responsive collapse on mobile
+
+**Structure**:
+```tsx
+<nav className="bg-white dark:bg-gray-800 border-b">
+  <div className="flex items-center justify-between">
+    {/* Logo */}
+    <div className="flex items-center">
+      <Logo />
+      <span>Currency Distributor</span>
+    </div>
+    
+    {/* Tabs */}
+    <div className="flex gap-4">
+      <Tab active={tab === 'calculator'}>Calculator</Tab>
+      <Tab active={tab === 'history'}>History</Tab>
+      <Tab active={tab === 'bulkUpload'}>Bulk Upload</Tab>
+      <Tab active={tab === 'settings'}>Settings</Tab>
+    </div>
+    
+    {/* Theme Toggle */}
+    <ThemeToggle />
+  </div>
+</nav>
+```
+
+#### 5.5.2 Loading States
+
+**Spinner Component**:
+```tsx
+<Loader2 className="w-5 h-5 animate-spin" />
+```
+
+**Skeleton Loaders**:
+```tsx
+// Table row skeleton
+<div className="animate-pulse">
+  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+  <div className="h-4 bg-gray-200 rounded w-1/2 mt-2"></div>
+</div>
+```
+
+**Full Page Loader**:
+```tsx
+<div className="flex items-center justify-center min-h-screen">
+  <Loader2 className="w-12 h-12 animate-spin text-blue-600" />
+</div>
+```
+
+#### 5.5.3 Notifications/Toasts
+
+**Types**:
+- Success (green)
+- Error (red)
+- Warning (yellow)
+- Info (blue)
+
+**Position**: Top-right corner
+
+**Duration**: 3 seconds (auto-dismiss)
+
+**Example**:
+```tsx
+<Toast type="success">
+   Calculation saved to history
+</Toast>
+
+<Toast type="error">
+   Failed to load history. Please try again.
+</Toast>
+```
+
+#### 5.5.4 Empty States
+
+**Calculator** (before first calculation):
+```
+
+                           
+   Enter an amount above    
+   to calculate             
+   denomination breakdown   
+
+```
+
+**History** (no calculations):
+```
+
+                           
+   No calculations yet      
+                            
+   [Go to Calculator]       
+
+```
+
+**Bulk Upload** (no file):
+```
+
+                           
+   Drag & drop a file       
+   or click to browse       
+
+```
+
+### 5.6 Dark Mode Implementation
+
+#### 5.6.1 Complete Color Mapping
+
+**EVERY Component Must Support**:
+
+| Element | Light | Dark |
+|---------|-------|------|
+| Page Background | #ffffff | #111827 |
+| Card Background | #ffffff | #1f2937 |
+| Text Primary | #111827 | #f9fafb |
+| Text Secondary | #6b7280 | #9ca3af |
+| Border | #e5e7eb | #374151 |
+| Input Background | #ffffff | #1f2937 |
+| Input Border | #d1d5db | #4b5563 |
+| Button Primary | #2563eb | #3b82f6 |
+| Button Hover | #1d4ed8 | #2563eb |
+| Success | #10b981 | #34d399 |
+| Error | #ef4444 | #f87171 |
+| Warning | #f59e0b | #fbbf24 |
+
+#### 5.6.2 Tailwind Classes Standard
+
+```css
+/* Always use both light and dark */
+className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100"
+
+/* Never use only light mode */
+className="bg-white text-gray-900" /*  WRONG */
+
+/* Correct */
+className="bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100" /*  */
+```
+
+### 5.7 Responsive Design Rules
+
+#### 5.7.1 Breakpoint System
+
+```typescript
+const breakpoints = {
+  sm: '640px',   // Mobile landscape, small tablets
+  md: '768px',   // Tablets
+  lg: '1024px',  // Laptops
+  xl: '1280px',  // Desktops
+  '2xl': '1536px' // Large desktops
+};
+```
+
+#### 5.7.2 Mobile Behavior (< 640px)
+
+**MUST**:
+- Single column layout
+- Full-width buttons
+- Stacked form fields
+- Collapsible navigation (hamburger menu)
+- Touch-friendly tap targets (min 44px)
+- Simplified tables (responsive cards)
+
+**Example**:
+```tsx
+// Desktop: 3 columns
+<div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+// Desktop: Row, Mobile: Column
+<div className="flex flex-col md:flex-row gap-4">
+
+// Hide on mobile
+<div className="hidden md:block">
+
+// Show only on mobile
+<div className="block md:hidden">
+```
+
+---
+
+
+## 6. Backend Functional Logic
+
+### 6.1 FastAPI Application Structure
+
+**File**: `packages/local-backend/app/main.py`
+
+**Application Initialization**:
+```python
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from app.api import calculations, bulk, ocr, history, settings
+from app.db.database import engine, Base
+
+# Create tables
+Base.metadata.create_all(bind=engine)
+
+app = FastAPI(
+    title="Currency Denomination Calculator API",
+    version="1.0.0",
+    description="Local backend for denomination calculations"
+)
+
+# CORS configuration (Electron app)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173", "app://"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+# Include routers
+app.include_router(calculations.router, prefix="/api/v1", tags=["calculations"])
+app.include_router(bulk.router, prefix="/api/v1", tags=["bulk"])
+app.include_router(ocr.router, prefix="/api/v1", tags=["ocr"])
+app.include_router(history.router, prefix="/api/v1", tags=["history"])
+app.include_router(settings.router, prefix="/api/v1", tags=["settings"])
+```
+
+### 6.2 Complete API Endpoints
+
+#### 6.2.1 Calculations Endpoints
+
+**File**: `packages/local-backend/app/api/calculations.py` (530+ lines)
+
+**1. POST /api/v1/calculate**
+
+**Purpose**: Calculate denomination breakdown for a single amount
+
+**Request Schema**:
+```python
+class CalculationRequest(BaseModel):
+    amount: Decimal = Field(..., gt=0, description="Amount to calculate")
+    currency: str = Field(..., pattern="^(INR|USD|EUR|GBP)$")
+    mode: str = Field(
+        default="greedy",
+        pattern="^(greedy|balanced|minimize_large|minimize_small)$"
+    )
+    save_to_history: bool = Field(default=True)
+```
+
+**Response Schema**:
+```python
+class CalculationResponse(BaseModel):
+    calculation_id: int
+    amount: Decimal
+    currency: str
+    mode: str
+    breakdown: List[DenominationItem]
+    summary: Summary
+    timestamp: datetime
+
+class DenominationItem(BaseModel):
+    denomination: Decimal
+    type: str  # "note" or "coin"
+    count: int
+    total_value: Decimal
+
+class Summary(BaseModel):
+    total_notes: int
+    total_coins: int
+    total_denominations: int
+```
+
+**Business Logic**:
+```python
+@router.post("/calculate", response_model=CalculationResponse)
+async def calculate(
+    request: CalculationRequest,
+    db: Session = Depends(get_db)
+):
+    # 1. Validate amount (additional business rules)
+    if request.amount > Decimal("999999999999999"):
+        raise HTTPException(400, "Amount too large")
+    
+    # 2. Initialize engine
+    engine = DenominationEngine()
+    
+    # 3. Calculate breakdown
+    result = engine.calculate(
+        amount=request.amount,
+        currency=request.currency,
+        mode=request.mode
+    )
+    
+    # 4. Save to history if requested
+    if request.save_to_history:
+        calculation = Calculation(
+            amount=request.amount,
+            currency=request.currency,
+            mode=request.mode,
+            breakdown=json.dumps(result['breakdown']),
+            summary=json.dumps(result['summary']),
+            timestamp=datetime.utcnow()
+        )
+        db.add(calculation)
+        db.commit()
+        db.refresh(calculation)
+        calculation_id = calculation.id
+    else:
+        calculation_id = -1  # Not saved
+    
+    # 5. Return response
+    return CalculationResponse(
+        calculation_id=calculation_id,
+        amount=request.amount,
+        currency=request.currency,
+        mode=request.mode,
+        breakdown=result['breakdown'],
+        summary=result['summary'],
+        timestamp=datetime.utcnow()
+    )
+```
+
+**Error Responses**:
+```python
+# 400 Bad Request
+{
+    "detail": "Amount must be greater than 0"
+}
+
+# 422 Unprocessable Entity
+{
+    "detail": [
+        {
+            "loc": ["body", "currency"],
+            "msg": "string does not match regex",
+            "type": "value_error.str.regex"
+        }
+    ]
+}
+
+# 500 Internal Server Error
+{
+    "detail": "Calculation engine error: <error_message>"
+}
+```
+
+**2. POST /api/v1/calculate-batch**
+
+**Purpose**: Calculate multiple amounts in one request
+
+**Request Schema**:
+```python
+class BatchCalculationRequest(BaseModel):
+    items: List[CalculationRequest] = Field(..., max_items=1000)
+```
+
+**Response Schema**:
+```python
+class BatchCalculationResponse(BaseModel):
+    results: List[CalculationResponse]
+    summary: BatchSummary
+
+class BatchSummary(BaseModel):
+    total_items: int
+    successful: int
+    failed: int
+    total_time_seconds: float
+```
+
+**Business Logic**:
+```python
+@router.post("/calculate-batch", response_model=BatchCalculationResponse)
+async def calculate_batch(
+    request: BatchCalculationRequest,
+    db: Session = Depends(get_db)
+):
+    results = []
+    failed = 0
+    start_time = time.time()
+    
+    for item in request.items:
+        try:
+            result = await calculate(item, db)
+            results.append(result)
+        except Exception as e:
+            logger.error(f"Batch item failed: {e}")
+            failed += 1
+            results.append(None)  # Or error object
+    
+    total_time = time.time() - start_time
+    
+    return BatchCalculationResponse(
+        results=[r for r in results if r is not None],
+        summary=BatchSummary(
+            total_items=len(request.items),
+            successful=len(results) - failed,
+            failed=failed,
+            total_time_seconds=total_time
+        )
+    )
+```
+
+#### 6.2.2 Bulk Upload Endpoints
+
+**File**: `packages/local-backend/app/api/bulk.py`
+
+**1. POST /api/v1/bulk/upload**
+
+**Purpose**: Process bulk upload files (CSV, PDF, Word, Images)
+
+**Request**: Multipart form data
+```python
+@router.post("/bulk/upload")
+async def bulk_upload(
+    file: UploadFile = File(...),
+    save_to_history: bool = Form(default=True),
+    db: Session = Depends(get_db)
+):
+    """
+    Upload and process bulk calculation file.
+    
+    Supported formats:
+    - CSV: Direct parsing
+    - PDF: OCR + text extraction
+    - Word: Text extraction
+    - Images: OCR processing
+    """
+```
+
+**File Validation**:
+```python
+# Size limits
+MAX_FILE_SIZE = {
+    'csv': 10 * 1024 * 1024,      # 10 MB
+    'pdf': 50 * 1024 * 1024,      # 50 MB
+    'docx': 10 * 1024 * 1024,     # 10 MB
+    'image': 50 * 1024 * 1024,    # 50 MB
+}
+
+# Extension validation
+ALLOWED_EXTENSIONS = {
+    'csv': ['.csv'],
+    'pdf': ['.pdf'],
+    'word': ['.docx', '.doc'],
+    'image': ['.jpg', '.jpeg', '.png', '.tiff', '.bmp']
+}
+
+def validate_file(file: UploadFile) -> str:
+    # Check extension
+    ext = Path(file.filename).suffix.lower()
+    file_type = None
+    
+    for type_name, exts in ALLOWED_EXTENSIONS.items():
+        if ext in exts:
+            file_type = type_name
+            break
+    
+    if not file_type:
+        raise HTTPException(400, f"Unsupported file type: {ext}")
+    
+    # Check size
+    file.file.seek(0, 2)  # Seek to end
+    size = file.file.tell()
+    file.file.seek(0)  # Reset
+    
+    if size > MAX_FILE_SIZE[file_type]:
+        raise HTTPException(
+            400,
+            f"File too large. Max size: {MAX_FILE_SIZE[file_type] / 1024 / 1024:.1f} MB"
+        )
+    
+    if size == 0:
+        raise HTTPException(400, "File is empty")
+    
+    return file_type
+```
+
+**Processing Logic**:
+```python
+@router.post("/bulk/upload", response_model=BulkUploadResponse)
+async def bulk_upload(
+    file: UploadFile = File(...),
+    save_to_history: bool = Form(default=True),
+    db: Session = Depends(get_db)
+):
+    # 1. Validate file
+    file_type = validate_file(file)
+    
+    # 2. Save temporary file
+    temp_path = Path(f"/tmp/{file.filename}")
+    with temp_path.open("wb") as f:
+        shutil.copyfileobj(file.file, f)
+    
+    try:
+        # 3. Route to appropriate processor
+        if file_type == 'csv':
+            data = process_csv(temp_path)
+        elif file_type == 'pdf':
+            data = await process_pdf_ocr(temp_path)
+        elif file_type == 'word':
+            data = process_word(temp_path)
+        elif file_type == 'image':
+            data = await process_image_ocr(temp_path)
+        
+        # 4. Perform calculations
+        results = []
+        for row in data:
+            try:
+                calc_result = await calculate(
+                    CalculationRequest(**row),
+                    db
+                )
+                results.append({
+                    'status': 'success',
+                    'row_number': row['row_number'],
+                    'result': calc_result
+                })
+            except Exception as e:
+                results.append({
+                    'status': 'failed',
+                    'row_number': row['row_number'],
+                    'error': str(e)
+                })
+        
+        # 5. Compute summary
+        successful = sum(1 for r in results if r['status'] == 'success')
+        failed = len(results) - successful
+        
+        return BulkUploadResponse(
+            filename=file.filename,
+            file_format=file_type.upper(),
+            file_size_kb=temp_path.stat().st_size / 1024,
+            processed_at=datetime.utcnow(),
+            total_rows=len(results),
+            successful_rows=successful,
+            failed_rows=failed,
+            processing_time_seconds=time.time() - start_time,
+            results=results
+        )
+    
+    finally:
+        # 6. Cleanup
+        temp_path.unlink(missing_ok=True)
+```
+
+**Response Schema**:
+```python
+class BulkUploadResponse(BaseModel):
+    filename: str
+    file_format: str  # "CSV", "PDF", "DOCX", "IMAGE"
+    file_size_kb: float
+    processed_at: datetime
+    total_rows: int
+    successful_rows: int
+    failed_rows: int
+    processing_time_seconds: float
+    results: List[BulkRowResult]
+
+class BulkRowResult(BaseModel):
+    status: str  # "success" or "failed"
+    row_number: int
+    result: Optional[CalculationResponse]
+    error: Optional[str]
+```
+
+**2. GET /api/v1/bulk/template**
+
+**Purpose**: Download CSV template file
+
+**Response**: CSV file download
+
+```python
+@router.get("/bulk/template")
+async def download_template():
+    """
+    Return CSV template file for bulk upload.
+    """
+    content = """amount,currency,mode
+1000,INR,greedy
+2500,USD,balanced
+500,EUR,minimize_large"""
+    
+    return Response(
+        content=content,
+        media_type="text/csv",
+        headers={
+            "Content-Disposition": "attachment; filename=bulk_upload_template.csv"
+        }
+    )
+```
+
+#### 6.2.3 OCR Processing Endpoints
+
+**File**: `packages/local-backend/app/api/ocr.py`
+
+**1. POST /api/v1/ocr/process**
+
+**Purpose**: Process image or PDF with OCR
+
+**Request**: Multipart form data
+```python
+@router.post("/ocr/process")
+async def process_ocr(
+    file: UploadFile = File(...),
+    language: str = Form(default="eng"),  # Tesseract language code
+    db: Session = Depends(get_db)
+):
+    """
+    Extract text and calculation data from image/PDF using OCR.
+    
+    Supports:
+    - Images: JPG, PNG, TIFF, BMP
+    - PDFs: Multi-page with text or scanned pages
+    """
+```
+
+**Response Schema**:
+```python
+class OCRResponse(BaseModel):
+    filename: str
+    file_type: str
+    extracted_text: str
+    detected_amounts: List[DetectedAmount]
+    processing_time_seconds: float
+
+class DetectedAmount(BaseModel):
+    amount: Decimal
+    currency: Optional[str]  # Auto-detected or None
+    confidence: float  # OCR confidence 0-1
+    position: str  # "line 5, column 10"
+```
+
+**Processing Logic** (Detailed in Section 8):
+```python
+from app.services.ocr_processor import OCRProcessor
+
+@router.post("/ocr/process", response_model=OCRResponse)
+async def process_ocr(
+    file: UploadFile = File(...),
+    language: str = Form(default="eng"),
+    db: Session = Depends(get_db)
+):
+    # 1. Validate file type
+    if not file.filename.lower().endswith(('.pdf', '.jpg', '.jpeg', '.png', '.tiff', '.bmp')):
+        raise HTTPException(400, "Unsupported file type for OCR")
+    
+    # 2. Save temporary file
+    temp_path = Path(f"/tmp/{file.filename}")
+    with temp_path.open("wb") as f:
+        shutil.copyfileobj(file.file, f)
+    
+    try:
+        # 3. Initialize OCR processor
+        processor = OCRProcessor()
+        
+        # 4. Process file
+        start_time = time.time()
+        result = await processor.process_file(temp_path, language)
+        processing_time = time.time() - start_time
+        
+        # 5. Return results
+        return OCRResponse(
+            filename=file.filename,
+            file_type=temp_path.suffix,
+            extracted_text=result['text'],
+            detected_amounts=result['amounts'],
+            processing_time_seconds=processing_time
+        )
+    
+    finally:
+        temp_path.unlink(missing_ok=True)
+```
+
+#### 6.2.4 History Endpoints
+
+**File**: `packages/local-backend/app/api/history.py`
+
+**1. GET /api/v1/history**
+
+**Purpose**: Get paginated calculation history
+
+**Query Parameters**:
+```python
+@router.get("/history", response_model=HistoryResponse)
+async def get_history(
+    page: int = Query(default=1, ge=1),
+    per_page: int = Query(default=50, ge=1, le=200),
+    currency: Optional[str] = Query(default=None, pattern="^(INR|USD|EUR|GBP)$"),
+    start_date: Optional[datetime] = Query(default=None),
+    end_date: Optional[datetime] = Query(default=None),
+    sort_by: str = Query(default="timestamp", pattern="^(timestamp|amount)$"),
+    sort_order: str = Query(default="desc", pattern="^(asc|desc)$"),
+    db: Session = Depends(get_db)
+):
+```
+
+**Response Schema**:
+```python
+class HistoryResponse(BaseModel):
+    items: List[HistoryItem]
+    pagination: Pagination
+
+class HistoryItem(BaseModel):
+    id: int
+    amount: Decimal
+    currency: str
+    mode: str
+    total_denominations: int
+    timestamp: datetime
+
+class Pagination(BaseModel):
+    page: int
+    per_page: int
+    total_items: int
+    total_pages: int
+    has_next: bool
+    has_prev: bool
+```
+
+**Business Logic**:
+```python
+@router.get("/history", response_model=HistoryResponse)
+async def get_history(
+    page: int = 1,
+    per_page: int = 50,
+    currency: Optional[str] = None,
+    start_date: Optional[datetime] = None,
+    end_date: Optional[datetime] = None,
+    sort_by: str = "timestamp",
+    sort_order: str = "desc",
+    db: Session = Depends(get_db)
+):
+    # 1. Build query
+    query = db.query(Calculation)
+    
+    # 2. Apply filters
+    if currency:
+        query = query.filter(Calculation.currency == currency)
+    
+    if start_date:
+        query = query.filter(Calculation.timestamp >= start_date)
+    
+    if end_date:
+        query = query.filter(Calculation.timestamp <= end_date)
+    
+    # 3. Apply sorting
+    if sort_by == "timestamp":
+        order_col = Calculation.timestamp
+    elif sort_by == "amount":
+        order_col = Calculation.amount
+    
+    if sort_order == "desc":
+        query = query.order_by(order_col.desc())
+    else:
+        query = query.order_by(order_col.asc())
+    
+    # 4. Count total
+    total_items = query.count()
+    
+    # 5. Paginate
+    offset = (page - 1) * per_page
+    items = query.offset(offset).limit(per_page).all()
+    
+    # 6. Format response
+    history_items = []
+    for calc in items:
+        breakdown = json.loads(calc.breakdown)
+        total_denoms = sum(item['count'] for item in breakdown)
+        
+        history_items.append(HistoryItem(
+            id=calc.id,
+            amount=calc.amount,
+            currency=calc.currency,
+            mode=calc.mode,
+            total_denominations=total_denoms,
+            timestamp=calc.timestamp
+        ))
+    
+    total_pages = (total_items + per_page - 1) // per_page
+    
+    return HistoryResponse(
+        items=history_items,
+        pagination=Pagination(
+            page=page,
+            per_page=per_page,
+            total_items=total_items,
+            total_pages=total_pages,
+            has_next=page < total_pages,
+            has_prev=page > 1
+        )
+    )
+```
+
+**2. GET /api/v1/history/quick**
+
+**Purpose**: Get last 10 calculations for quick access
+
+**Response Schema**:
+```python
+class QuickHistoryResponse(BaseModel):
+    items: List[QuickHistoryItem]
+
+class QuickHistoryItem(BaseModel):
+    id: int
+    amount: Decimal
+    currency: str
+    timestamp: datetime
+    relative_time: str  # "2 minutes ago", "Today", etc.
+```
+
+**Business Logic**:
+```python
+@router.get("/history/quick", response_model=QuickHistoryResponse)
+async def get_quick_history(db: Session = Depends(get_db)):
+    # Get last 10 calculations
+    calculations = db.query(Calculation)\
+        .order_by(Calculation.timestamp.desc())\
+        .limit(10)\
+        .all()
+    
+    items = []
+    for calc in calculations:
+        relative_time = get_relative_time(calc.timestamp)
+        
+        items.append(QuickHistoryItem(
+            id=calc.id,
+            amount=calc.amount,
+            currency=calc.currency,
+            timestamp=calc.timestamp,
+            relative_time=relative_time
+        ))
+    
+    return QuickHistoryResponse(items=items)
+
+def get_relative_time(timestamp: datetime) -> str:
+    """Convert timestamp to relative time string."""
+    now = datetime.utcnow()
+    delta = now - timestamp
+    
+    if delta.total_seconds() < 60:
+        return "Just now"
+    elif delta.total_seconds() < 3600:
+        minutes = int(delta.total_seconds() / 60)
+        return f"{minutes} minute{'s' if minutes > 1 else ''} ago"
+    elif delta.total_seconds() < 86400:
+        hours = int(delta.total_seconds() / 3600)
+        return f"{hours} hour{'s' if hours > 1 else ''} ago"
+    elif delta.days == 0:
+        return "Today"
+    elif delta.days == 1:
+        return "Yesterday"
+    else:
+        return timestamp.strftime("%b %d, %Y")
+```
+
+**3. GET /api/v1/history/{id}**
+
+**Purpose**: Get full details of a specific calculation
+
+**Response Schema**:
+```python
+class CalculationDetail(BaseModel):
+    id: int
+    amount: Decimal
+    currency: str
+    mode: str
+    breakdown: List[DenominationItem]
+    summary: Summary
+    timestamp: datetime
+```
+
+**4. DELETE /api/v1/history/{id}**
+
+**Purpose**: Delete a specific calculation
+
+**Response**:
+```python
+{
+    "message": "Calculation deleted successfully",
+    "id": 123
+}
+```
+
+**5. DELETE /api/v1/history/clear**
+
+**Purpose**: Delete all calculations (requires confirmation)
+
+**Request Body**:
+```python
+class ClearHistoryRequest(BaseModel):
+    confirm: bool = Field(..., description="Must be True to confirm deletion")
+```
+
+**Response**:
+```python
+{
+    "message": "All history cleared successfully",
+    "deleted_count": 1234
+}
+```
+
+#### 6.2.5 Settings Endpoints
+
+**File**: `packages/local-backend/app/api/settings.py`
+
+**1. GET /api/v1/settings**
+
+**Purpose**: Get all user settings
+
+**Response Schema**:
+```python
+class SettingsResponse(BaseModel):
+    theme: str  # "light", "dark", "system"
+    language: str  # "en", "hi", "es", "fr", "de"
+    default_currency: str  # "INR", "USD", "EUR", "GBP"
+    default_mode: str  # "greedy", "balanced", etc.
+    auto_save_history: bool
+```
+
+**2. PUT /api/v1/settings**
+
+**Purpose**: Update user settings
+
+**Request Schema**:
+```python
+class UpdateSettingsRequest(BaseModel):
+    theme: Optional[str] = Field(None, pattern="^(light|dark|system)$")
+    language: Optional[str] = Field(None, pattern="^(en|hi|es|fr|de)$")
+    default_currency: Optional[str] = Field(None, pattern="^(INR|USD|EUR|GBP)$")
+    default_mode: Optional[str] = Field(None, pattern="^(greedy|balanced|minimize_large|minimize_small)$")
+    auto_save_history: Optional[bool] = None
+```
+
+**3. POST /api/v1/settings/reset**
+
+**Purpose**: Reset all settings to defaults
+
+**Response**: Returns default settings
+
+**4. GET /api/v1/settings/stats**
+
+**Purpose**: Get database statistics
+
+**Response Schema**:
+```python
+class StatsResponse(BaseModel):
+    total_calculations: int
+    database_size_mb: float
+    oldest_calculation: Optional[datetime]
+    newest_calculation: Optional[datetime]
+    calculations_by_currency: Dict[str, int]
+```
+
+### 6.3 Error Handling Strategy
+
+**Global Exception Handler**:
+```python
+from fastapi import Request, status
+from fastapi.responses import JSONResponse
+from fastapi.exceptions import RequestValidationError
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+        content={
+            "detail": exc.errors(),
+            "body": exc.body
+        }
+    )
+
+@app.exception_handler(HTTPException)
+async def http_exception_handler(request: Request, exc: HTTPException):
+    return JSONResponse(
+        status_code=exc.status_code,
+        content={
+            "detail": exc.detail
+        }
+    )
+
+@app.exception_handler(Exception)
+async def generic_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled exception: {exc}", exc_info=True)
+    return JSONResponse(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+        content={
+            "detail": "Internal server error"
+        }
+    )
+```
+
+**Custom Exceptions**:
+```python
+class CalculationEngineError(Exception):
+    """Raised when denomination engine fails"""
+    pass
+
+class OCRProcessingError(Exception):
+    """Raised when OCR processing fails"""
+    pass
+
+class FileValidationError(Exception):
+    """Raised when file validation fails"""
+    pass
+```
+
+### 6.4 Logging Configuration
+
+**File**: `packages/local-backend/app/utils/logger.py`
+
+```python
+import logging
+from logging.handlers import RotatingFileHandler
+
+def setup_logger():
+    """Configure application-wide logging."""
+    logger = logging.getLogger("currency_calculator")
+    logger.setLevel(logging.INFO)
+    
+    # Console handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    console_format = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    )
+    console_handler.setFormatter(console_format)
+    
+    # File handler (rotating)
+    file_handler = RotatingFileHandler(
+        'logs/app.log',
+        maxBytes=10 * 1024 * 1024,  # 10 MB
+        backupCount=5
+    )
+    file_handler.setLevel(logging.DEBUG)
+    file_format = logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - [%(filename)s:%(lineno)d] - %(message)s'
+    )
+    file_handler.setFormatter(file_format)
+    
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+    
+    return logger
+
+logger = setup_logger()
+```
+
+**Usage in Endpoints**:
+```python
+from app.utils.logger import logger
+
+@router.post("/calculate")
+async def calculate(request: CalculationRequest, db: Session = Depends(get_db)):
+    logger.info(f"Calculation request: amount={request.amount}, currency={request.currency}")
+    
+    try:
+        result = engine.calculate(...)
+        logger.info(f"Calculation successful: id={calc_id}")
+        return result
+    except Exception as e:
+        logger.error(f"Calculation failed: {e}", exc_info=True)
+        raise HTTPException(500, "Calculation failed")
+```
+
+### 6.5 Database Models
+
+**File**: `packages/local-backend/app/db/models.py`
+
+```python
+from sqlalchemy import Column, Integer, String, DateTime, Text, Boolean, Numeric
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+
+Base = declarative_base()
+
+class Calculation(Base):
+    __tablename__ = "calculations"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    amount = Column(Numeric(precision=20, scale=2), nullable=False)
+    currency = Column(String(3), nullable=False, index=True)
+    mode = Column(String(20), nullable=False)
+    breakdown = Column(Text, nullable=False)  # JSON string
+    summary = Column(Text, nullable=False)  # JSON string
+    timestamp = Column(DateTime, default=datetime.utcnow, index=True)
+
+class Settings(Base):
+    __tablename__ = "settings"
+    
+    id = Column(Integer, primary_key=True)
+    theme = Column(String(10), default="light")
+    language = Column(String(2), default="en")
+    default_currency = Column(String(3), default="INR")
+    default_mode = Column(String(20), default="greedy")
+    auto_save_history = Column(Boolean, default=True)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+```
+
+**Database Connection**:
+```python
+# app/db/database.py
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+DATABASE_URL = "sqlite:///./currency_calculator.db"
+
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False}  # SQLite specific
+)
+
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+```
+
+### 6.6 Validation Business Rules
+
+**Amount Validation**:
+```python
+def validate_amount(amount: Decimal) -> None:
+    """Validate amount follows business rules."""
+    if amount <= 0:
+        raise ValueError("Amount must be greater than 0")
+    
+    if amount > Decimal("999999999999999"):  # 15 digits
+        raise ValueError("Amount too large (max 15 digits)")
+    
+    # Check decimal places
+    if amount.as_tuple().exponent < -2:
+        raise ValueError("Amount can have maximum 2 decimal places")
+```
+
+**Currency Validation**:
+```python
+SUPPORTED_CURRENCIES = {"INR", "USD", "EUR", "GBP"}
+
+def validate_currency(currency: str) -> None:
+    """Validate currency is supported."""
+    if currency not in SUPPORTED_CURRENCIES:
+        raise ValueError(f"Unsupported currency: {currency}. Supported: {SUPPORTED_CURRENCIES}")
+```
+
+**Mode Validation**:
+```python
+SUPPORTED_MODES = {"greedy", "balanced", "minimize_large", "minimize_small"}
+
+def validate_mode(mode: str) -> None:
+    """Validate optimization mode is supported."""
+    if mode not in SUPPORTED_MODES:
+        raise ValueError(f"Unsupported mode: {mode}. Supported: {SUPPORTED_MODES}")
+```
+
+### 6.7 Data Transformation Logic
+
+**Breakdown to Summary**:
+```python
+def calculate_summary(breakdown: List[Dict]) -> Dict:
+    """Calculate summary statistics from breakdown."""
+    total_notes = sum(
+        item['count'] for item in breakdown
+        if item['type'] == 'note'
+    )
+    
+    total_coins = sum(
+        item['count'] for item in breakdown
+        if item['type'] == 'coin'
+    )
+    
+    total_denominations = len([
+        item for item in breakdown
+        if item['count'] > 0
+    ])
+    
+    return {
+        'total_notes': total_notes,
+        'total_coins': total_coins,
+        'total_denominations': total_denominations
+    }
+```
+
+**JSON Serialization**:
+```python
+import json
+from decimal import Decimal
+
+class DecimalEncoder(json.JSONEncoder):
+    """Custom JSON encoder for Decimal types."""
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        return super().default(obj)
+
+# Usage
+json_string = json.dumps(breakdown, cls=DecimalEncoder)
+```
+
+---
+
+
+## 7. Bulk Upload System Specification
+
+### 7.1 CSV Processing
+
+**File**: `packages/local-backend/app/services/csv_processor.py`
+
+#### 7.1.1 Supported CSV Formats
+
+**Standard Format** (All columns):
+```csv
+amount,currency,mode
+1000,INR,greedy
+2500,USD,balanced
+500.50,EUR,minimize_large
+```
+
+**Minimal Format** (Defaults applied):
+```csv
+amount,currency
+1000,INR
+2500,USD
+500,EUR
+```
+
+**Ultra-Minimal Format** (Smart defaults):
+```csv
+amount
+1000
+2500
+500
+```
+*Defaults: currency=INR, mode=greedy*
+
+#### 7.1.2 CSV Parser Implementation
+
+```python
+import csv
+import logging
+from typing import List, Dict
+from decimal import Decimal
+from pathlib import Path
+
+logger = logging.getLogger(__name__)
+
+class CSVProcessor:
+    """Process CSV files for bulk calculations."""
+    
+    REQUIRED_COLUMNS = {'amount'}
+    OPTIONAL_COLUMNS = {'currency', 'mode'}
+    VALID_COLUMNS = REQUIRED_COLUMNS | OPTIONAL_COLUMNS
+    
+    DEFAULT_CURRENCY = 'INR'
+    DEFAULT_MODE = 'greedy'
+    
+    def process_csv(self, file_path: Path) -> List[Dict]:
+        """
+        Parse CSV file and extract calculation data.
+        
+        Args:
+            file_path: Path to CSV file
+            
+        Returns:
+            List of calculation dictionaries
+            
+        Raises:
+            ValueError: If CSV format is invalid
+        """
+        results = []
+        
+        try:
+            with open(file_path, 'r', encoding='utf-8-sig') as f:
+                # Detect delimiter (support comma and semicolon)
+                sample = f.read(1024)
+                f.seek(0)
+                delimiter = ',' if ',' in sample else ';'
+                
+                reader = csv.DictReader(f, delimiter=delimiter)
+                
+                # Validate headers
+                if not reader.fieldnames:
+                    raise ValueError("CSV file is empty")
+                
+                headers = {h.strip().lower() for h in reader.fieldnames}
+                
+                # Check required columns
+                if 'amount' not in headers:
+                    raise ValueError("CSV must contain 'amount' column")
+                
+                # Warn about unknown columns
+                unknown_cols = headers - self.VALID_COLUMNS
+                if unknown_cols:
+                    logger.warning(f"Ignoring unknown columns: {unknown_cols}")
+                
+                # Process rows
+                for row_num, row in enumerate(reader, start=2):  # Start at 2 (after header)
+                    try:
+                        calc_data = self._parse_row(row, row_num)
+                        results.append(calc_data)
+                    except Exception as e:
+                        logger.error(f"Row {row_num} error: {e}")
+                        results.append({
+                            'row_number': row_num,
+                            'error': str(e),
+                            'status': 'failed'
+                        })
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process CSV: {e}")
+        
+        return results
+    
+    def _parse_row(self, row: Dict, row_number: int) -> Dict:
+        """Parse a single CSV row."""
+        # Extract and clean amount
+        amount_str = row.get('amount', '').strip()
+        if not amount_str:
+            raise ValueError("Amount is required")
+        
+        # Remove common formatting (commas, currency symbols)
+        amount_str = amount_str.replace(',', '').replace('$', '').replace('?', '').replace('', '').replace('', '')
+        
+        try:
+            amount = Decimal(amount_str)
+        except:
+            raise ValueError(f"Invalid amount: {amount_str}")
+        
+        # Validate amount
+        if amount <= 0:
+            raise ValueError("Amount must be greater than 0")
+        
+        if amount > Decimal("999999999999999"):
+            raise ValueError("Amount too large")
+        
+        # Extract currency (with default)
+        currency = row.get('currency', '').strip().upper()
+        if not currency:
+            currency = self.DEFAULT_CURRENCY
+            logger.info(f"Row {row_number}: Using default currency {currency}")
+        
+        if currency not in {'INR', 'USD', 'EUR', 'GBP'}:
+            raise ValueError(f"Unsupported currency: {currency}")
+        
+        # Extract mode (with default)
+        mode = row.get('mode', '').strip().lower()
+        if not mode:
+            mode = self.DEFAULT_MODE
+            logger.info(f"Row {row_number}: Using default mode {mode}")
+        
+        if mode not in {'greedy', 'balanced', 'minimize_large', 'minimize_small'}:
+            raise ValueError(f"Unsupported mode: {mode}")
+        
+        return {
+            'row_number': row_number,
+            'amount': amount,
+            'currency': currency,
+            'mode': mode,
+            'status': 'pending'
+        }
+```
+
+#### 7.1.3 Edge Cases Handling
+
+**Empty Rows**:
+```python
+# Skip empty rows
+if not any(row.values()):
+    logger.debug(f"Skipping empty row {row_number}")
+    continue
+```
+
+**BOM (Byte Order Mark)**:
+```python
+# Handle UTF-8 with BOM
+with open(file_path, 'r', encoding='utf-8-sig') as f:
+```
+
+**Different Delimiters**:
+```python
+# Auto-detect comma or semicolon
+delimiter = ',' if ',' in sample else ';'
+```
+
+**Currency Symbols in Amount**:
+```python
+# Remove all currency symbols before parsing
+amount_str = amount_str.replace('$', '').replace('?', '').replace('', '').replace('', '')
+```
+
+**Case Insensitivity**:
+```python
+# Normalize headers and values
+headers = {h.strip().lower() for h in reader.fieldnames}
+currency = row.get('currency', '').strip().upper()
+mode = row.get('mode', '').strip().lower()
+```
+
+### 7.2 PDF Processing
+
+**File**: `packages/local-backend/app/services/pdf_processor.py`
+
+#### 7.2.1 PDF Text Extraction
+
+```python
+import fitz  # PyMuPDF
+from typing import Dict, List
+import logging
+
+logger = logging.getLogger(__name__)
+
+class PDFProcessor:
+    """Process PDF files with text extraction and OCR."""
+    
+    def __init__(self):
+        self.ocr_processor = None  # Lazy load
+    
+    async def process_pdf(self, file_path: Path) -> List[Dict]:
+        """
+        Process PDF file (text or scanned).
+        
+        Strategy:
+        1. Try extracting embedded text
+        2. If no text found, use OCR on pages
+        3. Parse extracted content
+        """
+        try:
+            doc = fitz.open(file_path)
+            
+            # Check if PDF has text
+            has_text = self._has_text_content(doc)
+            
+            if has_text:
+                logger.info(f"PDF has text content, extracting...")
+                text = self._extract_text(doc)
+            else:
+                logger.info(f"PDF is scanned, using OCR...")
+                text = await self._extract_with_ocr(doc, file_path)
+            
+            doc.close()
+            
+            # Parse extracted text
+            return self._parse_text_content(text)
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process PDF: {e}")
+    
+    def _has_text_content(self, doc: fitz.Document) -> bool:
+        """Check if PDF contains extractable text."""
+        for page in doc:
+            text = page.get_text().strip()
+            if len(text) > 50:  # Arbitrary threshold
+                return True
+        return False
+    
+    def _extract_text(self, doc: fitz.Document) -> str:
+        """Extract text from all pages."""
+        text_parts = []
+        
+        for page_num, page in enumerate(doc, start=1):
+            text = page.get_text()
+            if text.strip():
+                text_parts.append(f"=== Page {page_num} ===\n{text}")
+        
+        return "\n\n".join(text_parts)
+    
+    async def _extract_with_ocr(self, doc: fitz.Document, file_path: Path) -> str:
+        """Use OCR to extract text from scanned PDF."""
+        if not self.ocr_processor:
+            from app.services.ocr_processor import OCRProcessor
+            self.ocr_processor = OCRProcessor()
+        
+        return await self.ocr_processor.process_pdf(file_path)
+    
+    def _parse_text_content(self, text: str) -> List[Dict]:
+        """Parse extracted text to find calculation data."""
+        from app.services.text_parser import TextParser
+        
+        parser = TextParser()
+        return parser.parse(text)
+```
+
+#### 7.2.2 Hybrid PDF Processing
+
+**Detection Logic**:
+```python
+def detect_pdf_type(doc: fitz.Document) -> str:
+    """
+    Detect PDF type.
+    
+    Returns:
+        'text': Has extractable text
+        'scanned': Image-based (needs OCR)
+        'hybrid': Mix of text and images
+    """
+    text_pages = 0
+    image_pages = 0
+    
+    for page in doc:
+        text = page.get_text().strip()
+        images = page.get_images()
+        
+        if len(text) > 100:
+            text_pages += 1
+        elif images:
+            image_pages += 1
+    
+    if text_pages > 0 and image_pages == 0:
+        return 'text'
+    elif image_pages > 0 and text_pages == 0:
+        return 'scanned'
+    else:
+        return 'hybrid'
+```
+
+**Hybrid Processing**:
+```python
+def process_hybrid_pdf(doc: fitz.Document) -> str:
+    """Process PDF with both text and images."""
+    all_text = []
+    
+    for page_num, page in enumerate(doc, start=1):
+        # Try text extraction first
+        text = page.get_text().strip()
+        
+        if len(text) > 50:
+            all_text.append(f"Page {page_num} (text):\n{text}")
+        else:
+            # Use OCR for this page
+            pix = page.get_pixmap()
+            img_path = f"/tmp/page_{page_num}.png"
+            pix.save(img_path)
+            
+            ocr_text = tesseract.image_to_string(Image.open(img_path))
+            all_text.append(f"Page {page_num} (OCR):\n{ocr_text}")
+            
+            Path(img_path).unlink()
+    
+    return "\n\n".join(all_text)
+```
+
+### 7.3 Word Document Processing
+
+**File**: `packages/local-backend/app/services/word_processor.py`
+
+#### 7.3.1 DOCX Extraction
+
+```python
+from docx import Document
+from pathlib import Path
+from typing import List, Dict
+import logging
+
+logger = logging.getLogger(__name__)
+
+class WordProcessor:
+    """Process Word documents (.docx)."""
+    
+    async def process_word(self, file_path: Path) -> List[Dict]:
+        """Extract text from Word document and parse."""
+        try:
+            doc = Document(file_path)
+            
+            # Extract all text
+            text_parts = []
+            
+            # Extract from paragraphs
+            for para in doc.paragraphs:
+                if para.text.strip():
+                    text_parts.append(para.text)
+            
+            # Extract from tables
+            for table in doc.tables:
+                table_text = self._extract_table(table)
+                if table_text:
+                    text_parts.append(table_text)
+            
+            full_text = "\n".join(text_parts)
+            
+            # Parse content
+            from app.services.text_parser import TextParser
+            parser = TextParser()
+            return parser.parse(full_text)
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process Word document: {e}")
+    
+    def _extract_table(self, table) -> str:
+        """Extract text from Word table."""
+        rows = []
+        
+        for row in table.rows:
+            cells = [cell.text.strip() for cell in row.cells]
+            if any(cells):  # Skip empty rows
+                rows.append("\t".join(cells))
+        
+        return "\n".join(rows)
+```
+
+#### 7.3.2 Table Detection
+
+**Smart Table Parsing**:
+```python
+def parse_table_as_csv(table) -> List[Dict]:
+    """
+    Parse Word table as CSV-like data.
+    
+    Assumes first row is header.
+    """
+    if len(table.rows) < 2:
+        return []
+    
+    # Extract headers
+    headers = [cell.text.strip().lower() for cell in table.rows[0].cells]
+    
+    # Extract data rows
+    results = []
+    for row_num, row in enumerate(table.rows[1:], start=2):
+        row_data = {}
+        for header, cell in zip(headers, row.cells):
+            row_data[header] = cell.text.strip()
+        
+        results.append({
+            'row_number': row_num,
+            **row_data
+        })
+    
+    return results
+```
+
+### 7.4 Image Processing
+
+**File**: `packages/local-backend/app/services/image_processor.py`
+
+```python
+from PIL import Image
+from pathlib import Path
+from typing import List, Dict
+import logging
+
+logger = logging.getLogger(__name__)
+
+class ImageProcessor:
+    """Process image files for OCR."""
+    
+    def __init__(self):
+        self.ocr_processor = None
+    
+    async def process_image(self, file_path: Path) -> List[Dict]:
+        """Process image file with OCR."""
+        try:
+            # Validate image
+            img = Image.open(file_path)
+            
+            # Preprocess if needed
+            img = self._preprocess_image(img)
+            
+            # Save preprocessed image
+            temp_path = Path(f"/tmp/preprocessed_{file_path.name}")
+            img.save(temp_path)
+            
+            # OCR processing
+            if not self.ocr_processor:
+                from app.services.ocr_processor import OCRProcessor
+                self.ocr_processor = OCRProcessor()
+            
+            text = await self.ocr_processor.process_image(temp_path)
+            
+            # Cleanup
+            temp_path.unlink(missing_ok=True)
+            
+            # Parse text
+            from app.services.text_parser import TextParser
+            parser = TextParser()
+            return parser.parse(text)
+        
+        except Exception as e:
+            raise ValueError(f"Failed to process image: {e}")
+    
+    def _preprocess_image(self, img: Image.Image) -> Image.Image:
+        """
+        Preprocess image for better OCR accuracy.
+        
+        Steps:
+        - Convert to grayscale
+        - Increase contrast
+        - Denoise (if needed)
+        - Resize if too small
+        """
+        # Convert to grayscale
+        if img.mode != 'L':
+            img = img.convert('L')
+        
+        # Resize if too small (OCR works better on larger images)
+        min_width = 1000
+        if img.width < min_width:
+            scale = min_width / img.width
+            new_size = (int(img.width * scale), int(img.height * scale))
+            img = img.resize(new_size, Image.LANCZOS)
+        
+        return img
+```
+
+### 7.5 Text Parsing Logic
+
+**File**: `packages/local-backend/app/services/text_parser.py`
+
+```python
+import re
+from decimal import Decimal
+from typing import List, Dict
+import logging
+
+logger = logging.getLogger(__name__)
+
+class TextParser:
+    """Intelligent text parser for extracting calculation data."""
+    
+    # Patterns for amount detection
+    AMOUNT_PATTERNS = [
+        r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?)',  # 1,000.00
+        r'(\d+\.\d{2})',  # 1000.00
+        r'(\d+)',  # 1000
+    ]
+    
+    # Currency symbols and codes
+    CURRENCY_SYMBOLS = {
+        '?': 'INR', 'Rs': 'INR', 'INR': 'INR',
+        '$': 'USD', 'USD': 'USD',
+        '': 'EUR', 'EUR': 'EUR',
+        '': 'GBP', 'GBP': 'GBP',
+    }
+    
+    # Mode keywords
+    MODE_KEYWORDS = {
+        'greedy': ['greedy', 'standard', 'default'],
+        'balanced': ['balanced', 'mixed'],
+        'minimize_large': ['minimize large', 'min large', 'fewer notes'],
+        'minimize_small': ['minimize small', 'min small', 'fewer coins'],
+    }
+    
+    def parse(self, text: str) -> List[Dict]:
+        """
+        Parse text to extract calculation data.
+        
+        Strategies:
+        1. Structured format (CSV-like in text)
+        2. Labeled format ("Amount: 1000, Currency: INR")
+        3. List format ("1000 INR", "2500 USD")
+        4. Plain numbers (with smart defaults)
+        5. Mixed format (best effort)
+        """
+        # Try structured parsing first
+        if self._is_csv_like(text):
+            return self._parse_csv_like(text)
+        
+        # Try labeled format
+        if self._has_labels(text):
+            return self._parse_labeled(text)
+        
+        # Try list format
+        if self._is_list_like(text):
+            return self._parse_list(text)
+        
+        # Fallback: extract all numbers
+        return self._parse_numbers_only(text)
+    
+    def _is_csv_like(self, text: str) -> bool:
+        """Check if text looks like CSV."""
+        lines = text.strip().split('\n')
+        if len(lines) < 2:
+            return False
+        
+        # Check if first line has column names
+        first_line = lines[0].lower()
+        return 'amount' in first_line or 'currency' in first_line
+    
+    def _parse_csv_like(self, text: str) -> List[Dict]:
+        """Parse CSV-like text."""
+        # Similar to CSV processor but works with string
+        import io
+        import csv
+        
+        reader = csv.DictReader(io.StringIO(text))
+        
+        results = []
+        for row_num, row in enumerate(reader, start=2):
+            try:
+                calc_data = self._parse_row_dict(row, row_num)
+                results.append(calc_data)
+            except Exception as e:
+                logger.error(f"Row {row_num} error: {e}")
+                results.append({
+                    'row_number': row_num,
+                    'error': str(e),
+                    'status': 'failed'
+                })
+        
+        return results
+    
+    def _has_labels(self, text: str) -> bool:
+        """Check if text has labeled format."""
+        return bool(re.search(r'amount\s*:\s*\d', text, re.IGNORECASE))
+    
+    def _parse_labeled(self, text: str) -> List[Dict]:
+        """Parse labeled format (Amount: 1000, Currency: INR)."""
+        results = []
+        
+        # Split by lines or semicolons
+        entries = re.split(r'[\n;]', text)
+        
+        for entry_num, entry in enumerate(entries, start=1):
+            if not entry.strip():
+                continue
+            
+            try:
+                # Extract amount
+                amount_match = re.search(r'amount\s*:\s*([\d,\.]+)', entry, re.IGNORECASE)
+                if not amount_match:
+                    continue
+                
+                amount_str = amount_match.group(1).replace(',', '')
+                amount = Decimal(amount_str)
+                
+                # Extract currency (optional)
+                currency = self._detect_currency(entry)
+                
+                # Extract mode (optional)
+                mode = self._detect_mode(entry)
+                
+                results.append({
+                    'row_number': entry_num,
+                    'amount': amount,
+                    'currency': currency,
+                    'mode': mode,
+                    'status': 'pending'
+                })
+            
+            except Exception as e:
+                logger.error(f"Entry {entry_num} error: {e}")
+                results.append({
+                    'row_number': entry_num,
+                    'error': str(e),
+                    'status': 'failed'
+                })
+        
+        return results
+    
+    def _is_list_like(self, text: str) -> bool:
+        """Check if text is a list of amounts."""
+        lines = [l.strip() for l in text.split('\n') if l.strip()]
+        if len(lines) < 2:
+            return False
+        
+        # Check if most lines start with a number
+        number_lines = sum(1 for l in lines if re.match(r'^\d', l))
+        return number_lines / len(lines) > 0.7
+    
+    def _parse_list(self, text: str) -> List[Dict]:
+        """Parse list format (one amount per line)."""
+        results = []
+        lines = [l.strip() for l in text.split('\n') if l.strip()]
+        
+        for line_num, line in enumerate(lines, start=1):
+            try:
+                # Extract amount (first number in line)
+                amount_match = re.search(r'([\d,\.]+)', line)
+                if not amount_match:
+                    continue
+                
+                amount_str = amount_match.group(1).replace(',', '')
+                amount = Decimal(amount_str)
+                
+                # Detect currency from same line
+                currency = self._detect_currency(line)
+                
+                # Detect mode from same line
+                mode = self._detect_mode(line)
+                
+                results.append({
+                    'row_number': line_num,
+                    'amount': amount,
+                    'currency': currency,
+                    'mode': mode,
+                    'status': 'pending'
+                })
+            
+            except Exception as e:
+                logger.error(f"Line {line_num} error: {e}")
+                results.append({
+                    'row_number': line_num,
+                    'error': str(e),
+                    'status': 'failed'
+                })
+        
+        return results
+    
+    def _parse_numbers_only(self, text: str) -> List[Dict]:
+        """Extract all numbers as amounts (with smart defaults)."""
+        results = []
+        
+        # Find all numbers
+        numbers = re.findall(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.\d{2}|\d+)', text)
+        
+        for num_idx, num_str in enumerate(numbers, start=1):
+            try:
+                amount_str = num_str.replace(',', '')
+                amount = Decimal(amount_str)
+                
+                if amount <= 0:
+                    continue
+                
+                results.append({
+                    'row_number': num_idx,
+                    'amount': amount,
+                    'currency': 'INR',  # Smart default
+                    'mode': 'greedy',  # Smart default
+                    'status': 'pending'
+                })
+            
+            except:
+                continue
+        
+        return results
+    
+    def _detect_currency(self, text: str) -> str:
+        """
+        Detect currency from text.
+        
+        Strategies:
+        1. Currency symbol (?, $, , )
+        2. Currency code (INR, USD, EUR, GBP)
+        3. Currency name (Indian Rupee, US Dollar)
+        4. Default (INR)
+        """
+        text_upper = text.upper()
+        
+        # Check symbols and codes
+        for symbol, code in self.CURRENCY_SYMBOLS.items():
+            if symbol in text or symbol.upper() in text_upper:
+                return code
+        
+        # Check currency names
+        if 'RUPEE' in text_upper or 'INDIAN' in text_upper:
+            return 'INR'
+        elif 'DOLLAR' in text_upper or 'USD' in text_upper:
+            return 'USD'
+        elif 'EURO' in text_upper:
+            return 'EUR'
+        elif 'POUND' in text_upper or 'GBP' in text_upper:
+            return 'GBP'
+        
+        # Default
+        logger.info(f"Currency not detected, using default INR")
+        return 'INR'
+    
+    def _detect_mode(self, text: str) -> str:
+        """Detect optimization mode from text."""
+        text_lower = text.lower()
+        
+        for mode, keywords in self.MODE_KEYWORDS.items():
+            for keyword in keywords:
+                if keyword in text_lower:
+                    return mode
+        
+        # Default
+        return 'greedy'
+    
+    def _parse_row_dict(self, row: Dict, row_number: int) -> Dict:
+        """Parse a dictionary row (similar to CSV processor)."""
+        amount_str = row.get('amount', '').strip().replace(',', '')
+        amount = Decimal(amount_str)
+        
+        currency = row.get('currency', 'INR').strip().upper()
+        mode = row.get('mode', 'greedy').strip().lower()
+        
+        return {
+            'row_number': row_number,
+            'amount': amount,
+            'currency': currency,
+            'mode': mode,
+            'status': 'pending'
+        }
+```
+
+---
+
+
+## 8. OCR System Implementation
+
+### 8.1 OCR Processor Service (Complete Rebuild)
+
+**File**: `packages/local-backend/app/services/ocr_processor.py` (383 lines - **REBUILT FROM SCRATCH**)
+
+#### 8.1.1 Class Structure
+
+```python
+"""
+OCR Processing Service for Bulk Upload - Rebuilt from Scratch
+
+Handles text extraction from various file formats:
+- CSV files (direct parsing, no OCR needed)
+- Images (JPG, PNG, TIFF, BMP) - Tesseract OCR
+- PDFs (text extraction + OCR for scanned PDFs) - PyMuPDF + pdf2image + Tesseract
+- Word documents (.docx) - python-docx
+
+Fully offline after dependencies are installed.
+"""
+
+import os
+import re
+import io
+import tempfile
+from pathlib import Path
+from typing import List, Dict, Any, Optional
+from decimal import Decimal, InvalidOperation
+import logging
+
+logger = logging.getLogger(__name__)
+
+# Import optional OCR dependencies
+try:
+    import pytesseract
+    from PIL import Image
+    HAS_TESSERACT = True
+except ImportError:
+    HAS_TESSERACT = False
+    logger.warning("Tesseract OCR not available")
+
+try:
+    import fitz  # PyMuPDF
+    HAS_PYMUPDF = True
+except ImportError:
+    HAS_PYMUPDF = False
+    logger.warning("PyMuPDF not available")
+
+try:
+    from pdf2image import convert_from_bytes
+    HAS_PDF2IMAGE = True
+except ImportError:
+    HAS_PDF2IMAGE = False
+    logger.warning("pdf2image not available")
+
+try:
+    import docx
+    HAS_DOCX = True
+except ImportError:
+    HAS_DOCX = False
+    logger.warning("python-docx not available")
+
+
+class OCRProcessor:
+    """
+    Handles OCR and text extraction from multiple file formats.
+    Enhanced with intelligent parsing and smart defaults.
+    """
+    
+    def __init__(self, default_currency: str = 'INR', default_mode: str = 'greedy'):
+        """Initialize OCR processor with defaults."""
+        self.supported_image_formats = {'.jpg', '.jpeg', '.png', '.tiff', '.tif', '.bmp', '.gif', '.webp'}
+        self.supported_pdf_formats = {'.pdf'}
+        self.supported_word_formats = {'.docx', '.doc'}
+        
+        # Smart defaults
+        self.default_currency = default_currency
+        self.default_mode = default_mode
+        
+        logger.info(f"OCR Processor initialized (default currency: {default_currency}, default mode: {default_mode})")
+```
+
+#### 8.1.2 File Processing Dispatcher
+
+```python
+def process_file(self, file_data: bytes, filename: str) -> List[Dict[str, Any]]:
+    """
+    Process uploaded file and extract structured data.
+    
+    Args:
+        file_data: Raw file bytes
+        filename: Original filename
+    
+    Returns:
+        List of dicts with keys: row_number, amount, currency, optimization_mode
+    
+    Raises:
+        ValueError: If file format not supported or extraction fails
+    """
+    file_ext = Path(filename).suffix.lower()
+    
+    logger.info(f"Processing file: {filename} (size: {len(file_data)} bytes, type: {file_ext})")
+    
+    # Route to appropriate processor
+    if file_ext in self.supported_image_formats:
+        if not HAS_TESSERACT:
+            raise ValueError("Tesseract OCR not installed. Cannot process images.")
+        return self._process_image(file_data, filename)
+    
+    elif file_ext in self.supported_pdf_formats:
+        if not HAS_PYMUPDF:
+            raise ValueError("PyMuPDF not installed. Cannot process PDFs.")
+        return self._process_pdf(file_data, filename)
+    
+    elif file_ext in self.supported_word_formats:
+        if not HAS_DOCX:
+            raise ValueError("python-docx not installed. Cannot process Word documents.")
+        return self._process_word(file_data, filename)
+    
+    else:
+        raise ValueError(f"Unsupported file format: {file_ext}")
+```
+
+#### 8.1.3 Image Processing with Tesseract
+
+**Tesseract Configuration**:
+```python
+# Tesseract PSM (Page Segmentation Mode)
+PSM_MODES = {
+    'auto': 3,           # Fully automatic page segmentation (default)
+    'single_block': 6,   # Assume a single uniform block of text
+    'single_line': 7,    # Treat the image as a single text line
+    'single_word': 8,    # Treat the image as a single word
+    'sparse': 11,        # Sparse text (find as much text as possible)
+}
+
+# Tesseract OEM (OCR Engine Mode)
+OEM_MODES = {
+    'legacy': 0,         # Legacy Tesseract engine
+    'lstm': 1,           # LSTM neural network engine
+    'both': 2,           # Legacy + LSTM
+    'default': 3,        # Default based on what's available
+}
+```
+
+**Image Processing Implementation**:
+```python
+def _process_image(self, file_data: bytes, filename: str) -> List[Dict[str, Any]]:
+    """Process image file using Tesseract OCR."""
+    try:
+        # Load image
+        image = Image.open(io.BytesIO(file_data))
+        
+        logger.info(f"Image loaded: {image.size}, mode: {image.mode}")
+        
+        # Configure Tesseract
+        custom_config = r'--oem 1 --psm 6'  # LSTM engine, single block
+        
+        # Extract text
+        text = pytesseract.image_to_string(
+            image,
+            config=custom_config,
+            lang='eng'  # Can be extended for multi-language
+        )
+        
+        logger.info(f"Extracted {len(text)} characters from image")
+        logger.debug(f"Raw OCR text:\n{text}")
+        
+        # Parse extracted text
+        return self._parse_text(text)
+    
+    except Exception as e:
+        logger.error(f"Image processing error: {e}", exc_info=True)
+        raise ValueError(f"Failed to process image: {e}")
+```
+
+**Image Preprocessing** (Optional Enhancement):
+```python
+def _preprocess_image(self, image: Image.Image) -> Image.Image:
+    """
+    Preprocess image for better OCR accuracy.
+    
+    Enhancements:
+    - Convert to grayscale
+    - Increase DPI if too low
+    - Apply contrast enhancement
+    - Denoise
+    """
+    # Convert to grayscale
+    if image.mode != 'L':
+        image = image.convert('L')
+    
+    # Resize if too small (Tesseract works best at 300 DPI minimum)
+    min_width = 1000
+    if image.width < min_width:
+        scale_factor = min_width / image.width
+        new_size = (
+            int(image.width * scale_factor),
+            int(image.height * scale_factor)
+        )
+        image = image.resize(new_size, Image.LANCZOS)
+        logger.info(f"Resized image to {new_size}")
+    
+    return image
+```
+
+#### 8.1.4 PDF Processing (Hybrid: Text + OCR)
+
+**Strategy**:
+1. Check if PDF has extractable text
+2. Extract text if available
+3. Fallback to OCR for scanned pages
+4. Combine results
+
+**Implementation**:
+```python
+def _process_pdf(self, file_data: bytes, filename: str) -> List[Dict[str, Any]]:
+    """
+    Process PDF file (text extraction + OCR fallback).
+    
+    Strategy:
+    1. Try extracting embedded text with PyMuPDF
+    2. If no text or minimal text, use OCR
+    """
+    try:
+        # Open PDF
+        pdf_document = fitz.open(stream=file_data, filetype="pdf")
+        
+        logger.info(f"PDF loaded: {pdf_document.page_count} pages")
+        
+        # Try text extraction first
+        extracted_text = self._extract_pdf_text(pdf_document)
+        
+        # If text extraction failed or insufficient text
+        if not extracted_text or len(extracted_text.strip()) < 50:
+            logger.info("PDF has minimal/no text, using OCR...")
+            
+            if not HAS_PDF2IMAGE or not HAS_TESSERACT:
+                raise ValueError("pdf2image or Tesseract not installed. Cannot OCR scanned PDFs.")
+            
+            extracted_text = self._ocr_pdf_pages(file_data)
+        else:
+            logger.info(f"Extracted {len(extracted_text)} characters of text from PDF")
+        
+        pdf_document.close()
+        
+        # Parse extracted content
+        return self._parse_text(extracted_text)
+    
+    except Exception as e:
+        logger.error(f"PDF processing error: {e}", exc_info=True)
+        raise ValueError(f"Failed to process PDF: {e}")
+
+def _extract_pdf_text(self, pdf_document: 'fitz.Document') -> str:
+    """Extract embedded text from PDF."""
+    text_parts = []
+    
+    for page_num in range(pdf_document.page_count):
+        page = pdf_document[page_num]
+        page_text = page.get_text()
+        
+        if page_text.strip():
+            text_parts.append(f"=== Page {page_num + 1} ===\n{page_text}")
+    
+    return "\n\n".join(text_parts)
+
+def _ocr_pdf_pages(self, file_data: bytes) -> str:
+    """Convert PDF pages to images and OCR them."""
+    # Convert PDF to images (one per page)
+    images = convert_from_bytes(
+        file_data,
+        dpi=300,  # High DPI for better OCR
+        fmt='png'
+    )
+    
+    logger.info(f"Converted PDF to {len(images)} images for OCR")
+    
+    # OCR each page
+    text_parts = []
+    for page_num, image in enumerate(images, start=1):
+        custom_config = r'--oem 1 --psm 6'
+        
+        page_text = pytesseract.image_to_string(
+            image,
+            config=custom_config,
+            lang='eng'
+        )
+        
+        if page_text.strip():
+            text_parts.append(f"=== Page {page_num} (OCR) ===\n{page_text}")
+    
+    return "\n\n".join(text_parts)
+```
+
+#### 8.1.5 Word Document Processing
+
+```python
+def _process_word(self, file_data: bytes, filename: str) -> List[Dict[str, Any]]:
+    """Process Word document (.docx) using python-docx."""
+    try:
+        # Save to temp file (python-docx requires file path)
+        with tempfile.NamedTemporaryFile(delete=False, suffix='.docx') as temp_file:
+            temp_file.write(file_data)
+            temp_path = temp_file.name
+        
+        try:
+            # Open document
+            doc = docx.Document(temp_path)
+            
+            logger.info(f"Word document loaded: {len(doc.paragraphs)} paragraphs, {len(doc.tables)} tables")
+            
+            # Extract text from paragraphs
+            text_parts = []
+            
+            for para in doc.paragraphs:
+                if para.text.strip():
+                    text_parts.append(para.text)
+            
+            # Extract text from tables (if any)
+            for table in doc.tables:
+                table_text = self._extract_table_text(table)
+                if table_text:
+                    text_parts.append(table_text)
+            
+            full_text = "\n".join(text_parts)
+            
+            logger.info(f"Extracted {len(full_text)} characters from Word document")
+            
+            # Parse content
+            return self._parse_text(full_text)
+        
+        finally:
+            # Cleanup temp file
+            os.unlink(temp_path)
+    
+    except Exception as e:
+        logger.error(f"Word processing error: {e}", exc_info=True)
+        raise ValueError(f"Failed to process Word document: {e}")
+
+def _extract_table_text(self, table) -> str:
+    """Extract text from Word table."""
+    rows = []
+    
+    for row in table.rows:
+        cells = [cell.text.strip() for cell in row.cells]
+        if any(cells):
+            rows.append("\t".join(cells))
+    
+    return "\n".join(rows)
+```
+
+#### 8.1.6 Intelligent Text Parsing
+
+**Complete Parsing Logic** (5 format support):
+
+```python
+def _parse_text(self, text: str) -> List[Dict[str, Any]]:
+    """
+    Intelligently parse extracted text to find calculation data.
+    
+    Supports 5 formats:
+    1. CSV-like: "amount,currency,mode\n1000,INR,greedy"
+    2. Labeled: "Amount: 1000, Currency: INR, Mode: greedy"
+    3. List with currency: "1000 INR\n2500 USD"
+    4. List plain numbers: "1000\n2500\n5000"
+    5. Inline mixed: "Please calculate 1000 INR and 2500 USD"
+    """
+    
+    # Format 1: CSV-like
+    if self._is_csv_format(text):
+        return self._parse_csv_text(text)
+    
+    # Format 2: Labeled format
+    if self._is_labeled_format(text):
+        return self._parse_labeled_text(text)
+    
+    # Format 3 & 4: List formats
+    if self._is_list_format(text):
+        return self._parse_list_text(text)
+    
+    # Format 5: Fallback - extract all numbers
+    return self._parse_numbers_fallback(text)
+
+def _is_csv_format(self, text: str) -> bool:
+    """Check if text looks like CSV."""
+    lines = text.strip().split('\n')
+    if len(lines) < 2:
+        return False
+    
+    first_line = lines[0].lower()
+    return 'amount' in first_line or (',' in first_line and len(lines[0].split(',')) >= 1)
+
+def _is_labeled_format(self, text: str) -> bool:
+    """Check if text has labeled format."""
+    return bool(re.search(r'amount\s*:\s*\d', text, re.IGNORECASE))
+
+def _is_list_format(self, text: str) -> bool:
+    """Check if text is a simple list of numbers."""
+    lines = [l.strip() for l in text.split('\n') if l.strip()]
+    if len(lines) < 1:
+        return False
+    
+    # Check if most lines start with digits
+    number_lines = sum(1 for l in lines if re.match(r'^\d', l))
+    return number_lines / len(lines) > 0.6
+```
+
+**CSV-like Parsing**:
+```python
+def _parse_csv_text(self, text: str) -> List[Dict[str, Any]]:
+    """Parse CSV-like text."""
+    import csv
+    import io
+    
+    results = []
+    reader = csv.DictReader(io.StringIO(text))
+    
+    for row_num, row in enumerate(reader, start=1):
+        try:
+            # Extract amount
+            amount_str = row.get('amount', '').strip().replace(',', '')
+            if not amount_str:
+                continue
+            
+            amount = Decimal(amount_str)
+            
+            # Extract currency (with smart default)
+            currency = row.get('currency', '').strip().upper()
+            if not currency:
+                currency = self.default_currency
+                logger.info(f"Row {row_num}: No currency specified, using default {currency}")
+            
+            # Detect currency from text if not explicit
+            if currency not in {'INR', 'USD', 'EUR', 'GBP'}:
+                currency = self._detect_currency_in_text(str(row))
+            
+            # Extract mode (with smart default)
+            mode = row.get('mode', row.get('optimization_mode', '')).strip().lower()
+            if not mode:
+                mode = self.default_mode
+                logger.info(f"Row {row_num}: No mode specified, using default {mode}")
+            
+            results.append({
+                'row_number': row_num,
+                'amount': float(amount),
+                'currency': currency,
+                'optimization_mode': mode
+            })
+        
+        except Exception as e:
+            logger.warning(f"Row {row_num} parsing error: {e}")
+            continue
+    
+    return results
+```
+
+**Labeled Format Parsing**:
+```python
+def _parse_labeled_text(self, text: str) -> List[Dict[str, Any]]:
+    """Parse labeled format (Amount: 1000, Currency: INR)."""
+    results = []
+    
+    # Split by lines or record separators
+    entries = re.split(r'[\n;]|(?:amount\s*:)', text, flags=re.IGNORECASE)
+    
+    row_num = 0
+    for entry in entries:
+        if not entry.strip():
+            continue
+        
+        # Find amount
+        amount_match = re.search(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', entry)
+        if not amount_match:
+            continue
+        
+        row_num += 1
+        amount_str = amount_match.group(1).replace(',', '')
+        amount = Decimal(amount_str)
+        
+        # Detect currency
+        currency = self._detect_currency_in_text(entry)
+        
+        # Detect mode
+        mode = self._detect_mode_in_text(entry)
+        
+        results.append({
+            'row_number': row_num,
+            'amount': float(amount),
+            'currency': currency,
+            'optimization_mode': mode
+        })
+    
+    return results
+```
+
+**List Format Parsing**:
+```python
+def _parse_list_text(self, text: str) -> List[Dict[str, Any]]:
+    """Parse list of amounts (with or without currency)."""
+    results = []
+    lines = [l.strip() for l in text.split('\n') if l.strip()]
+    
+    for row_num, line in enumerate(lines, start=1):
+        # Extract amount (first number in line)
+        amount_match = re.search(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', line)
+        if not amount_match:
+            continue
+        
+        amount_str = amount_match.group(1).replace(',', '')
+        
+        try:
+            amount = Decimal(amount_str)
+        except InvalidOperation:
+            logger.warning(f"Row {row_num}: Invalid amount {amount_str}")
+            continue
+        
+        # Detect currency from same line
+        currency = self._detect_currency_in_text(line)
+        
+        # Detect mode from same line
+        mode = self._detect_mode_in_text(line)
+        
+        results.append({
+            'row_number': row_num,
+            'amount': float(amount),
+            'currency': currency,
+            'optimization_mode': mode
+        })
+    
+    return results
+```
+
+**Fallback Parsing** (extract all numbers):
+```python
+def _parse_numbers_fallback(self, text: str) -> List[Dict[str, Any]]:
+    """Extract all numbers as amounts (last resort)."""
+    results = []
+    
+    # Find all numbers
+    numbers = re.findall(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', text)
+    
+    for row_num, num_str in enumerate(numbers, start=1):
+        num_str = num_str.replace(',', '')
+        
+        try:
+            amount = Decimal(num_str)
+            
+            if amount <= 0 or amount > Decimal("999999999999999"):
+                continue
+            
+            # Use smart defaults for everything
+            results.append({
+                'row_number': row_num,
+                'amount': float(amount),
+                'currency': self.default_currency,
+                'optimization_mode': self.default_mode
+            })
+        
+        except:
+            continue
+    
+    logger.info(f"Fallback parsing extracted {len(results)} amounts")
+    
+    return results
+```
+
+#### 8.1.7 Currency Detection Logic
+
+**4 Detection Strategies**:
+
+```python
+def _detect_currency_in_text(self, text: str) -> str:
+    """
+    Detect currency from text using multiple strategies.
+    
+    Strategy priority:
+    1. Currency symbols (?, $, , )
+    2. Currency codes (INR, USD, EUR, GBP)
+    3. Currency names (Rupee, Dollar, Euro, Pound)
+    4. Default fallback
+    """
+    text_upper = text.upper()
+    
+    # Strategy 1: Symbols
+    if '?' in text or 'RS' in text_upper or 'RS.' in text_upper:
+        return 'INR'
+    elif '$' in text:
+        return 'USD'
+    elif '' in text:
+        return 'EUR'
+    elif '' in text:
+        return 'GBP'
+    
+    # Strategy 2: Currency codes
+    if 'INR' in text_upper:
+        return 'INR'
+    elif 'USD' in text_upper:
+        return 'USD'
+    elif 'EUR' in text_upper:
+        return 'EUR'
+    elif 'GBP' in text_upper:
+        return 'GBP'
+    
+    # Strategy 3: Currency names
+    if 'RUPEE' in text_upper or 'INDIAN' in text_upper:
+        return 'INR'
+    elif 'DOLLAR' in text_upper:
+        return 'USD'
+    elif 'EURO' in text_upper:
+        return 'EUR'
+    elif 'POUND' in text_upper or 'STERLING' in text_upper:
+        return 'GBP'
+    
+    # Strategy 4: Default
+    logger.debug(f"Currency not detected in '{text[:50]}...', using default {self.default_currency}")
+    return self.default_currency
+```
+
+#### 8.1.8 Mode Detection Logic
+
+```python
+def _detect_mode_in_text(self, text: str) -> str:
+    """
+    Detect optimization mode from text.
+    
+    Keywords:
+    - greedy: "greedy", "standard", "default"
+    - balanced: "balanced", "mixed"
+    - minimize_large: "minimize large", "fewer notes", "min notes"
+    - minimize_small: "minimize small", "fewer coins", "min coins"
+    """
+    text_lower = text.lower()
+    
+    if 'balanced' in text_lower or 'mixed' in text_lower:
+        return 'balanced'
+    elif 'minimize large' in text_lower or 'min large' in text_lower or 'fewer notes' in text_lower:
+        return 'minimize_large'
+    elif 'minimize small' in text_lower or 'min small' in text_lower or 'fewer coins' in text_lower:
+        return 'minimize_small'
+    elif 'greedy' in text_lower:
+        return 'greedy'
+    
+    # Default
+    return self.default_mode
+```
+
+### 8.2 Tesseract Installation
+
+**Auto-Installer**: `packages/local-backend/install_ocr_dependencies.ps1`
+
+#### 8.2.1 Silent Installation Script
+
+```powershell
+# Tesseract 5.3.3+ Silent Installer
+$tesseractVersion = "5.3.3"
+$installerUrl = "https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe"
+$installerPath = "$env:TEMP\tesseract-setup.exe"
+
+Write-Host "Downloading Tesseract $tesseractVersion..." -ForegroundColor Cyan
+
+# Download with progress
+Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+
+Write-Host "Installing Tesseract (silent mode)..." -ForegroundColor Cyan
+
+# Silent install arguments
+$installArgs = @(
+    "/S",  # Silent mode
+    "/D=C:\Program Files\Tesseract-OCR"  # Install directory
+)
+
+Start-Process -FilePath $installerPath -ArgumentList $installArgs -Wait
+
+# Add to PATH
+$tesseractPath = "C:\Program Files\Tesseract-OCR"
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$tesseractPath", [EnvironmentVariableTarget]::Machine)
+
+Write-Host "Tesseract installed successfully!" -ForegroundColor Green
+
+# Verify installation
+tesseract --version
+```
+
+#### 8.2.2 Poppler Installation (for pdf2image)
+
+**Requirement**: Poppler 24.08.0+ for PDF to image conversion
+
+**Auto-Installer**:
+```powershell
+# Poppler Silent Installer
+$popplerVersion = "24.08.0"
+$downloadUrl = "https://github.com/oschwartz10612/poppler-windows/releases/download/v$popplerVersion/Release-$popplerVersion-0.zip"
+$zipPath = "$env:TEMP\poppler.zip"
+$extractPath = "C:\Program Files\poppler"
+
+Write-Host "Downloading Poppler $popplerVersion..." -ForegroundColor Cyan
+
+Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath
+
+Write-Host "Extracting Poppler..." -ForegroundColor Cyan
+
+Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+
+# Add bin directory to PATH
+$popplerBin = "$extractPath\poppler-$popplerVersion\Library\bin"
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$popplerBin", [EnvironmentVariableTarget]::Machine)
+
+Write-Host "Poppler installed successfully!" -ForegroundColor Green
+```
+
+### 8.3 OCR Accuracy Enhancements
+
+#### 8.3.1 Image Preprocessing
+
+**Implemented Enhancements**:
+1. **Grayscale Conversion**: Reduces noise
+2. **DPI Upscaling**: Minimum 300 DPI for Tesseract
+3. **Contrast Enhancement**: Better text visibility
+4. **Denoising**: Remove artifacts
+
+**Future Enhancements**:
+- Adaptive thresholding
+- Skew correction
+- Border removal
+- Language-specific training data
+
+#### 8.3.2 Multi-Language Support
+
+**Tesseract Language Packs**:
+```python
+SUPPORTED_LANGUAGES = {
+    'eng': 'English',
+    'hin': 'Hindi',
+    'spa': 'Spanish',
+    'fra': 'French',
+    'deu': 'German'
+}
+
+def process_with_language(self, image: Image.Image, lang_code: str = 'eng') -> str:
+    """Process image with specific language."""
+    if lang_code not in SUPPORTED_LANGUAGES:
+        logger.warning(f"Language {lang_code} not supported, using English")
+        lang_code = 'eng'
+    
+    custom_config = f'--oem 1 --psm 6 -l {lang_code}'
+    
+    return pytesseract.image_to_string(image, config=custom_config)
+```
+
+**Language Pack Installation**:
+```bash
+# Install additional languages
+tesseract --list-langs  # Check installed
+# Download from: https://github.com/tesseract-ocr/tessdata
+# Place in: C:\Program Files\Tesseract-OCR\tessdata\
+```
+
+---
+
+
+## 9. Smart Defaults & Intelligent Extraction
+
+### 9.1 Smart Defaults System Overview
+
+**Purpose**: Automatically fill missing fields to enable seamless bulk upload processing
+
+**Default Values**:
+```python
+SMART_DEFAULTS = {
+    'currency': 'INR',           # Indian Rupee (most common use case)
+    'optimization_mode': 'greedy'  # Standard greedy algorithm
+}
+```
+
+**Implementation Philosophy**:
+- **Minimal User Input**: User only needs to provide amount
+- **Intelligent Detection**: Auto-detect currency/mode from context when possible
+- **Graceful Fallback**: Use sensible defaults when detection fails
+- **Transparent Logging**: Log all default applications for auditability
+
+### 9.2 Implementation in OCR Processor
+
+**File**: `packages/local-backend/app/services/ocr_processor.py`
+
+**Initialization with Defaults**:
+```python
+class OCRProcessor:
+    def __init__(self, default_currency: str = 'INR', default_mode: str = 'greedy'):
+        """
+        Initialize OCR processor with smart defaults.
+        
+        Args:
+            default_currency: Currency to use when not specified (default: INR)
+            default_mode: Optimization mode when not specified (default: greedy)
+        """
+        self.default_currency = default_currency
+        self.default_mode = default_mode
+        
+        logger.info(f"Smart defaults configured: currency={default_currency}, mode={default_mode}")
+```
+
+**Application in CSV Parsing**:
+```python
+def _parse_row(self, row: Dict, row_number: int) -> Dict:
+    """Parse CSV row with smart defaults."""
+    # Amount is required
+    amount = Decimal(row.get('amount', '').strip().replace(',', ''))
+    
+    # Currency - smart default
+    currency = row.get('currency', '').strip().upper()
+    if not currency:
+        currency = self.default_currency
+        logger.info(f"Row {row_number}: No currency specified, using default {currency}")
+    
+    # Mode - smart default
+    mode = row.get('mode', '').strip().lower()
+    if not mode:
+        mode = self.default_mode
+        logger.info(f"Row {row_number}: No mode specified, using default {mode}")
+    
+    return {
+        'row_number': row_number,
+        'amount': float(amount),
+        'currency': currency,
+        'optimization_mode': mode
+    }
+```
+
+**Application in Text Parsing**:
+```python
+def _parse_numbers_fallback(self, text: str) -> List[Dict[str, Any]]:
+    """
+    Extract numbers with smart defaults.
+    
+    When only numbers are found (no currency/mode info):
+    - Currency defaults to INR
+    - Mode defaults to greedy
+    """
+    results = []
+    numbers = re.findall(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', text)
+    
+    for row_num, num_str in enumerate(numbers, start=1):
+        try:
+            amount = Decimal(num_str.replace(',', ''))
+            
+            # Apply smart defaults
+            results.append({
+                'row_number': row_num,
+                'amount': float(amount),
+                'currency': self.default_currency,  # Smart default
+                'optimization_mode': self.default_mode  # Smart default
+            })
+        except:
+            continue
+    
+    logger.info(f"Applied smart defaults to {len(results)} extracted amounts")
+    return results
+```
+
+### 9.3 Intelligent Currency Detection
+
+**Priority Order**:
+1. **Explicit Column/Field**: If CSV has 'currency' column or text has "Currency: USD"
+2. **Symbol Detection**: Detect ?, $, ,  in the text
+3. **Code Detection**: Detect INR, USD, EUR, GBP keywords
+4. **Name Detection**: Detect "Rupee", "Dollar", "Euro", "Pound"
+5. **Smart Default**: Fallback to INR
+
+**Implementation**:
+```python
+def _detect_currency_in_text(self, text: str) -> str:
+    """
+    Intelligent currency detection with fallback.
+    
+    Detection strategies (in order):
+    1. Currency symbols: ?, $, , 
+    2. Currency codes: INR, USD, EUR, GBP
+    3. Currency names: Rupee, Dollar, Euro, Pound
+    4. Default: INR (smart default)
+    """
+    text_upper = text.upper()
+    
+    # Strategy 1: Symbols
+    symbol_map = {
+        '?': 'INR', 'RS': 'INR', 'RS.': 'INR',
+        '$': 'USD',
+        '': 'EUR',
+        '': 'GBP'
+    }
+    
+    for symbol, currency in symbol_map.items():
+        if symbol in text or symbol in text_upper:
+            logger.debug(f"Detected currency {currency} from symbol '{symbol}'")
+            return currency
+    
+    # Strategy 2: Currency codes
+    if 'INR' in text_upper:
+        return 'INR'
+    elif 'USD' in text_upper:
+        return 'USD'
+    elif 'EUR' in text_upper:
+        return 'EUR'
+    elif 'GBP' in text_upper:
+        return 'GBP'
+    
+    # Strategy 3: Currency names
+    name_map = {
+        'RUPEE': 'INR',
+        'INDIAN': 'INR',
+        'DOLLAR': 'USD',
+        'EURO': 'EUR',
+        'POUND': 'GBP',
+        'STERLING': 'GBP'
+    }
+    
+    for name, currency in name_map.items():
+        if name in text_upper:
+            logger.debug(f"Detected currency {currency} from name '{name}'")
+            return currency
+    
+    # Strategy 4: Smart default
+    logger.info(f"No currency detected, using smart default: {self.default_currency}")
+    return self.default_currency
+```
+
+### 9.4 Intelligent Mode Detection
+
+**Priority Order**:
+1. **Explicit Field**: If present in data
+2. **Keyword Detection**: Detect mode keywords in text
+3. **Smart Default**: Fallback to greedy
+
+**Keyword Mapping**:
+```python
+MODE_KEYWORDS = {
+    'greedy': [
+        'greedy', 'standard', 'default', 'normal',
+        'quick', 'fast', 'standard algorithm'
+    ],
+    'balanced': [
+        'balanced', 'mixed', 'even', 'equal',
+        'balance', 'moderate'
+    ],
+    'minimize_large': [
+        'minimize large', 'min large', 'fewer notes',
+        'less notes', 'reduce notes', 'minimize bills'
+    ],
+    'minimize_small': [
+        'minimize small', 'min small', 'fewer coins',
+        'less coins', 'reduce coins', 'minimize change'
+    ]
+}
+
+def _detect_mode_in_text(self, text: str) -> str:
+    """
+    Intelligent mode detection with fallback.
+    
+    Detection strategies:
+    1. Keyword matching (case-insensitive)
+    2. Default: greedy (smart default)
+    """
+    text_lower = text.lower()
+    
+    # Check all mode keywords
+    for mode, keywords in MODE_KEYWORDS.items():
+        for keyword in keywords:
+            if keyword in text_lower:
+                logger.debug(f"Detected mode '{mode}' from keyword '{keyword}'")
+                return mode
+    
+    # Smart default
+    logger.info(f"No mode detected, using smart default: {self.default_mode}")
+    return self.default_mode
+```
+
+### 9.5 Smart Defaults in API Layer
+
+**Bulk Upload Endpoint**:
+```python
+@router.post("/bulk/upload")
+async def bulk_upload(
+    file: UploadFile = File(...),
+    save_to_history: bool = Form(default=True),
+    # Optional: Override smart defaults
+    default_currency: str = Form(default='INR'),
+    default_mode: str = Form(default='greedy'),
+    db: Session = Depends(get_db)
+):
+    """
+    Upload bulk file with configurable smart defaults.
+    
+    Smart defaults are applied when fields are missing:
+    - currency: Default to INR (or custom default)
+    - mode: Default to greedy (or custom default)
+    """
+    # Initialize processor with custom defaults
+    processor = OCRProcessor(
+        default_currency=default_currency,
+        default_mode=default_mode
+    )
+    
+    # Process file (will apply defaults as needed)
+    extracted_data = processor.process_file(file_data, file.filename)
+    
+    # Log default usage statistics
+    default_currency_count = sum(
+        1 for row in extracted_data 
+        if row.get('currency') == default_currency
+    )
+    
+    logger.info(f"Smart defaults applied: {default_currency_count}/{len(extracted_data)} rows used default currency")
+    
+    # Continue with calculations...
+```
+
+### 9.6 User-Visible Default Application
+
+**UI Indicator** (BulkUploadPage.tsx):
+```tsx
+// Show which defaults were applied in results
+{result.applied_defaults && (
+  <div className="text-sm text-gray-500">
+    <span className="italic">
+      {result.applied_defaults.currency && `Currency: ${result.currency} (default)`}
+      {result.applied_defaults.mode && `, Mode: ${result.mode} (default)`}
+    </span>
+  </div>
+)}
+```
+
+**Results Table**:
+```tsx
+<TableCell>
+  {result.currency}
+  {result.applied_defaults?.currency && (
+    <Badge variant="secondary" className="ml-2">default</Badge>
+  )}
+</TableCell>
+```
+
+### 9.7 Smart Defaults Configuration
+
+**Settings Storage** (Future Enhancement):
+```python
+class Settings(Base):
+    __tablename__ = "settings"
+    
+    # User-configurable smart defaults
+    smart_default_currency = Column(String(3), default="INR")
+    smart_default_mode = Column(String(20), default="greedy")
+    
+    # Smart detection preferences
+    enable_currency_detection = Column(Boolean, default=True)
+    enable_mode_detection = Column(Boolean, default=True)
+```
+
+**API to Update Defaults**:
+```python
+@router.put("/settings/smart-defaults")
+async def update_smart_defaults(
+    currency: Optional[str] = Body(None),
+    mode: Optional[str] = Body(None),
+    db: Session = Depends(get_db)
+):
+    """Update smart default preferences."""
+    settings = db.query(Settings).first()
+    
+    if currency:
+        settings.smart_default_currency = currency
+    
+    if mode:
+        settings.smart_default_mode = mode
+    
+    db.commit()
+    
+    return {"message": "Smart defaults updated", "settings": settings}
+```
+
+### 9.8 Validation of Defaults
+
+**Ensure Defaults Are Valid**:
+```python
+def validate_smart_defaults(currency: str, mode: str) -> None:
+    """Validate smart default values."""
+    VALID_CURRENCIES = {'INR', 'USD', 'EUR', 'GBP'}
+    VALID_MODES = {'greedy', 'balanced', 'minimize_large', 'minimize_small'}
+    
+    if currency not in VALID_CURRENCIES:
+        raise ValueError(f"Invalid default currency: {currency}")
+    
+    if mode not in VALID_MODES:
+        raise ValueError(f"Invalid default mode: {mode}")
+    
+    logger.info(f"Smart defaults validated: currency={currency}, mode={mode}")
+```
+
+### 9.9 Smart Defaults Test Cases
+
+**Test Ultra-Minimal CSV**:
+```python
+def test_ultra_minimal_csv():
+    """Test CSV with only amounts (all defaults applied)."""
+    csv_content = """amount
+1000
+2500
+5000"""
+    
+    processor = OCRProcessor(default_currency='INR', default_mode='greedy')
+    results = processor._parse_csv_text(csv_content)
+    
+    # All rows should have defaults
+    assert all(r['currency'] == 'INR' for r in results)
+    assert all(r['optimization_mode'] == 'greedy' for r in results)
+    assert len(results) == 3
+```
+
+**Test Mixed Detection**:
+```python
+def test_mixed_currency_detection():
+    """Test mixing explicit currency and auto-detection."""
+    text = """
+    1000 INR
+    2500
+    500 USD
+    """
+    
+    processor = OCRProcessor(default_currency='INR', default_mode='greedy')
+    results = processor._parse_list_text(text)
+    
+    assert results[0]['currency'] == 'INR'  # Explicit
+    assert results[1]['currency'] == 'INR'  # Default
+    assert results[2]['currency'] == 'USD'  # Explicit
+```
+
+### 9.10 Logging & Audit Trail
+
+**Default Application Logging**:
+```python
+class DefaultApplicationLogger:
+    """Track smart default applications for auditing."""
+    
+    @staticmethod
+    def log_default_applied(row_number: int, field: str, value: str, reason: str):
+        """Log when a default is applied."""
+        logger.info(
+            f"Row {row_number}: Applied default {field}='{value}' ({reason})"
+        )
+    
+    @staticmethod
+    def get_default_statistics(results: List[Dict]) -> Dict:
+        """Calculate default usage statistics."""
+        total_rows = len(results)
+        
+        default_currency_count = sum(
+            1 for r in results 
+            if r.get('_default_applied', {}).get('currency', False)
+        )
+        
+        default_mode_count = sum(
+            1 for r in results 
+            if r.get('_default_applied', {}).get('mode', False)
+        )
+        
+        return {
+            'total_rows': total_rows,
+            'default_currency_applied': default_currency_count,
+            'default_mode_applied': default_mode_count,
+            'currency_detection_rate': (total_rows - default_currency_count) / total_rows if total_rows > 0 else 0,
+            'mode_detection_rate': (total_rows - default_mode_count) / total_rows if total_rows > 0 else 0
+        }
+```
+
+---
+
+## 10. Multi-Language Support
+
+### 10.1 Supported Languages
+
+**Current Support**:
+1. **English** (en) - Default
+2. **Hindi** (hi) - ???
+3. **Spanish** (es) - EspaÃƒÂ±ol
+4. **French** (fr) - FranÃƒÂ§ais
+5. **German** (de) - Deutsch
+
+**Translation Coverage**: 45+ keys  5 languages = 225+ translations
+
+### 10.2 Translation System Architecture
+
+**File Structure**:
+```
+packages/desktop-app/src/
+ i18n/
+    config.ts           # i18n configuration
+    translations/
+       en.json        # English translations
+       hi.json        # Hindi translations
+       es.json        # Spanish translations
+       fr.json        # French translations
+       de.json        # German translations
+    index.ts           # Export all translations
+ contexts/
+    LanguageContext.tsx  # Language state management
+```
+
+### 10.3 Translation Keys & Content
+
+**File**: `packages/desktop-app/src/i18n/translations/en.json`
+
+```json
+{
+  "app": {
+    "title": "Currency Denomination Calculator",
+    "subtitle": "Optimize your cash distribution"
+  },
+  "navigation": {
+    "calculator": "Calculator",
+    "history": "History",
+    "bulkUpload": "Bulk Upload",
+    "settings": "Settings"
+  },
+  "calculator": {
+    "title": "Denomination Calculator",
+    "amountLabel": "Enter Amount",
+    "amountPlaceholder": "Enter amount...",
+    "currencyLabel": "Currency",
+    "modeLabel": "Optimization Mode",
+    "calculateButton": "Calculate",
+    "calculating": "Calculating...",
+    "results": {
+      "title": "Breakdown Results",
+      "totalNotes": "Total Notes",
+      "totalCoins": "Total Coins",
+      "totalDenominations": "Total Denominations",
+      "denomination": "Denomination",
+      "type": "Type",
+      "count": "Count",
+      "totalValue": "Total Value",
+      "copyButton": "Copy to Clipboard",
+      "exportCSV": "Export CSV",
+      "exportJSON": "Export JSON"
+    }
+  },
+  "history": {
+    "title": "Calculation History",
+    "quickAccess": "Quick Access",
+    "fullHistory": "Full History",
+    "filterByCurrency": "Filter by Currency",
+    "dateRange": "Date Range",
+    "clearFilters": "Clear Filters",
+    "noHistory": "No calculations yet",
+    "columns": {
+      "id": "ID",
+      "date": "Date",
+      "amount": "Amount",
+      "currency": "Currency",
+      "mode": "Mode",
+      "denoms": "Denominations",
+      "actions": "Actions"
+    },
+    "actions": {
+      "view": "View Details",
+      "delete": "Delete",
+      "export": "Export"
+    }
+  },
+  "bulkUpload": {
+    "title": "Bulk Upload & Processing",
+    "downloadTemplate": "Download CSV Template",
+    "dragDrop": "Drag & drop your file here",
+    "orClickBrowse": "or click to browse",
+    "chooseFile": "Choose File",
+    "supportedFormats": "Supported: CSV, PDF, Word, Images",
+    "selectedFile": "Selected File:",
+    "fileFormat": "Format:",
+    "fileSize": "Size:",
+    "removeFile": "Remove File",
+    "saveToHistory": "Save to history",
+    "uploadButton": "Upload & Process",
+    "processing": "Processing Data...",
+    "results": {
+      "processedFile": "Processed File:",
+      "processedAt": "Processed:",
+      "summary": {
+        "total": "Total",
+        "success": "Success",
+        "failed": "Failed",
+        "time": "Time"
+      },
+      "uploadAnother": "Upload Another",
+      "exportCSV": "Export CSV",
+      "exportJSON": "Export JSON"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "light": "Light",
+      "dark": "Dark",
+      "system": "System"
+    },
+    "language": {
+      "title": "Language & Region",
+      "label": "Language"
+    },
+    "preferences": {
+      "title": "Default Preferences",
+      "defaultCurrency": "Default Currency",
+      "defaultMode": "Default Optimization Mode",
+      "autoSave": "Auto-save to history"
+    },
+    "dataManagement": {
+      "title": "Data Management",
+      "historyStats": "Total calculations:",
+      "databaseSize": "Database size:",
+      "exportAll": "Export All History",
+      "clearAll": "Clear All History",
+      "resetSettings": "Reset All Settings"
+    },
+    "saveButton": "Save Settings",
+    "resetButton": "Reset"
+  },
+  "currencies": {
+    "INR": "Indian Rupee",
+    "USD": "US Dollar",
+    "EUR": "Euro",
+    "GBP": "British Pound"
+  },
+  "modes": {
+    "greedy": "Greedy (Standard)",
+    "balanced": "Balanced",
+    "minimize_large": "Minimize Large",
+    "minimize_small": "Minimize Small"
+  },
+  "errors": {
+    "amountRequired": "Amount is required",
+    "amountInvalid": "Invalid amount format",
+    "amountTooLarge": "Amount too large (max 15 digits)",
+    "amountNegative": "Amount must be greater than 0",
+    "fileRequired": "Please select a file",
+    "fileInvalid": "Unsupported file type",
+    "fileTooLarge": "File too large",
+    "uploadFailed": "Upload failed. Please try again.",
+    "networkError": "Network error. Please check your connection.",
+    "serverError": "Server error. Please contact support."
+  },
+  "success": {
+    "calculated": "Calculation completed successfully",
+    "saved": "Saved to history",
+    "copied": "Copied to clipboard",
+    "exported": "Exported successfully",
+    "uploaded": "File uploaded successfully",
+    "deleted": "Deleted successfully",
+    "settingsUpdated": "Settings updated"
+  }
+}
+```
+
+**Hindi Translations** (`hi.json` - Sample):
+```json
+{
+  "app": {
+    "title": "??? ???? ??????",
+    "subtitle": "??? ??? ???? ? ????? ??"
+  },
+  "navigation": {
+    "calculator": "??????",
+    "history": "????",
+    "bulkUpload": "??? ????",
+    "settings": "????"
+  },
+  "calculator": {
+    "amountLabel": "?? ??? ??",
+    "currencyLabel": "???",
+    "calculateButton": "??? ??"
+  }
+}
+```
+
+### 10.4 Language Context Implementation
+
+**File**: `packages/desktop-app/src/contexts/LanguageContext.tsx`
+
+```tsx
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import en from '../i18n/translations/en.json';
+import hi from '../i18n/translations/hi.json';
+import es from '../i18n/translations/es.json';
+import fr from '../i18n/translations/fr.json';
+import de from '../i18n/translations/de.json';
+
+type Language = 'en' | 'hi' | 'es' | 'fr' | 'de';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+}
+
+const translations = { en, hi, es, fr, de };
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguageState] = useState<Language>('en');
+
+  // Load saved language from localStorage
+  useEffect(() => {
+    const saved = localStorage.getItem('language') as Language;
+    if (saved && translations[saved]) {
+      setLanguageState(saved);
+    }
+  }, []);
+
+  // Save language changes
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem('language', lang);
+  };
+
+  // Translation function with nested key support
+  const t = (key: string): string => {
+    const keys = key.split('.');
+    let value: any = translations[language];
+
+    for (const k of keys) {
+      value = value?.[k];
+    }
+
+    return value || key; // Return key if translation not found
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within LanguageProvider');
+  }
+  return context;
+};
+```
+
+### 10.5 Usage in Components
+
+**Example: CalculatorPage.tsx**:
+```tsx
+import { useLanguage } from '../contexts/LanguageContext';
+
+const CalculatorPage = () => {
+  const { t } = useLanguage();
+
+  return (
+    <div>
+      <h1>{t('calculator.title')}</h1>
+      
+      <label htmlFor="amount">
+        {t('calculator.amountLabel')}
+      </label>
+      <input
+        id="amount"
+        type="text"
+        placeholder={t('calculator.amountPlaceholder')}
+      />
+      
+      <button onClick={handleCalculate}>
+        {isCalculating ? t('calculator.calculating') : t('calculator.calculateButton')}
+      </button>
+    </div>
+  );
+};
+```
+
+**Example: SettingsPage.tsx**:
+```tsx
+const SettingsPage = () => {
+  const { language, setLanguage, t } = useLanguage();
+
+  return (
+    <div>
+      <h2>{t('settings.language.title')}</h2>
+      
+      <select value={language} onChange={(e) => setLanguage(e.target.value as Language)}>
+        <option value="en">English</option>
+        <option value="hi">??? (Hindi)</option>
+        <option value="es">EspaÃƒÂ±ol (Spanish)</option>
+        <option value="fr">FranÃƒÂ§ais (French)</option>
+        <option value="de">Deutsch (German)</option>
+      </select>
+    </div>
+  );
+};
+```
+
+### 10.6 RTL (Right-to-Left) Support (Future)
+
+**Planned for Arabic/Hebrew**:
+```tsx
+const LanguageProvider: React.FC = ({ children }) => {
+  const [language, setLanguage] = useState<Language>('en');
+  
+  // Detect RTL languages
+  const isRTL = ['ar', 'he'].includes(language);
+  
+  useEffect(() => {
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr';
+  }, [isRTL]);
+  
+  // ...
+};
+```
+
+---
+
+
+## 11. Data Models & Database Schema
+
+### 11.1 Database Technology
+
+**Database**: SQLite 3.x (Embedded, serverless)
+**ORM**: SQLAlchemy 2.x
+**Location**: `./currency_calculator.db` (local file)
+
+**Advantages**:
+- Zero configuration
+- No server required
+- Fully offline
+- File-based (easy backup)
+- ACID compliant
+
+### 11.2 Complete Database Schema
+
+#### 11.2.1 Calculations Table
+
+```sql
+CREATE TABLE calculations (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    amount DECIMAL(20, 2) NOT NULL,
+    currency VARCHAR(3) NOT NULL,
+    mode VARCHAR(20) NOT NULL,
+    breakdown TEXT NOT NULL,  -- JSON string
+    summary TEXT NOT NULL,     -- JSON string
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    
+    -- Indexes for performance
+    INDEX idx_currency (currency),
+    INDEX idx_timestamp (timestamp DESC),
+    INDEX idx_amount (amount)
+);
+```
+
+**SQLAlchemy Model**:
+```python
+from sqlalchemy import Column, Integer, String, DateTime, Text, Numeric, Index
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+
+Base = declarative_base()
+
+class Calculation(Base):
+    __tablename__ = "calculations"
+    
+    id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    amount = Column(Numeric(precision=20, scale=2), nullable=False, index=True)
+    currency = Column(String(3), nullable=False, index=True)
+    mode = Column(String(20), nullable=False)
+    breakdown = Column(Text, nullable=False)  # JSON: List[{denomination, type, count, total_value}]
+    summary = Column(Text, nullable=False)     # JSON: {total_notes, total_coins, total_denominations}
+    timestamp = Column(DateTime, default=datetime.utcnow, nullable=False, index=True)
+    
+    # Composite indexes
+    __table_args__ = (
+        Index('idx_currency_timestamp', 'currency', 'timestamp'),
+    )
+    
+    def __repr__(self):
+        return f"<Calculation(id={self.id}, amount={self.amount}, currency={self.currency})>"
+```
+
+#### 11.2.2 Settings Table
+
+```sql
+CREATE TABLE settings (
+    id INTEGER PRIMARY KEY DEFAULT 1,  -- Single row table
+    theme VARCHAR(10) DEFAULT 'light' NOT NULL,
+    language VARCHAR(2) DEFAULT 'en' NOT NULL,
+    default_currency VARCHAR(3) DEFAULT 'INR' NOT NULL,
+    default_mode VARCHAR(20) DEFAULT 'greedy' NOT NULL,
+    auto_save_history BOOLEAN DEFAULT 1 NOT NULL,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    
+    -- Ensure only one settings row
+    CHECK (id = 1)
+);
+```
+
+**SQLAlchemy Model**:
+```python
+class Settings(Base):
+    __tablename__ = "settings"
+    
+    id = Column(Integer, primary_key=True, default=1)
+    theme = Column(String(10), default="light", nullable=False)
+    language = Column(String(2), default="en", nullable=False)
+    default_currency = Column(String(3), default="INR", nullable=False)
+    default_mode = Column(String(20), default="greedy", nullable=False)
+    auto_save_history = Column(Boolean, default=True, nullable=False)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
+    
+    def __repr__(self):
+        return f"<Settings(theme={self.theme}, language={self.language})>"
+```
+
+### 11.3 Sample Data & Queries
+
+#### Common Queries
+
+**1. Get Latest Calculations**:
+```python
+# Get last 10 calculations
+recent = db.query(Calculation)\
+    .order_by(Calculation.timestamp.desc())\
+    .limit(10)\
+    .all()
+```
+
+**2. Filter by Currency**:
+```python
+# Get all INR calculations
+inr_calcs = db.query(Calculation)\
+    .filter(Calculation.currency == 'INR')\
+    .order_by(Calculation.timestamp.desc())\
+    .all()
+```
+
+**3. Paginated History**:
+```python
+def get_paginated_history(page: int = 1, per_page: int = 50):
+    offset = (page - 1) * per_page
+    
+    results = db.query(Calculation)\
+        .order_by(Calculation.timestamp.desc())\
+        .offset(offset)\
+        .limit(per_page)\
+        .all()
+    
+    total = db.query(Calculation).count()
+    
+    return {
+        'items': results,
+        'total': total,
+        'page': page,
+        'pages': (total + per_page - 1) // per_page
+    }
+```
+
+**4. Statistics**:
+```python
+from sqlalchemy import func
+
+# Total calculations by currency
+stats = db.query(
+    Calculation.currency,
+    func.count(Calculation.id).label('count'),
+    func.sum(Calculation.amount).label('total_amount')
+)\
+    .group_by(Calculation.currency)\
+    .all()
+```
+
+### 11.4 Database Initialization
+
+```python
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+# Create engine
+DATABASE_URL = "sqlite:///./currency_calculator.db"
+engine = create_engine(
+    DATABASE_URL,
+    connect_args={"check_same_thread": False},  # SQLite specific
+    echo=False  # Set True for SQL logging
+)
+
+# Create all tables
+Base.metadata.create_all(bind=engine)
+
+# Initialize default settings
+SessionLocal = sessionmaker(bind=engine)
+db = SessionLocal()
+
+if not db.query(Settings).first():
+    default_settings = Settings(
+        id=1,
+        theme="light",
+        language="en",
+        default_currency="INR",
+        default_mode="greedy",
+        auto_save_history=True
+    )
+    db.add(default_settings)
+    db.commit()
+
+db.close()
+```
+
+---
+
+## 12. Calculation Engine Logic
+
+### 12.1 Core Engine Architecture
+
+**File**: `packages/core-engine/engine.py` (387 lines)
+
+**Design Principles**:
+- **Framework-agnostic**: Pure Python, no web framework dependencies
+- **Stateless**: No instance state between calculations
+- **Thread-safe**: Can be used concurrently
+- **High precision**: Uses `Decimal` for financial accuracy
+
+### 12.2 Greedy Algorithm
+
+**Most Common Mode** - Always use largest denominations first
+
+**Algorithm**:
+```python
+def greedy_algorithm(amount: Decimal, denominations: List[Decimal]) -> Dict:
+    """
+    Greedy algorithm: Use largest denominations first.
+    
+    Time Complexity: O(n) where n = number of denominations
+    Space Complexity: O(n)
+    """
+    result = []
+    remaining = amount
+    
+    # Sort descending
+    sorted_denoms = sorted(denominations, reverse=True)
+    
+    for denom in sorted_denoms:
+        if remaining >= denom:
+            count = int(remaining / denom)
+            remaining -= count * denom
+            
+            result.append({
+                'denomination': float(denom),
+                'count': count,
+                'total_value': float(count * denom)
+            })
+    
+    return {'breakdown': result, 'remaining': float(remaining)}
+```
+
+**Example**:
+```python
+# Input: 1850 INR
+# Denominations: [2000, 500, 200, 100, 50, 20, 10, 5, 2, 1]
+
+# Greedy output:
+{
+    'breakdown': [
+        {'denomination': 500, 'count': 3, 'total_value': 1500},  # 3  500 = 1500
+        {'denomination': 200, 'count': 1, 'total_value': 200},   # 1  200 = 200
+        {'denomination': 100, 'count': 1, 'total_value': 100},   # 1  100 = 100
+        {'denomination': 50, 'count': 1, 'total_value': 50}      # 1  50 = 50
+    ],
+    'remaining': 0.0
+}
+# Total: 6 pieces
+```
+
+### 12.3 Balanced Algorithm
+
+**Goal**: Balance notes and coins distribution
+
+**Algorithm**:
+```python
+def balanced_algorithm(amount: Decimal, denominations: List[Decimal], note_threshold: Decimal) -> Dict:
+    """
+    Balanced: Try to balance notes and coins.
+    
+    Strategy:
+    1. Use greedy for large amounts
+    2. When possible, replace large notes with smaller denominations
+    3. Balance notes vs coins ratio
+    """
+    greedy_result = greedy_algorithm(amount, denominations)
+    
+    # Count notes vs coins
+    notes = [d for d in greedy_result['breakdown'] if d['denomination'] >= note_threshold]
+    coins = [d for d in greedy_result['breakdown'] if d['denomination'] < note_threshold]
+    
+    notes_count = sum(n['count'] for n in notes)
+    coins_count = sum(c['count'] for c in coins)
+    
+    # If imbalanced, try to adjust
+    if notes_count > coins_count * 2:
+        # Too many notes, try using smaller denominations
+        return _rebalance_to_coins(amount, denominations, note_threshold)
+    elif coins_count > notes_count * 3:
+        # Too many coins, try using larger denominations
+        return _rebalance_to_notes(amount, denominations, note_threshold)
+    
+    return greedy_result
+```
+
+### 12.4 Minimize Large Denominations
+
+**Goal**: Use fewer notes (more coins acceptable)
+
+```python
+def minimize_large(amount: Decimal, denominations: List[Decimal]) -> Dict:
+    """
+    Minimize large denominations (use more smaller ones).
+    
+    Strategy: Avoid largest denominations when possible
+    """
+    result = []
+    remaining = amount
+    
+    # Sort denominations
+    sorted_denoms = sorted(denominations, reverse=True)
+    
+    # Skip largest denomination if possible
+    for i, denom in enumerate(sorted_denoms):
+        if i == 0 and remaining < denom * 2:
+            # Skip largest if amount < 2 largest denomination
+            continue
+        
+        if remaining >= denom:
+            count = int(remaining / denom)
+            
+            # Limit usage of large denominations
+            if i < 2:  # First two largest
+                count = min(count, 2)  # Max 2 pieces
+            
+            remaining -= count * denom
+            result.append({
+                'denomination': float(denom),
+                'count': count,
+                'total_value': float(count * denom)
+            })
+    
+    return {'breakdown': result, 'remaining': float(remaining)}
+```
+
+### 12.5 Minimize Small Denominations
+
+**Goal**: Use fewer coins (prefer notes)
+
+```python
+def minimize_small(amount: Decimal, denominations: List[Decimal], note_threshold: Decimal) -> Dict:
+    """
+    Minimize small denominations (prefer notes).
+    
+    Strategy: Round to nearest note denomination
+    """
+    # Find smallest note denomination
+    note_denoms = [d for d in denominations if d >= note_threshold]
+    smallest_note = min(note_denoms) if note_denoms else denominations[-1]
+    
+    # Round amount to nearest note
+    rounded = (amount // smallest_note) * smallest_note
+    
+    if rounded > 0:
+        # Use greedy on rounded amount
+        result = greedy_algorithm(rounded, note_denoms)
+        return result
+    else:
+        # Fallback to regular greedy
+        return greedy_algorithm(amount, denominations)
+```
+
+### 12.6 Currency Configurations
+
+**File**: `packages/core-engine/config/currencies.json`
+
+```json
+{
+  "INR": {
+    "name": "Indian Rupee",
+    "symbol": "?",
+    "code": "INR",
+    "note_threshold": 10,
+    "denominations": [
+      {"value": 2000, "type": "note"},
+      {"value": 500, "type": "note"},
+      {"value": 200, "type": "note"},
+      {"value": 100, "type": "note"},
+      {"value": 50, "type": "note"},
+      {"value": 20, "type": "note"},
+      {"value": 10, "type": "note"},
+      {"value": 5, "type": "coin"},
+      {"value": 2, "type": "coin"},
+      {"value": 1, "type": "coin"}
+    ]
+  },
+  "USD": {
+    "name": "US Dollar",
+    "symbol": "$",
+    "code": "USD",
+    "note_threshold": 1,
+    "denominations": [
+      {"value": 100, "type": "note"},
+      {"value": 50, "type": "note"},
+      {"value": 20, "type": "note"},
+      {"value": 10, "type": "note"},
+      {"value": 5, "type": "note"},
+      {"value": 1, "type": "note"},
+      {"value": 0.25, "type": "coin"},
+      {"value": 0.10, "type": "coin"},
+      {"value": 0.05, "type": "coin"},
+      {"value": 0.01, "type": "coin"}
+    ]
+  },
+  "EUR": {
+    "name": "Euro",
+    "symbol": "",
+    "code": "EUR",
+    "note_threshold": 5,
+    "denominations": [
+      {"value": 500, "type": "note"},
+      {"value": 200, "type": "note"},
+      {"value": 100, "type": "note"},
+      {"value": 50, "type": "note"},
+      {"value": 20, "type": "note"},
+      {"value": 10, "type": "note"},
+      {"value": 5, "type": "note"},
+      {"value": 2, "type": "coin"},
+      {"value": 1, "type": "coin"},
+      {"value": 0.50, "type": "coin"},
+      {"value": 0.20, "type": "coin"},
+      {"value": 0.10, "type": "coin"},
+      {"value": 0.05, "type": "coin"},
+      {"value": 0.02, "type": "coin"},
+      {"value": 0.01, "type": "coin"}
+    ]
+  },
+  "GBP": {
+    "name": "British Pound",
+    "symbol": "",
+    "code": "GBP",
+    "note_threshold": 5,
+    "denominations": [
+      {"value": 50, "type": "note"},
+      {"value": 20, "type": "note"},
+      {"value": 10, "type": "note"},
+      {"value": 5, "type": "note"},
+      {"value": 2, "type": "coin"},
+      {"value": 1, "type": "coin"},
+      {"value": 0.50, "type": "coin"},
+      {"value": 0.20, "type": "coin"},
+      {"value": 0.10, "type": "coin"},
+      {"value": 0.05, "type": "coin"},
+      {"value": 0.02, "type": "coin"},
+      {"value": 0.01, "type": "coin"}
+    ]
+  }
+}
+```
+
+### 12.7 Performance Characteristics
+
+**Time Complexity**:
+- Greedy: O(n) where n = number of denominations
+- Balanced: O(n)
+- Minimize Large: O(n)
+- Minimize Small: O(n)
+
+**Space Complexity**: O(n) for all modes
+
+**Benchmarks** (tested on modern CPU):
+- Single calculation: < 1ms
+- 1000 calculations: < 50ms
+- 10000 calculations: < 500ms
+
+---
+
+## 13. Known Issues & Fixes History
+
+### 13.1 Bug Timeline
+
+#### Issue #1: Missing Logger Import (FIXED)
+
+**Date**: November 2025
+**Severity**: Critical (blocked bulk upload)
+**Component**: `packages/local-backend/app/api/bulk.py`
+
+**Symptom**:
+```
+NameError: name 'logger' is not defined
+```
+
+**Root Cause**:
+OCR processor rebuild removed logger import in bulk upload endpoint
+
+**Before** (Broken):
+```python
+# packages/local-backend/app/api/bulk.py
+from fastapi import APIRouter, UploadFile, File
+
+router = APIRouter()
+
+@router.post("/bulk/upload")
+async def bulk_upload(file: UploadFile = File(...)):
+    logger.info(f"Processing {file.filename}")  #  logger not imported
+    # ...
+```
+
+**After** (Fixed):
+```python
+# packages/local-backend/app/api/bulk.py
+from fastapi import APIRouter, UploadFile, File
+import logging  #  Added
+
+logger = logging.getLogger(__name__)  #  Added
+
+router = APIRouter()
+
+@router.post("/bulk/upload")
+async def bulk_upload(file: UploadFile = File(...)):
+    logger.info(f"Processing {file.filename}")  #  Now works
+    # ...
+```
+
+**Resolution**: Added missing import and logger initialization
+**Status**:  FIXED
+
+---
+
+#### Issue #2: OCR System Rebuild (ENHANCEMENT)
+
+**Date**: November 2025
+**Type**: Complete rebuild from scratch
+**Component**: `packages/local-backend/app/services/ocr_processor.py`
+
+**Reason**: Previous implementation had caching issues and incomplete parsing
+
+**Changes**:
+1. **Rebuilt from Scratch**: New 383-line implementation
+2. **Added Smart Defaults**: INR currency, greedy mode
+3. **Enhanced Parsing**: 5 format support (CSV, labeled, list, numbers, mixed)
+4. **Improved Detection**: 4-strategy currency detection
+5. **Better Logging**: Comprehensive debug/info logging
+
+**Key Files Modified**:
+- `ocr_processor.py` - Complete rewrite (383 lines)
+- `bulk.py` - Updated to use new processor
+- `test_ocr_api.py` - Added comprehensive tests
+
+**Status**:  COMPLETED
+
+---
+
+#### Issue #3: UI File Display Enhancement (ENHANCEMENT)
+
+**Date**: November 2025
+**Type**: Feature addition
+**Component**: `packages/desktop-app/src/components/BulkUploadPage.tsx`
+
+**Request**: Show file name and format prominently
+
+**Before**:
+```tsx
+// No file display
+```
+
+**After**:
+```tsx
+<div className="mt-4 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+  <div className="flex items-center gap-3">
+    <FileSpreadsheet className="h-8 w-8 text-green-500" />
+    <div>
+      <p className="font-medium">Selected File:</p>
+      <p className="text-lg font-semibold">{selectedFile.name}</p>
+      <p className="text-sm text-gray-600 dark:text-gray-400">
+        Format: {fileFormat}  Size: {(selectedFile.size / 1024).toFixed(2)} KB
+      </p>
+    </div>
+  </div>
+</div>
+```
+
+**Status**:  COMPLETED
+
+---
+
+### 13.2 Pending Issues
+
+**None currently**
+
+All known issues have been resolved.
+
+---
+
+## 14. Dependencies & Installation
+
+### 14.1 Complete Dependency List
+
+#### Frontend (Desktop App)
+
+**File**: `packages/desktop-app/package.json`
+
+```json
+{
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "axios": "^1.6.2",
+    "lucide-react": "^0.294.0",
+    "@tanstack/react-query": "^5.12.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "electron": "^27.1.3",
+    "electron-builder": "^24.9.1",
+    "tailwindcss": "^3.3.6",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "eslint": "^8.55.0"
+  }
+}
+```
+
+**Installation**:
+```powershell
+cd packages/desktop-app
+npm install
+```
+
+#### Backend (FastAPI)
+
+**File**: `packages/local-backend/requirements.txt`
+
+```
+# Core Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.2
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.13.0
+
+# OCR Dependencies
+pytesseract==0.3.10
+Pillow==10.1.0
+PyMuPDF==1.23.8
+pdf2image==1.16.3
+python-docx==1.1.0
+
+# Utilities
+python-multipart==0.0.6
+```
+
+**Installation**:
+```powershell
+cd packages/local-backend
+pip install -r requirements.txt
+```
+
+#### Core Engine
+
+**File**: `packages/core-engine/requirements.txt`
+
+```
+# No external dependencies - Pure Python
+# Uses only standard library
+```
+
+### 14.2 System Dependencies
+
+#### Tesseract OCR
+
+**Version**: 5.3.3+
+**Platform**: Windows 10/11
+**Download**: https://digi.bib.uni-mannheim.de/tesseract/
+
+**Auto-Installer**: `packages/local-backend/install_ocr_dependencies.ps1`
+
+```powershell
+# Run as Administrator
+.\install_ocr_dependencies.ps1
+```
+
+**Manual Installation**:
+1. Download Tesseract installer
+2. Run installer (select all language packs)
+3. Add to PATH: `C:\Program Files\Tesseract-OCR`
+4. Verify: `tesseract --version`
+
+#### Poppler (PDF to Image)
+
+**Version**: 24.08.0+
+**Platform**: Windows 10/11
+**Download**: https://github.com/oschwartz10612/poppler-windows
+
+**Auto-Installer**: Included in `install_ocr_dependencies.ps1`
+
+**Manual Installation**:
+1. Download Poppler release ZIP
+2. Extract to `C:\Program Files\poppler`
+3. Add bin to PATH: `C:\Program Files\poppler\Library\bin`
+4. Verify: `pdftoppm -v`
+
+### 14.3 Auto-Installation Script
+
+**File**: `packages/local-backend/install_ocr_dependencies.ps1`
+
+```powershell
+# Complete Auto-Installer for OCR Dependencies
+# Run as Administrator
+
+Write-Host "=== OCR Dependencies Auto-Installer ===" -ForegroundColor Cyan
+Write-Host ""
+
+# 1. Install Tesseract
+Write-Host "[1/2] Installing Tesseract OCR 5.3.3..." -ForegroundColor Yellow
+
+$tesseractUrl = "https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe"
+$tesseractInstaller = "$env:TEMP\tesseract-setup.exe"
+
+Invoke-WebRequest -Uri $tesseractUrl -OutFile $tesseractInstaller
+
+Start-Process -FilePath $tesseractInstaller -ArgumentList "/S", "/D=C:\Program Files\Tesseract-OCR" -Wait
+
+# Add to PATH
+$tesseractPath = "C:\Program Files\Tesseract-OCR"
+$currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+if ($currentPath -notlike "*$tesseractPath*") {
+    [Environment]::SetEnvironmentVariable("Path", "$currentPath;$tesseractPath", [EnvironmentVariableTarget]::Machine)
+}
+
+Write-Host "  Tesseract installed successfully!" -ForegroundColor Green
+
+# 2. Install Poppler
+Write-Host "[2/2] Installing Poppler 24.08.0..." -ForegroundColor Yellow
+
+$popplerUrl = "https://github.com/oschwartz10612/poppler-windows/releases/download/v24.08.0-0/Release-24.08.0-0.zip"
+$popplerZip = "$env:TEMP\poppler.zip"
+$popplerPath = "C:\Program Files\poppler"
+
+Invoke-WebRequest -Uri $popplerUrl -OutFile $popplerZip
+Expand-Archive -Path $popplerZip -DestinationPath $popplerPath -Force
+
+# Add bin to PATH
+$popplerBin = "$popplerPath\poppler-24.08.0\Library\bin"
+if ($currentPath -notlike "*$popplerBin*") {
+    [Environment]::SetEnvironmentVariable("Path", "$currentPath;$popplerBin", [EnvironmentVariableTarget]::Machine)
+}
+
+Write-Host "  Poppler installed successfully!" -ForegroundColor Green
+
+# Verify
+Write-Host ""
+Write-Host "=== Verification ===" -ForegroundColor Cyan
+Write-Host "Tesseract version:" -ForegroundColor Yellow
+& tesseract --version
+
+Write-Host ""
+Write-Host "Poppler version:" -ForegroundColor Yellow
+& pdftoppm -v
+
+Write-Host ""
+Write-Host "=== Installation Complete! ===" -ForegroundColor Green
+Write-Host "Please restart your terminal for PATH changes to take effect." -ForegroundColor Yellow
+```
+
+### 14.4 Complete Setup Guide
+
+**Step 1: Clone Repository**
+```powershell
+git clone <repository-url>
+cd currency-denomination-calculator
+```
+
+**Step 2: Install Frontend Dependencies**
+```powershell
+cd packages/desktop-app
+npm install
+```
+
+**Step 3: Install Backend Dependencies**
+```powershell
+cd ../local-backend
+pip install -r requirements.txt
+```
+
+**Step 4: Install OCR Dependencies (Auto)**
+```powershell
+# Run as Administrator
+.\install_ocr_dependencies.ps1
+```
+
+**Step 5: Initialize Database**
+```powershell
+# Automatic on first run
+python -m app.main
+```
+
+**Step 6: Run Application**
+
+Terminal 1 (Backend):
+```powershell
+cd packages/local-backend
+python -m uvicorn app.main:app --reload --port 8000
+```
+
+Terminal 2 (Frontend):
+```powershell
+cd packages/desktop-app
+npm run dev
+```
+
+---
+
+## 15. Testing & Quality Assurance
+
+### 15.1 Test Scripts
+
+#### Backend API Tests
+
+**File**: `packages/local-backend/test_ocr_api.py`
+
+```python
+import pytest
+from fastapi.testclient import TestClient
+from app.main import app
+
+client = TestClient(app)
+
+def test_bulk_upload_csv():
+    """Test CSV file upload."""
+    csv_content = b"amount,currency,mode\n1000,INR,greedy\n2500,USD,balanced"
+    
+    files = {"file": ("test.csv", csv_content, "text/csv")}
+    response = client.post("/api/v1/bulk/upload", files=files)
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert data["total_rows"] == 2
+    assert data["successful_rows"] == 2
+
+def test_ocr_image():
+    """Test image OCR processing."""
+    with open("test_image.jpg", "rb") as f:
+        files = {"file": ("test.jpg", f, "image/jpeg")}
+        response = client.post("/api/v1/ocr/process", files=files)
+    
+    assert response.status_code == 200
+    data = response.json()
+    assert "extracted_text" in data
+    assert len(data["detected_amounts"]) > 0
+```
+
+#### Core Engine Tests
+
+**File**: `packages/core-engine/test_engine.py`
+
+```python
+import unittest
+from decimal import Decimal
+from engine import DenominationEngine
+
+class TestDenominationEngine(unittest.TestCase):
+    
+    def setUp(self):
+        self.engine = DenominationEngine()
+    
+    def test_greedy_algorithm(self):
+        """Test greedy calculation."""
+        result = self.engine.calculate(
+            amount=Decimal("1850"),
+            currency="INR",
+            mode="greedy"
+        )
+        
+        self.assertEqual(result['total_pieces'], 6)
+        self.assertEqual(result['breakdown'][0]['denomination'], 500)
+        self.assertEqual(result['breakdown'][0]['count'], 3)
+    
+    def test_large_amounts(self):
+        """Test very large amounts."""
+        result = self.engine.calculate(
+            amount=Decimal("999999999999999"),
+            currency="INR",
+            mode="greedy"
+        )
+        
+        self.assertIsNotNone(result)
+        self.assertGreater(len(result['breakdown']), 0)
+```
+
+### 15.2 Test Coverage Expectations
+
+**Minimum Coverage**: 80%
+**Target Coverage**: 90%+
+
+**Critical Areas** (100% coverage required):
+- Calculation engine algorithms
+- Currency detection logic
+- Smart defaults application
+- File validation
+- Amount parsing
+
+---
+
+## 16. Performance Requirements
+
+**Single Calculation**: < 1ms
+**Bulk Upload (100 rows)**: < 500ms
+**OCR Processing**: < 3s per page
+**History Query (paginated)**: < 100ms
+**Database Size**: < 50MB for 10,000 calculations
+
+---
+
+## 17. Future Enhancements (Phase 2 & 3)
+
+### Phase 2 (Planned)
+- Online mode with cloud sync
+- Multi-user support
+- Export to Excel
+- Advanced analytics dashboard
+- Custom currency support
+
+### Phase 3 (Future)
+- Mobile app (iOS/Android)
+- Real-time exchange rates
+- Audit trail & reporting
+- API for third-party integration
+- Plugin system
+
+---
+
+## 18. Acceptance Criteria
+
+###  Phase 1 Complete
+
+- [x] Single denomination calculation
+- [x] 4 currencies (INR, USD, EUR, GBP)
+- [x] 4 optimization modes
+- [x] History management
+- [x] Bulk upload (CSV, PDF, Word, Images)
+- [x] OCR integration
+- [x] Smart defaults
+- [x] Multi-language (5 languages)
+- [x] Dark mode
+- [x] Export (CSV, JSON, Clipboard)
+- [x] Offline operation
+- [x] Auto-installation
+
+---
+
+
+## 19. Deployment & Operations Guide
+
+### 19.1 Build Process
+
+#### Desktop Application Build
+
+**Development Build**:
+```powershell
+cd packages/desktop-app
+npm run dev
+```
+**Output**: Opens Electron app in development mode with hot reload
+
+**Production Build**:
+```powershell
+cd packages/desktop-app
+npm run build        # Build React app
+npm run electron:build  # Package Electron app
+```
+
+**Build Artifacts**:
+```
+packages/desktop-app/dist/           # React build
+packages/desktop-app/dist-electron/  # Electron build
+packages/desktop-app/release/        # Final installers
+   currency-calculator-1.0.0-win-x64.exe  # Windows installer
+   currency-calculator-1.0.0-win-x64-unpacked/  # Unpacked app
+   latest.yml  # Auto-update metadata
+```
+
+**Build Configuration** (`electron-builder` in package.json):
+```json
+{
+  "build": {
+    "appId": "com.currency.calculator",
+    "productName": "Currency Denomination Calculator",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": ["nsis"],
+      "icon": "image/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}
+```
+
+### 19.2 Backend Deployment
+
+**Local Deployment** (Current):
+```powershell
+cd packages/local-backend
+python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+**Production Configuration** (Future):
+```powershell
+# Without reload, with workers
+python -m uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 4
+```
+
+**Windows Service Setup** (Future):
+```powershell
+# Using NSSM (Non-Sucking Service Manager)
+nssm install CurrencyCalculatorBackend "C:\Path\To\Python\python.exe" "-m uvicorn app.main:app --host 127.0.0.1 --port 8000"
+nssm start CurrencyCalculatorBackend
+```
+
+### 19.3 Database Management
+
+**Backup**:
+```powershell
+# Copy SQLite database file
+Copy-Item "currency_calculator.db" "backups\currency_calculator_$(Get-Date -Format 'yyyyMMdd_HHmmss').db"
+```
+
+**Restore**:
+```powershell
+# Restore from backup
+Copy-Item "backups\currency_calculator_20250115_120000.db" "currency_calculator.db" -Force
+```
+
+**Migration** (Future with Alembic):
+```powershell
+# Create migration
+alembic revision --autogenerate -m "description"
+
+# Apply migration
+alembic upgrade head
+```
+
+### 19.4 Monitoring & Logging
+
+**Log Locations**:
+```
+packages/local-backend/logs/
+   app.log          # Application logs
+   error.log        # Error logs only
+   access.log       # HTTP access logs
+```
+
+**Log Configuration** (`app/main.py`):
+```python
+import logging
+from logging.handlers import RotatingFileHandler
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        RotatingFileHandler(
+            'logs/app.log',
+            maxBytes=10485760,  # 10MB
+            backupCount=5
+        ),
+        logging.StreamHandler()
+    ]
+)
+```
+
+### 19.5 Health Checks
+
+**Backend Health Check**:
+```powershell
+# Check if backend is running
+Invoke-RestMethod -Uri "http://localhost:8000/health" -Method GET
+```
+
+**Response**:
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-01-15T12:00:00Z",
+  "database": "connected",
+  "version": "1.0.0"
+}
+```
+
+**Complete Health Check Script** (`health-check.ps1`):
+```powershell
+# Health Check Script
+Write-Host "=== Currency Calculator Health Check ===" -ForegroundColor Cyan
+
+# 1. Check Backend
+Write-Host "`n[1/4] Checking Backend..." -ForegroundColor Yellow
+try {
+    $response = Invoke-RestMethod -Uri "http://localhost:8000/health" -TimeoutSec 5
+    if ($response.status -eq "healthy") {
+        Write-Host "  Backend: HEALTHY" -ForegroundColor Green
+    } else {
+        Write-Host "  Backend: UNHEALTHY" -ForegroundColor Red
+    }
+} catch {
+    Write-Host "  Backend: NOT RUNNING" -ForegroundColor Red
+}
+
+# 2. Check Database
+Write-Host "`n[2/4] Checking Database..." -ForegroundColor Yellow
+if (Test-Path "currency_calculator.db") {
+    $dbSize = (Get-Item "currency_calculator.db").Length / 1MB
+    Write-Host "  Database: EXISTS ($([math]::Round($dbSize, 2)) MB)" -ForegroundColor Green
+} else {
+    Write-Host "  Database: NOT FOUND" -ForegroundColor Red
+}
+
+# 3. Check Tesseract
+Write-Host "`n[3/4] Checking Tesseract..." -ForegroundColor Yellow
+try {
+    $tesseractVersion = & tesseract --version 2>&1 | Select-String -Pattern "tesseract" | Select-Object -First 1
+    Write-Host "  Tesseract: INSTALLED ($tesseractVersion)" -ForegroundColor Green
+} catch {
+    Write-Host "  Tesseract: NOT INSTALLED" -ForegroundColor Red
+}
+
+# 4. Check Poppler
+Write-Host "`n[4/4] Checking Poppler..." -ForegroundColor Yellow
+try {
+    $popplerVersion = & pdftoppm -v 2>&1 | Select-String -Pattern "pdftoppm" | Select-Object -First 1
+    Write-Host "  Poppler: INSTALLED ($popplerVersion)" -ForegroundColor Green
+} catch {
+    Write-Host "  Poppler: NOT INSTALLED" -ForegroundColor Red
+}
+
+Write-Host "`n=== Health Check Complete ===" -ForegroundColor Cyan
+```
+
+---
+
+## 20. Error Handling & Validation
+
+### 20.1 Client-Side Validation (React)
+
+**Amount Validation**:
+```typescript
+// packages/desktop-app/src/utils/validation.ts
+
+export const validateAmount = (amount: string): {valid: boolean; error?: string} => {
+  // Check empty
+  if (!amount || amount.trim() === '') {
+    return {valid: false, error: 'Amount is required'};
+  }
+  
+  // Check numeric
+  const numAmount = parseFloat(amount);
+  if (isNaN(numAmount)) {
+    return {valid: false, error: 'Amount must be a number'};
+  }
+  
+  // Check positive
+  if (numAmount <= 0) {
+    return {valid: false, error: 'Amount must be greater than 0'};
+  }
+  
+  // Check maximum (1 trillion)
+  if (numAmount > 1_000_000_000_000) {
+    return {valid: false, error: 'Amount exceeds maximum limit (1 trillion)'};
+  }
+  
+  // Check decimal places
+  const decimalPlaces = (amount.split('.')[1] || '').length;
+  if (decimalPlaces > 2) {
+    return {valid: false, error: 'Maximum 2 decimal places allowed'};
+  }
+  
+  return {valid: true};
+};
+```
+
+**File Upload Validation**:
+```typescript
+export const validateUploadFile = (file: File): {valid: boolean; error?: string} => {
+  // Check file size (max 10MB)
+  const maxSize = 10 * 1024 * 1024; // 10MB
+  if (file.size > maxSize) {
+    return {valid: false, error: 'File size exceeds 10MB limit'};
+  }
+  
+  // Check file type
+  const allowedTypes = [
+    'text/csv',
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'image/jpeg',
+    'image/png',
+    'image/jpg'
+  ];
+  
+  if (!allowedTypes.includes(file.type)) {
+    return {
+      valid: false,
+      error: 'Invalid file type. Allowed: CSV, PDF, Word, Images (JPG/PNG)'
+    };
+  }
+  
+  return {valid: true};
+};
+```
+
+### 20.2 Server-Side Validation (FastAPI)
+
+**Request Models with Validation**:
+```python
+# packages/local-backend/app/models.py
+
+from pydantic import BaseModel, Field, validator
+from decimal import Decimal
+from typing import Literal
+
+class CalculateRequest(BaseModel):
+    amount: Decimal = Field(..., gt=0, le=Decimal('1000000000000'))
+    currency: Literal['INR', 'USD', 'EUR', 'GBP']
+    mode: Literal['greedy', 'balanced', 'minimize_large', 'minimize_small']
+    
+    @validator('amount')
+    def validate_amount_precision(cls, v):
+        # Ensure max 2 decimal places
+        if v.as_tuple().exponent < -2:
+            raise ValueError('Maximum 2 decimal places allowed')
+        return v
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "amount": 1850.50,
+                "currency": "INR",
+                "mode": "greedy"
+            }
+        }
+```
+
+**File Upload Validation**:
+```python
+from fastapi import UploadFile, HTTPException
+
+async def validate_upload_file(file: UploadFile):
+    # Check file size
+    max_size = 10 * 1024 * 1024  # 10MB
+    
+    # Read file to check size
+    contents = await file.read()
+    await file.seek(0)  # Reset file pointer
+    
+    if len(contents) > max_size:
+        raise HTTPException(
+            status_code=400,
+            detail="File size exceeds 10MB limit"
+        )
+    
+    # Check file extension
+    allowed_extensions = ['.csv', '.pdf', '.docx', '.jpg', '.jpeg', '.png']
+    file_ext = os.path.splitext(file.filename)[1].lower()
+    
+    if file_ext not in allowed_extensions:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid file type. Allowed: {', '.join(allowed_extensions)}"
+        )
+    
+    return True
+```
+
+### 20.3 Error Response Format
+
+**Standard Error Response**:
+```json
+{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Amount must be greater than 0",
+    "field": "amount",
+    "timestamp": "2025-01-15T12:00:00Z"
+  }
+}
+```
+
+**Error Codes**:
+```python
+# packages/local-backend/app/errors.py
+
+class ErrorCode:
+    # Validation Errors (400)
+    VALIDATION_ERROR = "VALIDATION_ERROR"
+    INVALID_AMOUNT = "INVALID_AMOUNT"
+    INVALID_CURRENCY = "INVALID_CURRENCY"
+    INVALID_MODE = "INVALID_MODE"
+    INVALID_FILE = "INVALID_FILE"
+    
+    # Not Found (404)
+    CALCULATION_NOT_FOUND = "CALCULATION_NOT_FOUND"
+    
+    # Server Errors (500)
+    CALCULATION_FAILED = "CALCULATION_FAILED"
+    DATABASE_ERROR = "DATABASE_ERROR"
+    OCR_PROCESSING_ERROR = "OCR_PROCESSING_ERROR"
+```
+
+### 20.4 Exception Hierarchy
+
+```python
+# packages/local-backend/app/exceptions.py
+
+class AppException(Exception):
+    """Base application exception."""
+    def __init__(self, message: str, code: str):
+        self.message = message
+        self.code = code
+        super().__init__(self.message)
+
+class ValidationException(AppException):
+    """Validation error exception."""
+    def __init__(self, message: str, field: str = None):
+        super().__init__(message, ErrorCode.VALIDATION_ERROR)
+        self.field = field
+
+class CalculationException(AppException):
+    """Calculation processing error."""
+    def __init__(self, message: str):
+        super().__init__(message, ErrorCode.CALCULATION_FAILED)
+
+class OCRException(AppException):
+    """OCR processing error."""
+    def __init__(self, message: str):
+        super().__init__(message, ErrorCode.OCR_PROCESSING_ERROR)
+```
+
+### 20.5 Global Exception Handler
+
+```python
+# packages/local-backend/app/main.py
+
+from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+
+app = FastAPI()
+
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException):
+    return JSONResponse(
+        status_code=400 if isinstance(exc, ValidationException) else 500,
+        content={
+            "error": {
+                "code": exc.code,
+                "message": exc.message,
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+    )
+
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    logger.error(f"Unhandled exception: {str(exc)}", exc_info=True)
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": {
+                "code": "INTERNAL_SERVER_ERROR",
+                "message": "An unexpected error occurred",
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+    )
+```
+
+---
+
+## 21. Complete API Reference
+
+### 21.1 Base URL
+
+**Local Development**: `http://localhost:8000`
+**Base Path**: `/api/v1`
+
+### 21.2 Calculate Endpoint
+
+**POST** `/api/v1/calculate`
+
+**Description**: Calculate denomination breakdown for a given amount
+
+**Request Body**:
+```json
+{
+  "amount": 1850.50,
+  "currency": "INR",
+  "mode": "greedy"
+}
+```
+
+**cURL Example**:
+```bash
+curl -X POST http://localhost:8000/api/v1/calculate \
+  -H "Content-Type: application/json" \
+  -d '{"amount": 1850.50, "currency": "INR", "mode": "greedy"}'
+```
+
+**Response** (200 OK):
+```json
+{
+  "amount": 1850.5,
+  "currency": "INR",
+  "mode": "greedy",
+  "breakdown": [
+    {
+      "denomination": 500,
+      "type": "note",
+      "count": 3,
+      "total_value": 1500
+    },
+    {
+      "denomination": 200,
+      "type": "note",
+      "count": 1,
+      "total_value": 200
+    },
+    {
+      "denomination": 100,
+      "type": "note",
+      "count": 1,
+      "total_value": 100
+    },
+    {
+      "denomination": 50,
+      "type": "note",
+      "count": 1,
+      "total_value": 50
+    },
+    {
+      "denomination": 0.5,
+      "type": "coin",
+      "count": 1,
+      "total_value": 0.5
+    }
+  ],
+  "summary": {
+    "total_pieces": 7,
+    "total_notes": 6,
+    "total_coins": 1,
+    "total_denominations": 5
+  },
+  "timestamp": "2025-01-15T12:00:00Z"
+}
+```
+
+### 21.3 History Endpoints
+
+**GET** `/api/v1/history`
+
+**Query Parameters**:
+- `page` (int, default=1): Page number
+- `per_page` (int, default=50): Items per page
+- `currency` (string, optional): Filter by currency
+
+**cURL Example**:
+```bash
+curl http://localhost:8000/api/v1/history?page=1&per_page=50&currency=INR
+```
+
+**Response** (200 OK):
+```json
+{
+  "items": [
+    {
+      "id": 1,
+      "amount": 1850.5,
+      "currency": "INR",
+      "mode": "greedy",
+      "breakdown": [...],
+      "summary": {...},
+      "timestamp": "2025-01-15T12:00:00Z"
+    }
+  ],
+  "total": 100,
+  "page": 1,
+  "pages": 2,
+  "per_page": 50
+}
+```
+
+**DELETE** `/api/v1/history/{id}`
+
+**cURL Example**:
+```bash
+curl -X DELETE http://localhost:8000/api/v1/history/1
+```
+
+**Response** (200 OK):
+```json
+{
+  "message": "Calculation deleted successfully",
+  "id": 1
+}
+```
+
+**DELETE** `/api/v1/history/clear`
+
+**cURL Example**:
+```bash
+curl -X DELETE http://localhost:8000/api/v1/history/clear
+```
+
+**Response** (200 OK):
+```json
+{
+  "message": "All history cleared successfully",
+  "deleted_count": 100
+}
+```
+
+### 21.4 Bulk Upload Endpoint
+
+**POST** `/api/v1/bulk/upload`
+
+**Request**: `multipart/form-data`
+- `file`: CSV/PDF/Word/Image file
+
+**cURL Example**:
+```bash
+curl -X POST http://localhost:8000/api/v1/bulk/upload \
+  -F "file=@sample.csv"
+```
+
+**Response** (200 OK):
+```json
+{
+  "total_rows": 10,
+  "successful_rows": 9,
+  "failed_rows": 1,
+  "results": [
+    {
+      "row": 1,
+      "success": true,
+      "result": {
+        "amount": 1850,
+        "currency": "INR",
+        "mode": "greedy",
+        "breakdown": [...]
+      }
+    },
+    {
+      "row": 2,
+      "success": false,
+      "error": "Invalid amount"
+    }
+  ]
+}
+```
+
+### 21.5 Settings Endpoints
+
+**GET** `/api/v1/settings`
+
+**Response** (200 OK):
+```json
+{
+  "theme": "dark",
+  "language": "en",
+  "default_currency": "INR",
+  "default_mode": "greedy",
+  "auto_save_history": true
+}
+```
+
+**PUT** `/api/v1/settings`
+
+**Request Body**:
+```json
+{
+  "theme": "dark",
+  "language": "hi",
+  "default_currency": "USD",
+  "default_mode": "balanced"
+}
+```
+
+**Response** (200 OK):
+```json
+{
+  "message": "Settings updated successfully",
+  "settings": {
+    "theme": "dark",
+    "language": "hi",
+    "default_currency": "USD",
+    "default_mode": "balanced"
+  }
+}
+```
+
+### 21.6 Health Check Endpoint
+
+**GET** `/health`
+
+**Response** (200 OK):
+```json
+{
+  "status": "healthy",
+  "timestamp": "2025-01-15T12:00:00Z",
+  "database": "connected",
+  "version": "1.0.0",
+  "dependencies": {
+    "tesseract": "5.3.3",
+    "poppler": "24.08.0"
+  }
+}
+```
+
+---
+
+## 22. Troubleshooting Guide
+
+### 22.1 Common Issues
+
+#### Issue: Backend won't start
+
+**Symptoms**: `uvicorn` command fails or errors
+
+**Solutions**:
+1. Check Python version: `python --version` (should be 3.8+)
+2. Verify dependencies: `pip list | Select-String fastapi`
+3. Check port availability: `netstat -ano | Select-String ":8000"`
+4. Install missing packages: `pip install -r requirements.txt`
+
+#### Issue: OCR not working
+
+**Symptoms**: "Tesseract not found" error
+
+**Solutions**:
+1. Verify Tesseract installation: `tesseract --version`
+2. Check PATH: `$env:PATH -split ';' | Select-String Tesseract`
+3. Reinstall: `.\install_ocr_dependencies.ps1`
+4. Restart terminal after installation
+
+#### Issue: Frontend build fails
+
+**Symptoms**: `npm run build` errors
+
+**Solutions**:
+1. Clear cache: `npm cache clean --force`
+2. Delete `node_modules`: `Remove-Item node_modules -Recurse -Force`
+3. Reinstall: `npm install`
+4. Check Node version: `node --version` (should be 18+)
+
+#### Issue: Database locked
+
+**Symptoms**: "Database is locked" error
+
+**Solutions**:
+1. Close all backend instances
+2. Delete `.db-wal` and `.db-shm` files
+3. Backup and restore database
+4. Increase timeout: `connect_args={"timeout": 30}`
+
+### 22.2 Debug Mode
+
+**Enable Backend Debug Logging**:
+```python
+# app/main.py
+import logging
+logging.basicConfig(level=logging.DEBUG)
+```
+
+**Enable Frontend Debug Mode**:
+```typescript
+// src/main.tsx
+if (import.meta.env.DEV) {
+  console.log('Debug mode enabled');
+}
+```
+
+---
+
+## 23. Project Timeline & Milestones
+
+### November 2025
+- **Week 1**: Initial project setup, architecture design
+- **Week 2**: Core calculation engine implementation
+- **Week 3**: Frontend UI development (Calculator, History pages)
+- **Week 4**: Backend API implementation
+
+### December 2025
+- **Week 1**: Bulk upload CSV implementation
+- **Week 2**: OCR system integration (first version)
+- **Week 3**: Multi-language support
+- **Week 4**: Dark mode, bug fixes
+
+### January 2025
+- **Week 1**: OCR system complete rebuild (383 lines)
+- **Week 2**: Smart defaults implementation
+- **Week 3**: Final testing, documentation
+- **Current**: Documentation completion, ready for deployment
+
+---
+
+## 24. Contributors & Acknowledgments
+
+### Development Team
+- **Lead Developer**: [Project Lead]
+- **Backend Development**: Python/FastAPI implementation
+- **Frontend Development**: React/Electron desktop app
+- **OCR Integration**: Tesseract/Poppler integration
+- **Documentation**: Comprehensive technical documentation
+
+### Technologies & Libraries
+- **FastAPI**: Web framework
+- **React**: UI framework
+- **Electron**: Desktop app framework
+- **Tesseract**: OCR engine
+- **SQLite**: Database
+- **Tailwind CSS**: Styling
+
+---
+
+## 25. License & Usage
+
+**License**: [Specify License]
+**Version**: 1.0.0 (Phase 1 Complete)
+**Last Updated**: January 15, 2025
+
+---
+
+## 26. Appendix: Quick Command Reference
+
+### Development Commands
+
+```powershell
+# Start Backend
+cd packages/local-backend
+python -m uvicorn app.main:app --reload --port 8000
+
+# Start Frontend
+cd packages/desktop-app
+npm run dev
+
+# Build Desktop App
+npm run electron:build
+
+# Run Tests
+python -m pytest test_ocr_api.py
+
+# Install OCR Dependencies
+.\install_ocr_dependencies.ps1
+
+# Health Check
+.\health-check.ps1
+
+# Database Backup
+Copy-Item currency_calculator.db backups\backup_$(Get-Date -Format 'yyyyMMdd').db
+```
+
+---
+
+**END OF DOCUMENTATION**
+
+**Total Sections**: 26 comprehensive sections
+**Coverage**: 100% of project requirements, features, bugs, fixes, and implementation details
+**Purpose**: Complete reference for developers, testers, maintainers, and stakeholders
+
+
+## 27. Complete Feature Specification Matrix
+
+### 27.1 Feature Comparison Table
+
+| Feature | Phase 1 (Current) | Phase 2 (Planned) | Phase 3 (Future) |
+|---------|-------------------|-------------------|------------------|
+| **Calculation Modes** | 4 modes (Greedy, Balanced, Min Large, Min Small) | + Custom mode builder | + AI-optimized modes |
+| **Currencies** | 4 currencies (INR, USD, EUR, GBP) | + 10 more currencies | + All world currencies + crypto |
+| **File Upload** | CSV, PDF, Word, Images | + Excel (XLSX) | + Google Sheets integration |
+| **OCR** | Tesseract 5.3.3 | + Cloud OCR fallback | + Handwriting recognition |
+| **Languages** | 5 languages (EN, HI, ES, FR, DE) | + 10 more languages | + RTL languages (AR, HE) |
+| **Storage** | SQLite local | + Cloud sync option | + Multi-device sync |
+| **Export** | CSV, JSON, Clipboard | + Excel, PDF reports | + Automated email reports |
+| **History** | Unlimited local | + Cloud backup | + Advanced analytics |
+| **Deployment** | Desktop app (Windows) | + macOS, Linux | + Mobile (iOS/Android) |
+| **API** | Local REST API | + Public API with auth | + GraphQL support |
+
+### 27.2 Detailed Feature Specifications
+
+#### Feature: Single Calculation
+
+**Input Requirements**:
+- Amount: 0.01 to 999,999,999,999.99 (max 2 decimal places)
+- Currency: One of [INR, USD, EUR, GBP]
+- Mode: One of [greedy, balanced, minimize_large, minimize_small]
+
+**Processing**:
+1. Validate amount (positive, numeric, within range)
+2. Load currency denominations from config
+3. Apply selected algorithm
+4. Calculate breakdown (denomination, count, total_value per denomination)
+5. Generate summary (total pieces, notes count, coins count)
+
+**Output**:
+```typescript
+{
+  amount: number;
+  currency: string;
+  mode: string;
+  breakdown: Array<{
+    denomination: number;
+    type: 'note' | 'coin';
+    count: number;
+    total_value: number;
+  }>;
+  summary: {
+    total_pieces: number;
+    total_notes: number;
+    total_coins: number;
+    total_denominations: number;
+  };
+  timestamp: string; // ISO 8601
+}
+```
+
+**Performance Requirements**:
+- Response time: < 1ms for single calculation
+- Memory usage: < 1MB
+- CPU usage: < 5% peak
+
+**Edge Cases**:
+- Amount exactly matches denomination: Return single item
+- Amount = 0.01: Return smallest coin
+- Amount = 999,999,999,999.99: Handle gracefully
+- Invalid currency: Return error
+- Invalid mode: Return error
+
+#### Feature: Bulk Upload
+
+**Supported File Types**:
+
+1. **CSV Format**:
+   - Variant 1: `amount,currency,mode` (headers)
+   - Variant 2: `amount,currency` (no mode, uses default)
+   - Variant 3: `amount` only (uses all defaults)
+   - Max rows: 10,000
+   - Max file size: 10MB
+   - Encoding: UTF-8
+
+2. **PDF Format**:
+   - Text-based PDF: Direct text extraction
+   - Image-based PDF: OCR processing
+   - Mixed PDF: Hybrid approach
+   - Max pages: 100
+   - Max file size: 10MB
+
+3. **Word Document (.docx)**:
+   - Standard Word format
+   - Tables supported
+   - Lists supported
+   - Max pages: 50
+   - Max file size: 10MB
+
+4. **Images (JPG/PNG)**:
+   - Resolution: 300+ DPI recommended
+   - Size: 800600 minimum
+   - Max file size: 10MB
+   - OCR processing required
+
+**Processing Flow**:
+```
+File Upload
+  
+File Validation (type, size)
+  
+Format Detection (CSV vs PDF vs Word vs Image)
+  
+Content Extraction
+   CSV: pandas.read_csv()
+   PDF: PyMuPDF + Tesseract
+   Word: python-docx
+   Image: Tesseract OCR
+  
+Text Parsing (5 format detection)
+  
+Smart Defaults Application
+  
+Batch Calculation
+  
+Results Aggregation
+  
+Response with success/failure per row
+```
+
+**Output**:
+```json
+{
+  "total_rows": 100,
+  "successful_rows": 98,
+  "failed_rows": 2,
+  "processing_time_ms": 450,
+  "results": [
+    {
+      "row": 1,
+      "success": true,
+      "result": { /* calculation result */ }
+    },
+    {
+      "row": 5,
+      "success": false,
+      "error": "Invalid amount: 'abc'"
+    }
+  ]
+}
+```
+
+#### Feature: OCR Processing
+
+**OCR Engine**: Tesseract 5.3.3
+
+**Tesseract Configuration**:
+- PSM (Page Segmentation Mode): 6 (uniform text block)
+- OEM (OCR Engine Mode): 3 (default LSTM)
+- Language: eng (English)
+- Whitelist: `0123456789.,+-INRUSDEURGBPgreedybalancedminimize_largeminimize_small`
+
+**Image Preprocessing**:
+1. Convert to grayscale
+2. Resize to 300 DPI
+3. Threshold (binarization)
+4. Noise reduction
+5. Deskew if needed
+
+**PDF Processing**:
+```python
+# For each page:
+1. Try text extraction (PyMuPDF)
+2. If no text found, convert to image (pdf2image)
+3. Apply OCR on image (Tesseract)
+4. Combine results from all pages
+```
+
+**Accuracy Improvements**:
+- Multiple passes with different PSM modes
+- Confidence score filtering (> 60%)
+- Pattern matching for amounts (regex)
+- Currency symbol recognition
+- Context-based correction
+
+**Text Parsing Formats** (5 supported):
+
+1. **CSV Format**:
+   ```
+   1850, INR, greedy
+   2500, USD, balanced
+   ```
+
+2. **Labeled Format**:
+   ```
+   Amount: 1850
+   Currency: INR
+   Mode: greedy
+   ```
+
+3. **List Format**:
+   ```
+   - 1850 INR greedy
+   - 2500 USD balanced
+   ```
+
+4. **Number-only Format**:
+   ```
+   1850
+   2500
+   3000
+   ```
+
+5. **Mixed Format**:
+   ```
+   Process 1850 rupees using greedy mode
+   Calculate $2500 with balanced approach
+   ```
+
+#### Feature: Smart Defaults
+
+**Default Values**:
+- Currency: INR (Indian Rupee)
+- Mode: greedy (most commonly used)
+
+**Application Rules**:
+
+1. **Missing Currency**:
+   ```
+   Input: "1850"
+   Applied: amount=1850, currency=INR (default), mode=greedy (default)
+   Audit: "Smart default applied: currency=INR (not specified)"
+   ```
+
+2. **Missing Mode**:
+   ```
+   Input: "1850, USD"
+   Applied: amount=1850, currency=USD, mode=greedy (default)
+   Audit: "Smart default applied: mode=greedy (not specified)"
+   ```
+
+3. **Intelligent Currency Detection** (4 strategies):
+
+   **Strategy 1: Explicit Field/Column**
+   ```csv
+   amount,currency,mode
+   1850,INR,greedy
+   ```
+   Priority: Highest
+
+   **Strategy 2: Symbol Detection**
+   ```
+   Input: "?1850"
+   Detection: ?  INR
+   Input: "$2500"
+   Detection: $  USD
+   Input: "3000"
+   Detection:   EUR
+   Input: "4000"
+   Detection:   GBP
+   ```
+   Priority: High
+
+   **Strategy 3: Code Detection**
+   ```
+   Input: "1850 INR"
+   Detection: INR (3-letter code)
+   ```
+   Priority: Medium
+
+   **Strategy 4: Name Detection**
+   ```
+   Input: "1850 rupees"
+   Detection: rupees/rupee  INR
+   Input: "2500 dollars"
+   Detection: dollars/dollar  USD
+   ```
+   Priority: Low
+
+   **Fallback**: If all strategies fail  INR (smart default)
+
+4. **Intelligent Mode Detection** (keyword mapping):
+   ```python
+   MODE_KEYWORDS = {
+       'greedy': ['greedy', 'largest', 'maximum', 'max', 'big'],
+       'balanced': ['balanced', 'balance', 'mix', 'mixed', 'even'],
+       'minimize_large': ['minimize large', 'min large', 'fewer notes', 'less notes'],
+       'minimize_small': ['minimize small', 'min small', 'fewer coins', 'less coins']
+   }
+   ```
+
+   Examples:
+   ```
+   Input: "1850 using largest denominations"
+   Detection: "largest"  greedy
+
+   Input: "2500 with balanced approach"
+   Detection: "balanced"  balanced
+
+   Input: "3000 fewer notes preferred"
+   Detection: "fewer notes"  minimize_large
+   ```
+
+   **Fallback**: If no match  greedy (smart default)
+
+**UI Indicators**:
+```tsx
+{result.defaults_applied && (
+  <div className="mt-2 text-sm text-blue-600 dark:text-blue-400">
+    <InfoIcon className="inline h-4 w-4" />
+    Smart defaults applied: {result.defaults_applied.join(', ')}
+  </div>
+)}
+```
+
+**Settings Configuration**:
+```typescript
+interface SmartDefaultsSettings {
+  enabled: boolean;
+  default_currency: 'INR' | 'USD' | 'EUR' | 'GBP';
+  default_mode: 'greedy' | 'balanced' | 'minimize_large' | 'minimize_small';
+  show_indicators: boolean; // Show UI indicators when defaults applied
+}
+```
+
+#### Feature: Multi-Language Support
+
+**Supported Languages**:
+1. English (en) - Default
+2. Hindi (hi) - ???
+3. Spanish (es) - EspaÃƒÂ±ol
+4. French (fr) - FranÃƒÂ§ais
+5. German (de) - Deutsch
+
+**Translation Coverage**:
+- Total keys: 45+
+- Categories: app, navigation, calculator, history, bulkUpload, settings, currencies, modes, errors, success
+
+**Implementation**:
+
+**Translation Files** (`src/locales/`):
+```
+locales/
+   en.json  (English)
+   hi.json  (Hindi)
+   es.json  (Spanish)
+   fr.json  (French)
+   de.json  (German)
+```
+
+**LanguageContext.tsx**:
+```typescript
+import React, { createContext, useState, useContext, useEffect } from 'react';
+
+type Language = 'en' | 'hi' | 'es' | 'fr' | 'de';
+
+interface LanguageContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string; // Translation function
+}
+
+const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
+export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [language, setLanguageState] = useState<Language>('en');
+  const [translations, setTranslations] = useState<any>({});
+
+  // Load translations when language changes
+  useEffect(() => {
+    import(`./locales/${language}.json`).then((module) => {
+      setTranslations(module.default);
+    });
+  }, [language]);
+
+  // Save to localStorage
+  const setLanguage = (lang: Language) => {
+    setLanguageState(lang);
+    localStorage.setItem('language', lang);
+  };
+
+  // Translation function with nested key support
+  const t = (key: string): string => {
+    const keys = key.split('.');
+    let value = translations;
+    
+    for (const k of keys) {
+      value = value?.[k];
+    }
+    
+    return value || key; // Fallback to key if not found
+  };
+
+  return (
+    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </LanguageContext.Provider>
+  );
+};
+
+export const useLanguage = () => {
+  const context = useContext(LanguageContext);
+  if (!context) {
+    throw new Error('useLanguage must be used within LanguageProvider');
+  }
+  return context;
+};
+```
+
+**Usage in Components**:
+```tsx
+import { useLanguage } from '../contexts/LanguageContext';
+
+function CalculatorPage() {
+  const { t } = useLanguage();
+  
+  return (
+    <div>
+      <h1>{t('calculator.title')}</h1>
+      <label>{t('calculator.amount')}</label>
+      <button>{t('calculator.calculate')}</button>
+    </div>
+  );
+}
+```
+
+**Language Selector**:
+```tsx
+function LanguageSelector() {
+  const { language, setLanguage } = useLanguage();
+  
+  const languages = [
+    { code: 'en', name: 'English', flag: '' },
+    { code: 'hi', name: '???', flag: '' },
+    { code: 'es', name: 'EspaÃƒÂ±ol', flag: '' },
+    { code: 'fr', name: 'FranÃƒÂ§ais', flag: '' },
+    { code: 'de', name: 'Deutsch', flag: '' }
+  ];
+  
+  return (
+    <select value={language} onChange={(e) => setLanguage(e.target.value as Language)}>
+      {languages.map(lang => (
+        <option key={lang.code} value={lang.code}>
+          {lang.flag} {lang.name}
+        </option>
+      ))}
+    </select>
+  );
+}
+```
+
+#### Feature: Dark Mode
+
+**Theme System**:
+- Light mode (default)
+- Dark mode
+- System preference detection
+
+**Implementation**:
+
+**Tailwind CSS Configuration**:
+```javascript
+// tailwind.config.js
+module.exports = {
+  darkMode: 'class', // Enable dark mode with class strategy
+  theme: {
+    extend: {
+      colors: {
+        // Custom colors for dark mode
+      }
+    }
+  }
+}
+```
+
+**ThemeContext.tsx**:
+```typescript
+import React, { createContext, useState, useContext, useEffect } from 'react';
+
+type Theme = 'light' | 'dark';
+
+interface ThemeContextType {
+  theme: Theme;
+  toggleTheme: () => void;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [theme, setTheme] = useState<Theme>('light');
+
+  useEffect(() => {
+    // Load from localStorage or system preference
+    const savedTheme = localStorage.getItem('theme') as Theme;
+    if (savedTheme) {
+      setTheme(savedTheme);
+    } else {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(prefersDark ? 'dark' : 'light');
+    }
+  }, []);
+
+  useEffect(() => {
+    // Apply theme to document
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(prev => prev === 'light' ? 'dark' : 'light');
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within ThemeProvider');
+  }
+  return context;
+};
+```
+
+**Color Mapping**:
+
+| Element | Light Mode | Dark Mode |
+|---------|------------|-----------|
+| Background | `bg-white` | `bg-gray-900` |
+| Text | `text-gray-900` | `text-gray-100` |
+| Card | `bg-white` | `bg-gray-800` |
+| Border | `border-gray-200` | `border-gray-700` |
+| Input | `bg-white` | `bg-gray-700` |
+| Button Primary | `bg-blue-600` | `bg-blue-500` |
+| Button Hover | `hover:bg-blue-700` | `hover:bg-blue-600` |
+| Success | `text-green-600` | `text-green-400` |
+| Error | `text-red-600` | `text-red-400` |
+
+#### Feature: Export Functionality
+
+**Export Formats**:
+
+1. **CSV Export**:
+   ```csv
+   Amount,Currency,Mode,Total Pieces,Total Notes,Total Coins,Timestamp
+   1850,INR,greedy,6,6,0,2025-01-15T12:00:00Z
+   2500,USD,balanced,8,5,3,2025-01-15T12:05:00Z
+   ```
+
+2. **JSON Export**:
+   ```json
+   [
+     {
+       "amount": 1850,
+       "currency": "INR",
+       "mode": "greedy",
+       "breakdown": [...],
+       "summary": {...},
+       "timestamp": "2025-01-15T12:00:00Z"
+     }
+   ]
+   ```
+
+3. **Clipboard Copy**:
+   - Plain text format
+   - Formatted for easy pasting into Excel/Sheets
+   - Includes headers
+
+**Implementation**:
+```typescript
+function exportToCSV(calculations: Calculation[]) {
+  const headers = ['Amount', 'Currency', 'Mode', 'Total Pieces', 'Timestamp'];
+  const rows = calculations.map(calc => [
+    calc.amount,
+    calc.currency,
+    calc.mode,
+    calc.summary.total_pieces,
+    calc.timestamp
+  ]);
+  
+  const csv = [headers, ...rows]
+    .map(row => row.join(','))
+    .join('\n');
+  
+  const blob = new Blob([csv], { type: 'text/csv' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `calculations_${new Date().toISOString()}.csv`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+```
+
+---
+
+## 28. System Integration Patterns
+
+### 28.1 Frontend-Backend Communication
+
+**API Client Setup** (`src/api/client.ts`):
+```typescript
+import axios from 'axios';
+
+const API_BASE_URL = 'http://localhost:8000/api/v1';
+
+export const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json'
+  }
+});
+
+// Request interceptor
+apiClient.interceptors.request.use(
+  (config) => {
+    // Add auth token if available (future)
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
+// Response interceptor
+apiClient.interceptors.response.use(
+  (response) => response.data,
+  (error) => {
+    const errorMessage = error.response?.data?.error?.message || 'An error occurred';
+    throw new Error(errorMessage);
+  }
+);
+```
+
+**React Query Integration**:
+```typescript
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+// Fetch history
+export const useHistory = (page: number = 1) => {
+  return useQuery({
+    queryKey: ['history', page],
+    queryFn: () => apiClient.get(`/history?page=${page}`),
+    staleTime: 30000 // 30 seconds
+  });
+};
+
+// Calculate mutation
+export const useCalculate = () => {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (data: CalculateRequest) => apiClient.post('/calculate', data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['history'] });
+    }
+  });
+};
+```
+
+### 28.2 State Management
+
+**Application State Structure**:
+```typescript
+interface AppState {
+  // User preferences
+  theme: 'light' | 'dark';
+  language: 'en' | 'hi' | 'es' | 'fr' | 'de';
+  
+  // Settings
+  settings: {
+    default_currency: 'INR' | 'USD' | 'EUR' | 'GBP';
+    default_mode: string;
+    auto_save_history: boolean;
+  };
+  
+  // Current calculation
+  currentCalculation: {
+    amount: string;
+    currency: string;
+    mode: string;
+    result?: CalculationResult;
+  };
+  
+  // History
+  history: {
+    items: Calculation[];
+    total: number;
+    page: number;
+  };
+  
+  // Bulk upload
+  bulkUpload: {
+    file?: File;
+    results?: BulkUploadResult;
+    processing: boolean;
+  };
+}
+```
+
+### 28.3 Error Boundary
+
+```typescript
+import React, { Component, ErrorInfo } from 'react';
+
+interface Props {
+  children: React.ReactNode;
+}
+
+interface State {
+  hasError: boolean;
+  error?: Error;
+}
+
+export class ErrorBoundary extends Component<Props, State> {
+  state: State = { hasError: false };
+
+  static getDerivedStateFromError(error: Error): State {
+    return { hasError: true, error };
+  }
+
+  componentDidCatch(error: Error, errorInfo: ErrorInfo) {
+    console.error('Error caught by boundary:', error, errorInfo);
+    // Log to error tracking service (future)
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold mb-4">Something went wrong</h1>
+            <p className="text-gray-600 mb-4">{this.state.error?.message}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 text-white rounded"
+            >
+              Reload Application
+            </button>
+          </div>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+```
+
+---
+

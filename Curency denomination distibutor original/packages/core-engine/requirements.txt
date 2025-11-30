@@ -1,0 +1,8 @@
+# Core Engine - Pure Python Module
+# No external dependencies required for basic functionality
+
+# Optional: For live FX rate fetching
+# requests>=2.31.0
+
+# Optional: For enhanced decimal operations
+# mpmath>=1.3.0

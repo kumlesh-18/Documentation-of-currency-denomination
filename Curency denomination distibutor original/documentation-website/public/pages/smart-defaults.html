@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Defaults & Intelligent Extraction - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html" class="active">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Smart Defaults & Intelligent Extraction</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>9. Smart Defaults & Intelligent Extraction</h1>
+
+                <section id="overview">
+                    <h2>9.1 Smart Defaults System Overview</h2>
+
+                    <div class="alert alert-info">
+                        <strong>Purpose:</strong> Automatically fill missing fields to enable seamless bulk upload processing with minimal user input
+                    </div>
+
+                    <h3>Default Values</h3>
+                    <pre><code class="language-python">SMART_DEFAULTS = {
+    'currency': 'INR',           # Indian Rupee (most common use case)
+    'optimization_mode': 'greedy'  # Standard greedy algorithm
+}</code></pre>
+
+                    <h3>Implementation Philosophy</h3>
+                    <div class="feature-card">
+                        <ul>
+                            <li>✓ <strong>Minimal User Input:</strong> User only needs to provide amount</li>
+                            <li>✓ <strong>Intelligent Detection:</strong> Auto-detect currency/mode from context when possible</li>
+                            <li>✓ <strong>Graceful Fallback:</strong> Use sensible defaults when detection fails</li>
+                            <li>✓ <strong>Transparent Logging:</strong> Log all default applications for auditability</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="implementation">
+                    <h2>9.2 Implementation in OCR Processor</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/services/ocr_processor.py</code></p>
+
+                    <h3>9.2.1 Initialization with Defaults</h3>
+                    <pre><code class="language-python">class OCRProcessor:
+    def __init__(self, default_currency: str = 'INR', default_mode: str = 'greedy'):
+        """
+        Initialize OCR processor with smart defaults.
+        
+        Args:
+            default_currency: Currency to use when not specified (default: INR)
+            default_mode: Optimization mode when not specified (default: greedy)
+        """
+        self.default_currency = default_currency
+        self.default_mode = default_mode
+        
+        logger.info(f"Smart defaults configured: currency={default_currency}, mode={default_mode}")</code></pre>
+
+                    <h3>9.2.2 Application in CSV Parsing</h3>
+                    <pre><code class="language-python">def _parse_row(self, row: Dict, row_number: int) -> Dict:
+    """Parse CSV row with smart defaults."""
+    # Amount is required
+    amount = Decimal(row.get('amount', '').strip().replace(',', ''))
+    
+    # Currency - smart default
+    currency = row.get('currency', '').strip().upper()
+    if not currency:
+        currency = self.default_currency
+        logger.info(f"Row {row_number}: No currency specified, using default {currency}")
+    
+    # Mode - smart default
+    mode = row.get('mode', '').strip().lower()
+    if not mode:
+        mode = self.default_mode
+        logger.info(f"Row {row_number}: No mode specified, using default {mode}")
+    
+    return {
+        'row_number': row_number,
+        'amount': float(amount),
+        'currency': currency,
+        'optimization_mode': mode
+    }</code></pre>
+
+                    <h3>9.2.3 Application in Text Parsing</h3>
+                    <pre><code class="language-python">def _parse_numbers_fallback(self, text: str) -> List[Dict[str, Any]]:
+    """
+    Extract numbers with smart defaults.
+    
+    When only numbers are found (no currency/mode info):
+    - Currency defaults to INR
+    - Mode defaults to greedy
+    """
+    results = []
+    numbers = re.findall(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', text)
+    
+    for row_num, num_str in enumerate(numbers, start=1):
+        try:
+            amount = Decimal(num_str.replace(',', ''))
+            
+            # Apply smart defaults
+            results.append({
+                'row_number': row_num,
+                'amount': float(amount),
+                'currency': self.default_currency,  # Smart default
+                'optimization_mode': self.default_mode  # Smart default
+            })
+        except:
+            continue
+    
+    logger.info(f"Applied smart defaults to {len(results)} extracted amounts")
+    return results</code></pre>
+                </section>
+
+                <section id="currency-detection">
+                    <h2>9.3 Intelligent Currency Detection</h2>
+
+                    <div class="alert alert-success">
+                        <strong>Priority Order:</strong>
+                        <ol>
+                            <li><strong>Explicit Column/Field:</strong> If CSV has 'currency' column or text has "Currency: USD"</li>
+                            <li><strong>Symbol Detection:</strong> Detect ₹, Rs, $, €, £ in the text</li>
+                            <li><strong>Code Detection:</strong> Detect INR, USD, EUR, GBP keywords</li>
+                            <li><strong>Name Detection:</strong> Detect "Rupee", "Dollar", "Euro", "Pound"</li>
+                            <li><strong>Smart Default:</strong> Fallback to INR</li>
+                        </ol>
+                    </div>
+
+                    <h3>Implementation</h3>
+                    <pre><code class="language-python">def _detect_currency_in_text(self, text: str) -> str:
+    """
+    Intelligent currency detection with fallback.
+    
+    Detection strategies (in order):
+    1. Currency symbols: ₹, Rs, $, €, £
+    2. Currency codes: INR, USD, EUR, GBP
+    3. Currency names: Rupee, Dollar, Euro, Pound
+    4. Default: INR (smart default)
+    """
+    text_upper = text.upper()
+    
+    # Strategy 1: Symbols
+    symbol_map = {
+        '₹': 'INR', 'RS': 'INR', 'RS.': 'INR',
+        '$': 'USD',
+        '€': 'EUR',
+        '£': 'GBP'
+    }
+    
+    for symbol, currency in symbol_map.items():
+        if symbol in text or symbol in text_upper:
+            logger.debug(f"Detected currency {currency} from symbol '{symbol}'")
+            return currency
+    
+    # Strategy 2: Currency codes
+    if 'INR' in text_upper:
+        return 'INR'
+    elif 'USD' in text_upper:
+        return 'USD'
+    elif 'EUR' in text_upper:
+        return 'EUR'
+    elif 'GBP' in text_upper:
+        return 'GBP'
+    
+    # Strategy 3: Currency names
+    name_map = {
+        'RUPEE': 'INR',
+        'INDIAN': 'INR',
+        'DOLLAR': 'USD',
+        'EURO': 'EUR',
+        'POUND': 'GBP',
+        'STERLING': 'GBP'
+    }
+    
+    for name, currency in name_map.items():
+        if name in text_upper:
+            logger.debug(f"Detected currency {currency} from name '{name}'")
+            return currency
+    
+    # Strategy 4: Smart default
+    logger.info(f"No currency detected, using smart default: {self.default_currency}")
+    return self.default_currency</code></pre>
+
+                    <h3>Detection Examples</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Input Text</th>
+                                <th>Detected Currency</th>
+                                <th>Strategy Used</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"1000 ₹"</td>
+                                <td>INR</td>
+                                <td>Symbol Detection</td>
+                            </tr>
+                            <tr>
+                                <td>"Rs 2500"</td>
+                                <td>INR</td>
+                                <td>Symbol Detection</td>
+                            </tr>
+                            <tr>
+                                <td>"$500"</td>
+                                <td>USD</td>
+                                <td>Symbol Detection</td>
+                            </tr>
+                            <tr>
+                                <td>"1000 USD"</td>
+                                <td>USD</td>
+                                <td>Code Detection</td>
+                            </tr>
+                            <tr>
+                                <td>"500 Rupees"</td>
+                                <td>INR</td>
+                                <td>Name Detection</td>
+                            </tr>
+                            <tr>
+                                <td>"1000"</td>
+                                <td>INR</td>
+                                <td>Smart Default</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="mode-detection">
+                    <h2>9.4 Intelligent Mode Detection</h2>
+
+                    <div class="alert alert-success">
+                        <strong>Priority Order:</strong>
+                        <ol>
+                            <li><strong>Explicit Field:</strong> If present in data</li>
+                            <li><strong>Keyword Detection:</strong> Detect mode keywords in text</li>
+                            <li><strong>Smart Default:</strong> Fallback to greedy</li>
+                        </ol>
+                    </div>
+
+                    <h3>Keyword Mapping</h3>
+                    <pre><code class="language-python">MODE_KEYWORDS = {
+    'greedy': [
+        'greedy', 'standard', 'default', 'normal',
+        'quick', 'fast', 'standard algorithm'
+    ],
+    'balanced': [
+        'balanced', 'mixed', 'even', 'equal',
+        'balance', 'moderate'
+    ],
+    'minimize_large': [
+        'minimize large', 'min large', 'fewer notes',
+        'less notes', 'reduce notes', 'minimize bills'
+    ],
+    'minimize_small': [
+        'minimize small', 'min small', 'fewer coins',
+        'less coins', 'reduce coins', 'minimize change'
+    ]
+}
+
+def _detect_mode_in_text(self, text: str) -> str:
+    """
+    Intelligent mode detection with fallback.
+    
+    Detection strategies:
+    1. Keyword matching (case-insensitive)
+    2. Default: greedy (smart default)
+    """
+    text_lower = text.lower()
+    
+    # Check all mode keywords
+    for mode, keywords in MODE_KEYWORDS.items():
+        for keyword in keywords:
+            if keyword in text_lower:
+                logger.debug(f"Detected mode '{mode}' from keyword '{keyword}'")
+                return mode
+    
+    # Smart default
+    logger.info(f"No mode detected, using smart default: {self.default_mode}")
+    return self.default_mode</code></pre>
+
+                    <h3>Detection Examples</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Input Text</th>
+                                <th>Detected Mode</th>
+                                <th>Keyword Matched</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"1000 balanced"</td>
+                                <td>balanced</td>
+                                <td>"balanced"</td>
+                            </tr>
+                            <tr>
+                                <td>"Calculate with fewer notes"</td>
+                                <td>minimize_large</td>
+                                <td>"fewer notes"</td>
+                            </tr>
+                            <tr>
+                                <td>"Use greedy algorithm"</td>
+                                <td>greedy</td>
+                                <td>"greedy"</td>
+                            </tr>
+                            <tr>
+                                <td>"1000"</td>
+                                <td>greedy</td>
+                                <td>(smart default)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="api-layer">
+                    <h2>9.5 Smart Defaults in API Layer</h2>
+
+                    <h3>Bulk Upload Endpoint with Configurable Defaults</h3>
+                    <pre><code class="language-python">@router.post("/bulk/upload")
+async def bulk_upload(
+    file: UploadFile = File(...),
+    save_to_history: bool = Form(default=True),
+    # Optional: Override smart defaults
+    default_currency: str = Form(default='INR'),
+    default_mode: str = Form(default='greedy'),
+    db: Session = Depends(get_db)
+):
+    """
+    Upload bulk file with configurable smart defaults.
+    
+    Smart defaults are applied when fields are missing:
+    - currency: Default to INR (or custom default)
+    - mode: Default to greedy (or custom default)
+    """
+    # Initialize processor with custom defaults
+    processor = OCRProcessor(
+        default_currency=default_currency,
+        default_mode=default_mode
+    )
+    
+    # Process file (will apply defaults as needed)
+    extracted_data = processor.process_file(file_data, file.filename)
+    
+    # Log default usage statistics
+    default_currency_count = sum(
+        1 for row in extracted_data 
+        if row.get('currency') == default_currency
+    )
+    
+    logger.info(f"Smart defaults applied: {default_currency_count}/{len(extracted_data)} rows used default currency")
+    
+    # Continue with calculations...</code></pre>
+                </section>
+
+                <section id="ui-indicators">
+                    <h2>9.6 User-Visible Default Application</h2>
+
+                    <h3>UI Indicator in Results</h3>
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/pages/BulkUploadPage.tsx</code></p>
+
+                    <pre><code class="language-tsx">// Show which defaults were applied in results
+{result.applied_defaults && (
+  <div className="text-sm text-gray-500">
+    <span className="italic">
+      {result.applied_defaults.currency && `Currency: ${result.currency} (default)`}
+      {result.applied_defaults.mode && `, Mode: ${result.mode} (default)`}
+    </span>
+  </div>
+)}</code></pre>
+
+                    <h3>Results Table with Badges</h3>
+                    <pre><code class="language-tsx"><TableCell>
+  {result.currency}
+  {result.applied_defaults?.currency && (
+    <Badge variant="secondary" className="ml-2">default</Badge>
+  )}
+</TableCell>
+
+<TableCell>
+  {result.mode}
+  {result.applied_defaults?.mode && (
+    <Badge variant="secondary" className="ml-2">default</Badge>
+  )}
+</TableCell></code></pre>
+                </section>
+
+                <section id="configuration">
+                    <h2>9.7 Smart Defaults Configuration</h2>
+
+                    <h3>Settings Storage (Future Enhancement)</h3>
+                    <pre><code class="language-python">class Settings(Base):
+    __tablename__ = "settings"
+    
+    # User-configurable smart defaults
+    smart_default_currency = Column(String(3), default="INR")
+    smart_default_mode = Column(String(20), default="greedy")
+    
+    # Smart detection preferences
+    enable_currency_detection = Column(Boolean, default=True)
+    enable_mode_detection = Column(Boolean, default=True)</code></pre>
+
+                    <h3>API to Update Defaults</h3>
+                    <pre><code class="language-python">@router.put("/settings/smart-defaults")
+async def update_smart_defaults(
+    currency: Optional[str] = Body(None),
+    mode: Optional[str] = Body(None),
+    db: Session = Depends(get_db)
+):
+    """Update smart default preferences."""
+    settings = db.query(Settings).first()
+    
+    if currency:
+        settings.smart_default_currency = currency
+    
+    if mode:
+        settings.smart_default_mode = mode
+    
+    db.commit()
+    
+    return {"message": "Smart defaults updated", "settings": settings}</code></pre>
+                </section>
+
+                <section id="validation">
+                    <h2>9.8 Validation of Defaults</h2>
+
+                    <h3>Ensure Defaults Are Valid</h3>
+                    <pre><code class="language-python">def validate_smart_defaults(currency: str, mode: str) -> None:
+    """Validate smart default values."""
+    VALID_CURRENCIES = {'INR', 'USD', 'EUR', 'GBP'}
+    VALID_MODES = {'greedy', 'balanced', 'minimize_large', 'minimize_small'}
+    
+    if currency not in VALID_CURRENCIES:
+        raise ValueError(f"Invalid default currency: {currency}")
+    
+    if mode not in VALID_MODES:
+        raise ValueError(f"Invalid default mode: {mode}")
+    
+    logger.info(f"Smart defaults validated: currency={currency}, mode={mode}")</code></pre>
+                </section>
+
+                <section id="testing">
+                    <h2>9.9 Smart Defaults Test Cases</h2>
+
+                    <h3>Test Ultra-Minimal CSV</h3>
+                    <pre><code class="language-python">def test_ultra_minimal_csv():
+    """Test CSV with only amounts (all defaults applied)."""
+    csv_content = """amount
+1000
+2500
+5000"""
+    
+    processor = OCRProcessor(default_currency='INR', default_mode='greedy')
+    results = processor._parse_csv_text(csv_content)
+    
+    # All rows should have defaults
+    assert all(r['currency'] == 'INR' for r in results)
+    assert all(r['optimization_mode'] == 'greedy' for r in results)
+    assert len(results) == 3</code></pre>
+
+                    <h3>Test Mixed Detection</h3>
+                    <pre><code class="language-python">def test_mixed_currency_detection():
+    """Test mixing explicit currency and auto-detection."""
+    text = """
+    1000 INR
+    2500
+    500 USD
+    """
+    
+    processor = OCRProcessor(default_currency='INR', default_mode='greedy')
+    results = processor._parse_list_text(text)
+    
+    assert results[0]['currency'] == 'INR'  # Explicit
+    assert results[1]['currency'] == 'INR'  # Default
+    assert results[2]['currency'] == 'USD'  # Explicit</code></pre>
+                </section>
+
+                <section id="audit-trail">
+                    <h2>9.10 Logging & Audit Trail</h2>
+
+                    <h3>Default Application Logging</h3>
+                    <pre><code class="language-python">class DefaultApplicationLogger:
+    """Track smart default applications for auditing."""
+    
+    @staticmethod
+    def log_default_applied(row_number: int, field: str, value: str, reason: str):
+        """Log when a default is applied."""
+        logger.info(
+            f"Row {row_number}: Applied default {field}='{value}' ({reason})"
+        )
+    
+    @staticmethod
+    def get_default_statistics(results: List[Dict]) -> Dict:
+        """Calculate default usage statistics."""
+        total_rows = len(results)
+        
+        default_currency_count = sum(
+            1 for r in results 
+            if r.get('_default_applied', {}).get('currency', False)
+        )
+        
+        default_mode_count = sum(
+            1 for r in results 
+            if r.get('_default_applied', {}).get('mode', False)
+        )
+        
+        return {
+            'total_rows': total_rows,
+            'default_currency_applied': default_currency_count,
+            'default_mode_applied': default_mode_count,
+            'currency_detection_rate': (total_rows - default_currency_count) / total_rows if total_rows > 0 else 0,
+            'mode_detection_rate': (total_rows - default_mode_count) / total_rows if total_rows > 0 else 0
+        }</code></pre>
+
+                    <h3>Statistics Example</h3>
+                    <div class="feature-card">
+                        <h4>Sample Audit Report</h4>
+                        <pre><code class="language-json">{
+  "total_rows": 100,
+  "default_currency_applied": 25,
+  "default_mode_applied": 80,
+  "currency_detection_rate": 0.75,
+  "mode_detection_rate": 0.20
+}</code></pre>
+                        <p class="text-sm text-gray-600">
+                            <em>Interpretation: 75% of rows had detectable currency, 20% had detectable mode</em>
+                        </p>
+                    </div>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section covers complete Smart Defaults system including intelligent currency detection (4 strategies), mode detection (keyword mapping), configurable defaults, UI indicators, validation, testing, and audit logging.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

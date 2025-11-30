@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database (Cloud Backend)
+  postgres:
+    image: postgres:16-alpine
+    container_name: currency-postgres
+    environment:
+      POSTGRES_DB: currency_db
+      POSTGRES_USER: currency_user
+      POSTGRES_PASSWORD: currency_pass_dev
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U currency_user" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Redis (Caching & Queue)
+  redis:
+    image: redis:7-alpine
+    container_name: currency-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  # Cloud Backend API
+  cloud-backend:
+    build:
+      context: ./packages/cloud-backend
+      dockerfile: Dockerfile
+    container_name: currency-cloud-api
+    environment:
+      DATABASE_URL: postgresql://currency_user:currency_pass_dev@postgres:5432/currency_db
+      REDIS_URL: redis://redis:6379
+      JWT_SECRET: dev_jwt_secret_change_in_production
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      FX_API_KEY: ${FX_API_KEY}
+      ENVIRONMENT: development
+    ports:
+      - "8000:8000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./packages/cloud-backend:/app
+      - /app/__pycache__
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  # Web Dashboard (Next.js)
+  web-dashboard:
+    build:
+      context: ./packages/web-dashboard
+      dockerfile: Dockerfile.dev
+    container_name: currency-web-dashboard
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8000
+    ports:
+      - "3000:3000"
+    depends_on:
+      - cloud-backend
+    volumes:
+      - ./packages/web-dashboard:/app
+      - /app/node_modules
+      - /app/.next
+    command: npm run dev
+
+  # Local Backend (for desktop offline mode)
+  local-backend:
+    build:
+      context: ./packages/local-backend
+      dockerfile: Dockerfile
+    container_name: currency-local-api
+    environment:
+      LOCAL_DB_PATH: /data/local.db
+      SYNC_ENABLED: "true"
+      CLOUD_API_URL: http://cloud-backend:8000
+    ports:
+      - "8001:8000"
+    volumes:
+      - ./packages/local-backend:/app
+      - local_data:/data
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+
+volumes:
+  postgres_data:
+  redis_data:
+  local_data:

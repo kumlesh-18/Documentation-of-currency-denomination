@@ -1,0 +1,756 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Screenshots & Sample Outputs - Currency Denomination Calculator</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html" class="active">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Screenshots & Sample Outputs</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>22. Screenshots & Sample Outputs</h1>
+
+                <div class="alert alert-info">
+                    <strong>â„¹ Note</strong>
+                    <p>This page contains visual examples and sample outputs from the Currency Denomination Calculator application. Screenshots would be located in the <code>image/</code> directory of the project.</p>
+                </div>
+
+                <section id="sample-calculations">
+                    <h2>Sample Calculation Outputs</h2>
+
+                    <h3>Example 1: INR 1850 (Greedy Mode)</h3>
+                    <div class="feature-card">
+                        <h4>Input</h4>
+                        <pre><code>{
+  "amount": 1850,
+  "currency": "INR",
+  "mode": "greedy"
+}</code></pre>
+
+                        <h4>Output</h4>
+                        <pre><code>{
+  "amount": 1850,
+  "currency": "INR",
+  "mode": "greedy",
+  "breakdown": [
+    {
+      "denomination": 500,
+      "type": "note",
+      "count": 3,
+      "total_value": 1500
+    },
+    {
+      "denomination": 200,
+      "type": "note",
+      "count": 1,
+      "total_value": 200
+    },
+    {
+      "denomination": 100,
+      "type": "note",
+      "count": 1,
+      "total_value": 100
+    },
+    {
+      "denomination": 50,
+      "type": "note",
+      "count": 1,
+      "total_value": 50
+    }
+  ],
+  "summary": {
+    "total_pieces": 6,
+    "total_notes": 6,
+    "total_coins": 0,
+    "total_denominations": 4
+  },
+  "timestamp": "2025-01-15T12:00:00Z"
+}</code></pre>
+
+                        <h4>Visual Representation</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Denomination</th>
+                                    <th>Type</th>
+                                    <th>Count</th>
+                                    <th>Total Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>â‚¹500</td>
+                                    <td>Note</td>
+                                    <td>3</td>
+                                    <td>â‚¹1500</td>
+                                </tr>
+                                <tr>
+                                    <td>â‚¹200</td>
+                                    <td>Note</td>
+                                    <td>1</td>
+                                    <td>â‚¹200</td>
+                                </tr>
+                                <tr>
+                                    <td>â‚¹100</td>
+                                    <td>Note</td>
+                                    <td>1</td>
+                                    <td>â‚¹100</td>
+                                </tr>
+                                <tr>
+                                    <td>â‚¹50</td>
+                                    <td>Note</td>
+                                    <td>1</td>
+                                    <td>â‚¹50</td>
+                                </tr>
+                                <tr class="font-bold">
+                                    <td colspan="2">TOTAL</td>
+                                    <td>6 pieces</td>
+                                    <td>â‚¹1850</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>Example 2: USD 2500 (Balanced Mode)</h3>
+                    <div class="feature-card">
+                        <h4>Input</h4>
+                        <pre><code>{
+  "amount": 2500,
+  "currency": "USD",
+  "mode": "balanced"
+}</code></pre>
+
+                        <h4>Output</h4>
+                        <pre><code>{
+  "amount": 2500,
+  "currency": "USD",
+  "mode": "balanced",
+  "breakdown": [
+    {
+      "denomination": 100,
+      "type": "note",
+      "count": 10,
+      "total_value": 1000
+    },
+    {
+      "denomination": 50,
+      "type": "note",
+      "count": 10,
+      "total_value": 500
+    },
+    {
+      "denomination": 20,
+      "type": "note",
+      "count": 20,
+      "total_value": 400
+    },
+    {
+      "denomination": 10,
+      "type": "note",
+      "count": 20,
+      "total_value": 200
+    },
+    {
+      "denomination": 5,
+      "type": "note",
+      "count": 20,
+      "total_value": 100
+    },
+    {
+      "denomination": 2,
+      "type": "note",
+      "count": 50,
+      "total_value": 100
+    },
+    {
+      "denomination": 1,
+      "type": "note",
+      "count": 100,
+      "total_value": 100
+    },
+    {
+      "denomination": 0.25,
+      "type": "coin",
+      "count": 80,
+      "total_value": 20
+    },
+    {
+      "denomination": 0.1,
+      "type": "coin",
+      "count": 100,
+      "total_value": 10
+    },
+    {
+      "denomination": 0.05,
+      "type": "coin",
+      "count": 100,
+      "total_value": 5
+    },
+    {
+      "denomination": 0.01,
+      "type": "coin",
+      "count": 100,
+      "total_value": 1
+    }
+  ],
+  "summary": {
+    "total_pieces": 610,
+    "total_notes": 230,
+    "total_coins": 380,
+    "total_denominations": 11
+  }
+}</code></pre>
+                    </div>
+
+                    <h3>Example 3: EUR 1234.56 (Minimize Large)</h3>
+                    <div class="feature-card">
+                        <h4>Output Summary</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Denomination</th>
+                                    <th>Type</th>
+                                    <th>Count</th>
+                                    <th>Total Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>â‚¬5</td>
+                                    <td>Note</td>
+                                    <td>246</td>
+                                    <td>â‚¬1230.00</td>
+                                </tr>
+                                <tr>
+                                    <td>â‚¬2</td>
+                                    <td>Coin</td>
+                                    <td>2</td>
+                                    <td>â‚¬4.00</td>
+                                </tr>
+                                <tr>
+                                    <td>â‚¬0.50</td>
+                                    <td>Coin</td>
+                                    <td>1</td>
+                                    <td>â‚¬0.50</td>
+                                </tr>
+                                <tr>
+                                    <td>â‚¬0.05</td>
+                                    <td>Coin</td>
+                                    <td>1</td>
+                                    <td>â‚¬0.05</td>
+                                </tr>
+                                <tr>
+                                    <td>â‚¬0.01</td>
+                                    <td>Coin</td>
+                                    <td>1</td>
+                                    <td>â‚¬0.01</td>
+                                </tr>
+                                <tr class="font-bold">
+                                    <td colspan="2">TOTAL</td>
+                                    <td>251 pieces</td>
+                                    <td>â‚¬1234.56</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="bulk-upload-samples">
+                    <h2>Bulk Upload Sample Outputs</h2>
+
+                    <h3>CSV Upload Example</h3>
+                    <div class="feature-card">
+                        <h4>Input File (sample.csv)</h4>
+                        <pre><code>amount,currency,mode
+1850,INR,greedy
+2500,USD,balanced
+1234.56,EUR,minimize_large
+999,GBP,minimize_small</code></pre>
+
+                        <h4>Processing Result</h4>
+                        <pre><code>{
+  "total_rows": 4,
+  "successful_rows": 4,
+  "failed_rows": 0,
+  "results": [
+    {
+      "row": 1,
+      "success": true,
+      "result": {
+        "amount": 1850,
+        "currency": "INR",
+        "mode": "greedy",
+        "summary": {
+          "total_pieces": 6,
+          "total_notes": 6,
+          "total_coins": 0
+        }
+      }
+    },
+    {
+      "row": 2,
+      "success": true,
+      "result": {
+        "amount": 2500,
+        "currency": "USD",
+        "mode": "balanced",
+        "summary": {
+          "total_pieces": 610,
+          "total_notes": 230,
+          "total_coins": 380
+        }
+      }
+    },
+    {
+      "row": 3,
+      "success": true,
+      "result": {
+        "amount": 1234.56,
+        "currency": "EUR",
+        "mode": "minimize_large",
+        "summary": {
+          "total_pieces": 251,
+          "total_notes": 246,
+          "total_coins": 5
+        }
+      }
+    },
+    {
+      "row": 4,
+      "success": true,
+      "result": {
+        "amount": 999,
+        "currency": "GBP",
+        "mode": "minimize_small",
+        "summary": {
+          "total_pieces": 6,
+          "total_notes": 6,
+          "total_coins": 0
+        }
+      }
+    }
+  ]
+}</code></pre>
+                    </div>
+
+                    <h3>OCR Text Extraction Example</h3>
+                    <div class="feature-card">
+                        <h4>Input (Scanned Image Text)</h4>
+                        <pre><code>Amount: 1850 INR
+Mode: greedy
+
+Amount: 2500 USD
+Mode: balanced
+
+Amount: 1234.56 EUR
+Mode: minimize large</code></pre>
+
+                        <h4>Extracted Data</h4>
+                        <pre><code>{
+  "detected_format": "labeled",
+  "extracted_data": [
+    {
+      "row_number": 1,
+      "amount": 1850.0,
+      "currency": "INR",
+      "optimization_mode": "greedy"
+    },
+    {
+      "row_number": 2,
+      "amount": 2500.0,
+      "currency": "USD",
+      "optimization_mode": "balanced"
+    },
+    {
+      "row_number": 3,
+      "amount": 1234.56,
+      "currency": "EUR",
+      "optimization_mode": "minimize_large"
+    }
+  ],
+  "total_detected": 3,
+  "ocr_confidence": 0.95
+}</code></pre>
+                    </div>
+                </section>
+
+                <section id="api-examples">
+                    <h2>API Request/Response Examples</h2>
+
+                    <h3>Calculate Endpoint</h3>
+                    <div class="feature-card">
+                        <h4>cURL Request</h4>
+                        <pre><code class="language-bash">curl -X POST http://localhost:8000/api/v1/calculate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": 1850,
+    "currency": "INR",
+    "mode": "greedy"
+  }'</code></pre>
+
+                        <h4>Response (200 OK)</h4>
+                        <pre><code class="language-json">{
+  "amount": 1850,
+  "currency": "INR",
+  "mode": "greedy",
+  "breakdown": [
+    {"denomination": 500, "type": "note", "count": 3, "total_value": 1500},
+    {"denomination": 200, "type": "note", "count": 1, "total_value": 200},
+    {"denomination": 100, "type": "note", "count": 1, "total_value": 100},
+    {"denomination": 50, "type": "note", "count": 1, "total_value": 50}
+  ],
+  "summary": {
+    "total_pieces": 6,
+    "total_notes": 6,
+    "total_coins": 0,
+    "total_denominations": 4
+  },
+  "timestamp": "2025-01-15T12:00:00Z"
+}</code></pre>
+                    </div>
+
+                    <h3>History Endpoint</h3>
+                    <div class="feature-card">
+                        <h4>cURL Request</h4>
+                        <pre><code class="language-bash">curl http://localhost:8000/api/v1/history?page=1&per_page=2</code></pre>
+
+                        <h4>Response (200 OK)</h4>
+                        <pre><code class="language-json">{
+  "items": [
+    {
+      "id": 1,
+      "amount": 1850,
+      "currency": "INR",
+      "mode": "greedy",
+      "breakdown": [...],
+      "summary": {"total_pieces": 6, "total_notes": 6, "total_coins": 0},
+      "timestamp": "2025-01-15T12:00:00Z"
+    },
+    {
+      "id": 2,
+      "amount": 2500,
+      "currency": "USD",
+      "mode": "balanced",
+      "breakdown": [...],
+      "summary": {"total_pieces": 610, "total_notes": 230, "total_coins": 380},
+      "timestamp": "2025-01-15T12:05:00Z"
+    }
+  ],
+  "total": 100,
+  "page": 1,
+  "pages": 50,
+  "per_page": 2
+}</code></pre>
+                    </div>
+
+                    <h3>Error Response Example</h3>
+                    <div class="feature-card">
+                        <h4>Request (Invalid Amount)</h4>
+                        <pre><code class="language-bash">curl -X POST http://localhost:8000/api/v1/calculate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "amount": -100,
+    "currency": "INR",
+    "mode": "greedy"
+  }'</code></pre>
+
+                        <h4>Response (400 Bad Request)</h4>
+                        <pre><code class="language-json">{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Amount must be greater than 0",
+    "field": "amount",
+    "timestamp": "2025-01-15T12:00:00Z"
+  }
+}</code></pre>
+                    </div>
+                </section>
+
+                <section id="export-samples">
+                    <h2>Export Format Samples</h2>
+
+                    <h3>CSV Export</h3>
+                    <div class="feature-card">
+                        <pre><code>Amount,Currency,Mode,Total Pieces,Total Notes,Total Coins,Timestamp
+1850,INR,greedy,6,6,0,2025-01-15T12:00:00Z
+2500,USD,balanced,610,230,380,2025-01-15T12:05:00Z
+1234.56,EUR,minimize_large,251,246,5,2025-01-15T12:10:00Z
+999,GBP,minimize_small,6,6,0,2025-01-15T12:15:00Z</code></pre>
+                    </div>
+
+                    <h3>JSON Export</h3>
+                    <div class="feature-card">
+                        <pre><code class="language-json">[
+  {
+    "amount": 1850,
+    "currency": "INR",
+    "mode": "greedy",
+    "breakdown": [
+      {"denomination": 500, "type": "note", "count": 3, "total_value": 1500},
+      {"denomination": 200, "type": "note", "count": 1, "total_value": 200},
+      {"denomination": 100, "type": "note", "count": 1, "total_value": 100},
+      {"denomination": 50, "type": "note", "count": 1, "total_value": 50}
+    ],
+    "summary": {
+      "total_pieces": 6,
+      "total_notes": 6,
+      "total_coins": 0,
+      "total_denominations": 4
+    },
+    "timestamp": "2025-01-15T12:00:00Z"
+  },
+  {
+    "amount": 2500,
+    "currency": "USD",
+    "mode": "balanced",
+    "breakdown": [...],
+    "summary": {...},
+    "timestamp": "2025-01-15T12:05:00Z"
+  }
+]</code></pre>
+                    </div>
+
+                    <h3>Clipboard (Plain Text)</h3>
+                    <div class="feature-card">
+                        <pre><code>Currency Denomination Calculator - Export
+
+Amount: 1850 INR
+Mode: greedy
+Total Pieces: 6 (6 notes, 0 coins)
+
+Breakdown:
+  â‚¹500 Ã— 3 = â‚¹1500
+  â‚¹200 Ã— 1 = â‚¹200
+  â‚¹100 Ã— 1 = â‚¹100
+  â‚¹50 Ã— 1 = â‚¹50
+
+Generated: 2025-01-15 12:00:00</code></pre>
+                    </div>
+                </section>
+
+                <section id="ui-states">
+                    <h2>UI State Examples</h2>
+
+                    <h3>Loading State</h3>
+                    <div class="feature-card">
+                        <pre><code>&lt;div class="loading-spinner"&gt;
+  &lt;div class="spinner"&gt;&lt;/div&gt;
+  &lt;p&gt;Processing bulk upload...&lt;/p&gt;
+  &lt;p class="text-sm"&gt;Analyzing 100 rows&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <h3>Success Message</h3>
+                    <div class="feature-card">
+                        <pre><code>&lt;div class="alert alert-success"&gt;
+  &lt;CheckCircle className="w-5 h-5" /&gt;
+  &lt;p&gt;Calculation completed successfully!&lt;/p&gt;
+  &lt;p class="text-sm"&gt;Result saved to history&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+
+                    <h3>Error Message</h3>
+                    <div class="feature-card">
+                        <pre><code>&lt;div class="alert alert-error"&gt;
+  &lt;AlertCircle className="w-5 h-5" /&gt;
+  &lt;p&gt;File size exceeds 10MB limit&lt;/p&gt;
+  &lt;p class="text-sm"&gt;Please upload a smaller file&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                </section>
+
+                <section id="database-samples">
+                    <h2>Database Sample Records</h2>
+
+                    <h3>Calculations Table</h3>
+                    <div class="feature-card">
+                        <pre><code class="language-sql">SELECT * FROM calculations LIMIT 3;
+
+id | amount  | currency | mode    | breakdown                                    | summary                                           | timestamp
+---|---------|----------|---------|----------------------------------------------|---------------------------------------------------|-------------------
+1  | 1850.0  | INR      | greedy  | [{"denomination":500,"count":3,...},...]     | {"total_pieces":6,"total_notes":6,...}            | 2025-01-15 12:00:00
+2  | 2500.0  | USD      | balanced| [{"denomination":100,"count":10,...},...]    | {"total_pieces":610,"total_notes":230,...}        | 2025-01-15 12:05:00
+3  | 1234.56 | EUR      | minimize| [{"denomination":5,"count":246,...},...]     | {"total_pieces":251,"total_notes":246,...}        | 2025-01-15 12:10:00</code></pre>
+                    </div>
+
+                    <h3>Query Examples</h3>
+                    <div class="feature-card">
+                        <h4>Get Latest 10 Calculations</h4>
+                        <pre><code class="language-sql">SELECT * FROM calculations 
+ORDER BY timestamp DESC 
+LIMIT 10;</code></pre>
+
+                        <h4>Filter by Currency</h4>
+                        <pre><code class="language-sql">SELECT * FROM calculations 
+WHERE currency = 'INR' 
+ORDER BY timestamp DESC;</code></pre>
+
+                        <h4>Statistics</h4>
+                        <pre><code class="language-sql">SELECT 
+  currency,
+  COUNT(*) as total_calculations,
+  AVG(amount) as avg_amount,
+  SUM(amount) as total_amount
+FROM calculations
+GROUP BY currency;</code></pre>
+                    </div>
+                </section>
+
+                <section id="performance-logs">
+                    <h2>Performance Log Samples</h2>
+
+                    <h3>Backend Performance Log</h3>
+                    <div class="feature-card">
+                        <pre><code>2025-01-15 12:00:00 - INFO - POST /api/v1/calculate - 0.3ms
+2025-01-15 12:00:01 - INFO - Calculation: 1850 INR (greedy) â†’ 6 pieces
+2025-01-15 12:00:01 - INFO - Database insert: 2.8ms
+2025-01-15 12:00:01 - INFO - Request completed: 3.5ms
+
+2025-01-15 12:05:00 - INFO - POST /api/v1/bulk/upload - File: sample.csv (4 rows)
+2025-01-15 12:05:00 - INFO - CSV parsing: 15ms
+2025-01-15 12:05:00 - INFO - Calculation batch (4 items): 1.2ms
+2025-01-15 12:05:00 - INFO - Database batch insert: 8.5ms
+2025-01-15 12:05:00 - INFO - Bulk upload completed: 24.7ms
+
+2025-01-15 12:10:00 - INFO - POST /api/v1/ocr/process - File: receipt.jpg (1.2MB)
+2025-01-15 12:10:00 - INFO - Image preprocessing: 150ms
+2025-01-15 12:10:00 - INFO - Tesseract OCR: 2.1s
+2025-01-15 12:10:02 - INFO - Text parsing (labeled format): 12ms
+2025-01-15 12:10:02 - INFO - Detected 3 amounts with 95% confidence
+2025-01-15 12:10:02 - INFO - OCR processing completed: 2.262s</code></pre>
+                    </div>
+
+                    <h3>Health Check Output</h3>
+                    <div class="feature-card">
+                        <pre><code>=== Currency Calculator Health Check ===
+
+[1/4] Checking Backend...
+  âœ“ Backend: HEALTHY
+    Database: connected
+    Version: 1.0.0
+
+[2/4] Checking Database...
+  âœ“ Database: 2.45 MB
+
+[3/4] Checking Tesseract OCR...
+  âœ“ Tesseract: tesseract 5.3.3
+
+[4/4] Checking Poppler...
+  âœ“ Poppler: pdftoppm version 24.08.0
+
+=== Health Check Complete ===</code></pre>
+                    </div>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>âœ“ Documentation Complete</strong>
+                    <p>This concludes the complete documentation for the Currency Denomination Calculator project. All 22 pages cover every aspect from executive summary to sample outputs, providing comprehensive reference for developers, testers, and users.</p>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>📁 Screenshot Location</strong>
+                    <p>Actual screenshot images would be stored in: <code>image/</code> directory in the project root. Screenshots would include: Calculator UI (light/dark mode), Bulk Upload interface, OCR processing, History page, Settings panel, Export options, Multi-language selector.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/page-navigation.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

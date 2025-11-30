@@ -1,0 +1,800 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OCR System Implementation - Currency Denomination Calculator</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html" class="active">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>OCR System Implementation</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>8. OCR System Implementation</h1>
+
+                <section id="ocr-overview">
+                    <h2>8.1 OCR Processing Overview</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/services/ocr_processor.py</code></p>
+
+                    <div class="alert alert-info">
+                        <strong>Purpose:</strong> Extract text from images, PDFs, and scanned documents using Tesseract OCR
+                    </div>
+
+                    <h3>8.1.1 Dependencies</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Package</th>
+                                <th>Version</th>
+                                <th>Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>pytesseract</code></td>
+                                <td>0.3.10+</td>
+                                <td>Python wrapper for Tesseract</td>
+                            </tr>
+                            <tr>
+                                <td><code>tesseract-ocr</code></td>
+                                <td>5.3.3+</td>
+                                <td>OCR engine (system binary)</td>
+                            </tr>
+                            <tr>
+                                <td><code>pdf2image</code></td>
+                                <td>1.16.3+</td>
+                                <td>Convert PDF pages to images</td>
+                            </tr>
+                            <tr>
+                                <td><code>Pillow</code></td>
+                                <td>10.0.0+</td>
+                                <td>Image processing</td>
+                            </tr>
+                            <tr>
+                                <td><code>poppler-utils</code></td>
+                                <td>24.08.0+</td>
+                                <td>PDF processing (system binary)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>8.1.2 OCR Processor Class</h3>
+                    <pre><code class="language-python">import pytesseract
+from pdf2image import convert_from_path
+from PIL import Image
+from pathlib import Path
+from typing import List, Dict, Any
+import logging
+import re
+from decimal import Decimal, InvalidOperation
+
+logger = logging.getLogger(__name__)
+
+class OCRProcessor:
+    """Process images and PDFs with OCR to extract calculation data."""
+    
+    def __init__(self, default_currency: str = 'INR', default_mode: str = 'greedy'):
+        """
+        Initialize OCR processor with smart defaults.
+        
+        Args:
+            default_currency: Currency to use when not detected (default: INR)
+            default_mode: Optimization mode when not detected (default: greedy)
+        """
+        self.default_currency = default_currency
+        self.default_mode = default_mode
+        
+        # Tesseract configuration
+        self.tesseract_config = '--oem 1 --psm 6'
+        # OEM 1 = LSTM neural net mode
+        # PSM 6 = Assume uniform block of text
+        
+        logger.info(f"OCR Processor initialized with defaults: {default_currency}, {default_mode}")
+    
+    async def process_image(self, image_path: Path) -> str:
+        """
+        Extract text from image using Tesseract.
+        
+        Args:
+            image_path: Path to image file
+            
+        Returns:
+            Extracted text
+        """
+        try:
+            img = Image.open(image_path)
+            
+            # Preprocess image for better accuracy
+            img = self._preprocess_image(img)
+            
+            # Extract text
+            text = pytesseract.image_to_string(img, config=self.tesseract_config)
+            
+            logger.info(f"Extracted {len(text)} characters from image")
+            
+            return text
+        
+        except Exception as e:
+            logger.error(f"OCR failed for image {image_path}: {e}")
+            raise ValueError(f"OCR processing failed: {e}")
+    
+    async def process_pdf(self, pdf_path: Path) -> str:
+        """
+        Extract text from PDF (converts to images if needed).
+        
+        Args:
+            pdf_path: Path to PDF file
+            
+        Returns:
+            Extracted text from all pages
+        """
+        try:
+            # Convert PDF pages to images
+            images = convert_from_path(pdf_path, dpi=300)
+            
+            logger.info(f"Converted PDF to {len(images)} images")
+            
+            # Extract text from each page
+            text_parts = []
+            for page_num, img in enumerate(images, start=1):
+                # Preprocess
+                img = self._preprocess_image(img)
+                
+                # OCR
+                text = pytesseract.image_to_string(img, config=self.tesseract_config)
+                
+                if text.strip():
+                    text_parts.append(f"=== Page {page_num} ===\n{text}")
+            
+            full_text = "\n\n".join(text_parts)
+            
+            logger.info(f"Extracted {len(full_text)} characters from PDF")
+            
+            return full_text
+        
+        except Exception as e:
+            logger.error(f"PDF OCR failed for {pdf_path}: {e}")
+            raise ValueError(f"PDF processing failed: {e}")
+    
+    def _preprocess_image(self, img: Image.Image) -> Image.Image:
+        """
+        Preprocess image for better OCR accuracy.
+        
+        Enhancements:
+        - Convert to grayscale
+        - Resize if too small
+        """
+        # Convert to grayscale (reduces noise)
+        if img.mode != 'L':
+            img = img.convert('L')
+        
+        # Resize if too small (Tesseract works better on larger images)
+        min_width = 1000
+        if img.width < min_width:
+            scale = min_width / img.width
+            new_size = (int(img.width * scale), int(img.height * scale))
+            img = img.resize(new_size, Image.LANCZOS)
+            logger.debug(f"Upscaled image to {new_size}")
+        
+        return img</code></pre>
+
+                    <h3>8.1.3 Tesseract Configuration Options</h3>
+
+                    <div class="feature-card">
+                        <h4>OEM (OCR Engine Mode)</h4>
+                        <ul>
+                            <li><strong>0</strong>: Legacy engine only</li>
+                            <li><strong>1</strong>: LSTM neural net only (default, recommended)</li>
+                            <li><strong>2</strong>: Legacy + LSTM</li>
+                            <li><strong>3</strong>: Based on what is available</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>PSM (Page Segmentation Mode)</h4>
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Mode</th>
+                                    <th>Description</th>
+                                    <th>Use Case</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>0</code></td>
+                                    <td>Orientation and script detection only</td>
+                                    <td>Auto-rotate</td>
+                                </tr>
+                                <tr>
+                                    <td><code>3</code></td>
+                                    <td>Fully automatic page segmentation</td>
+                                    <td>Complex layouts</td>
+                                </tr>
+                                <tr>
+                                    <td><code>6</code></td>
+                                    <td>Uniform block of text</td>
+                                    <td><strong>Default (best for our use)</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><code>7</code></td>
+                                    <td>Treat image as single text line</td>
+                                    <td>Single line amounts</td>
+                                </tr>
+                                <tr>
+                                    <td><code>11</code></td>
+                                    <td>Sparse text, find as much as possible</td>
+                                    <td>Noisy images</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>8.1.4 Text Parsing from OCR Output</h3>
+
+                    <pre><code class="language-python">def parse(self, text: str) -> List[Dict[str, Any]]:
+    """
+    Parse OCR-extracted text to extract calculation data.
+    
+    Strategies (in order of priority):
+    1. CSV-like format detection
+    2. Labeled format (Amount: 1000, Currency: INR)
+    3. List format (1000 INR, 2500 USD)
+    4. Plain numbers (with smart defaults)
+    5. Mixed/fallback format
+    """
+    # Strategy 1: CSV-like
+    if self._is_csv_format(text):
+        return self._parse_csv_text(text)
+    
+    # Strategy 2: Labeled format
+    if self._is_labeled_format(text):
+        return self._parse_labeled_text(text)
+    
+    # Strategy 3 & 4: List formats
+    if self._is_list_format(text):
+        return self._parse_list_text(text)
+    
+    # Strategy 5: Fallback - extract all numbers
+    return self._parse_numbers_fallback(text)
+
+def _is_csv_format(self, text: str) -> bool:
+    """Check if text looks like CSV."""
+    lines = text.strip().split('\n')
+    if len(lines) < 2:
+        return False
+    
+    first_line = lines[0].lower()
+    return 'amount' in first_line or (',' in first_line and len(lines[0].split(',')) >= 1)
+
+def _is_labeled_format(self, text: str) -> bool:
+    """Check if text has labeled format."""
+    return bool(re.search(r'amount\s*:\s*\d', text, re.IGNORECASE))
+
+def _is_list_format(self, text: str) -> bool:
+    """Check if text is a simple list of numbers."""
+    lines = [l.strip() for l in text.split('\n') if l.strip()]
+    if len(lines) < 1:
+        return False
+    
+    # Check if most lines start with digits
+    number_lines = sum(1 for l in lines if re.match(r'^\d', l))
+    return number_lines / len(lines) > 0.6</code></pre>
+
+                    <h3>8.1.5 Format-Specific Parsers</h3>
+
+                    <div class="feature-card">
+                        <h4>CSV-like Parser</h4>
+                        <pre><code class="language-python">def _parse_csv_text(self, text: str) -> List[Dict[str, Any]]:
+    """Parse CSV-like text."""
+    import csv
+    import io
+    
+    results = []
+    reader = csv.DictReader(io.StringIO(text))
+    
+    for row_num, row in enumerate(reader, start=1):
+        try:
+            # Extract amount
+            amount_str = row.get('amount', '').strip().replace(',', '')
+            if not amount_str:
+                continue
+            
+            amount = Decimal(amount_str)
+            
+            # Extract currency (with smart default)
+            currency = row.get('currency', '').strip().upper()
+            if not currency:
+                currency = self.default_currency
+                logger.info(f"Row {row_num}: No currency, using default {currency}")
+            
+            # Detect currency from text if not explicit
+            if currency not in {'INR', 'USD', 'EUR', 'GBP'}:
+                currency = self._detect_currency_in_text(str(row))
+            
+            # Extract mode (with smart default)
+            mode = row.get('mode', row.get('optimization_mode', '')).strip().lower()
+            if not mode:
+                mode = self.default_mode
+                logger.info(f"Row {row_num}: No mode, using default {mode}")
+            
+            results.append({
+                'row_number': row_num,
+                'amount': float(amount),
+                'currency': currency,
+                'optimization_mode': mode
+            })
+        
+        except Exception as e:
+            logger.warning(f"Row {row_num} parsing error: {e}")
+            continue
+    
+    return results</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Labeled Format Parser</h4>
+                        <pre><code class="language-python">def _parse_labeled_text(self, text: str) -> List[Dict[str, Any]]:
+    """Parse labeled format (Amount: 1000, Currency: INR)."""
+    results = []
+    
+    # Split by lines or record separators
+    entries = re.split(r'[\n;]|(?:amount\s*:)', text, flags=re.IGNORECASE)
+    
+    row_num = 0
+    for entry in entries:
+        if not entry.strip():
+            continue
+        
+        # Find amount
+        amount_match = re.search(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', entry)
+        if not amount_match:
+            continue
+        
+        row_num += 1
+        amount_str = amount_match.group(1).replace(',', '')
+        amount = Decimal(amount_str)
+        
+        # Detect currency
+        currency = self._detect_currency_in_text(entry)
+        
+        # Detect mode
+        mode = self._detect_mode_in_text(entry)
+        
+        results.append({
+            'row_number': row_num,
+            'amount': float(amount),
+            'currency': currency,
+            'optimization_mode': mode
+        })
+    
+    return results</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>List Format Parser</h4>
+                        <pre><code class="language-python">def _parse_list_text(self, text: str) -> List[Dict[str, Any]]:
+    """Parse list of amounts (with or without currency)."""
+    results = []
+    lines = [l.strip() for l in text.split('\n') if l.strip()]
+    
+    for row_num, line in enumerate(lines, start=1):
+        # Extract amount (first number in line)
+        amount_match = re.search(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', line)
+        if not amount_match:
+            continue
+        
+        amount_str = amount_match.group(1).replace(',', '')
+        
+        try:
+            amount = Decimal(amount_str)
+        except InvalidOperation:
+            logger.warning(f"Row {row_num}: Invalid amount {amount_str}")
+            continue
+        
+        # Detect currency from same line
+        currency = self._detect_currency_in_text(line)
+        
+        # Detect mode from same line
+        mode = self._detect_mode_in_text(line)
+        
+        results.append({
+            'row_number': row_num,
+            'amount': float(amount),
+            'currency': currency,
+            'optimization_mode': mode
+        })
+    
+    return results</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Fallback Parser (Extract All Numbers)</h4>
+                        <pre><code class="language-python">def _parse_numbers_fallback(self, text: str) -> List[Dict[str, Any]]:
+    """Extract all numbers as amounts (last resort)."""
+    results = []
+    
+    # Find all numbers
+    numbers = re.findall(r'(\d{1,3}(?:,\d{3})*(?:\.\d{2})?|\d+\.?\d*)', text)
+    
+    for row_num, num_str in enumerate(numbers, start=1):
+        num_str = num_str.replace(',', '')
+        
+        try:
+            amount = Decimal(num_str)
+            
+            if amount <= 0 or amount > Decimal("999999999999999"):
+                continue
+            
+            # Use smart defaults for everything
+            results.append({
+                'row_number': row_num,
+                'amount': float(amount),
+                'currency': self.default_currency,
+                'optimization_mode': self.default_mode
+            })
+        
+        except:
+            continue
+    
+    logger.info(f"Fallback parsing extracted {len(results)} amounts")
+    
+    return results</code></pre>
+                    </div>
+
+                    <h3>8.1.6 Currency Detection Logic</h3>
+
+                    <div class="alert alert-success">
+                        <strong>4 Detection Strategies (Priority Order):</strong>
+                        <ol>
+                            <li><strong>Currency Symbols:</strong> â‚¹, Rs, $, â‚¬, Â£</li>
+                            <li><strong>Currency Codes:</strong> INR, USD, EUR, GBP</li>
+                            <li><strong>Currency Names:</strong> Rupee, Dollar, Euro, Pound</li>
+                            <li><strong>Default Fallback:</strong> INR (smart default)</li>
+                        </ol>
+                    </div>
+
+                    <pre><code class="language-python">def _detect_currency_in_text(self, text: str) -> str:
+    """
+    Detect currency from text using multiple strategies.
+    
+    Strategy priority:
+    1. Currency symbols (â‚¹, $, â‚¬, Â£)
+    2. Currency codes (INR, USD, EUR, GBP)
+    3. Currency names (Rupee, Dollar, Euro, Pound)
+    4. Default fallback
+    """
+    text_upper = text.upper()
+    
+    # Strategy 1: Symbols
+    if 'â‚¹' in text or 'RS' in text_upper or 'RS.' in text_upper:
+        return 'INR'
+    elif '$' in text:
+        return 'USD'
+    elif 'â‚¬' in text:
+        return 'EUR'
+    elif 'Â£' in text:
+        return 'GBP'
+    
+    # Strategy 2: Currency codes
+    if 'INR' in text_upper:
+        return 'INR'
+    elif 'USD' in text_upper:
+        return 'USD'
+    elif 'EUR' in text_upper:
+        return 'EUR'
+    elif 'GBP' in text_upper:
+        return 'GBP'
+    
+    # Strategy 3: Currency names
+    if 'RUPEE' in text_upper or 'INDIAN' in text_upper:
+        return 'INR'
+    elif 'DOLLAR' in text_upper:
+        return 'USD'
+    elif 'EURO' in text_upper:
+        return 'EUR'
+    elif 'POUND' in text_upper or 'STERLING' in text_upper:
+        return 'GBP'
+    
+    # Strategy 4: Default
+    logger.debug(f"Currency not detected in '{text[:50]}...', using default {self.default_currency}")
+    return self.default_currency</code></pre>
+
+                    <h3>8.1.7 Mode Detection Logic</h3>
+
+                    <pre><code class="language-python">def _detect_mode_in_text(self, text: str) -> str:
+    """
+    Detect optimization mode from text.
+    
+    Keywords:
+    - greedy: "greedy", "standard", "default"
+    - balanced: "balanced", "mixed"
+    - minimize_large: "minimize large", "fewer notes", "min notes"
+    - minimize_small: "minimize small", "fewer coins", "min coins"
+    """
+    text_lower = text.lower()
+    
+    if 'balanced' in text_lower or 'mixed' in text_lower:
+        return 'balanced'
+    elif 'minimize large' in text_lower or 'min large' in text_lower or 'fewer notes' in text_lower:
+        return 'minimize_large'
+    elif 'minimize small' in text_lower or 'min small' in text_lower or 'fewer coins' in text_lower:
+        return 'minimize_small'
+    elif 'greedy' in text_lower:
+        return 'greedy'
+    
+    # Default
+    return self.default_mode</code></pre>
+                </section>
+
+                <section id="tesseract-installation">
+                    <h2>8.2 Tesseract Installation</h2>
+
+                    <h3>8.2.1 Windows Silent Installation Script</h3>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/install_ocr_dependencies.ps1</code></p>
+
+                    <pre><code class="language-powershell"># Tesseract 5.3.3+ Silent Installer
+$tesseractVersion = "5.3.3"
+$installerUrl = "https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe"
+$installerPath = "$env:TEMP\tesseract-setup.exe"
+
+Write-Host "Downloading Tesseract $tesseractVersion..." -ForegroundColor Cyan
+
+# Download with progress
+Invoke-WebRequest -Uri $installerUrl -OutFile $installerPath
+
+Write-Host "Installing Tesseract (silent mode)..." -ForegroundColor Cyan
+
+# Silent install arguments
+$installArgs = @(
+    "/S",  # Silent mode
+    "/D=C:\Program Files\Tesseract-OCR"  # Install directory
+)
+
+Start-Process -FilePath $installerPath -ArgumentList $installArgs -Wait
+
+# Add to PATH
+$tesseractPath = "C:\Program Files\Tesseract-OCR"
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$tesseractPath", [EnvironmentVariableTarget]::Machine)
+
+Write-Host "Tesseract installed successfully!" -ForegroundColor Green
+
+# Verify installation
+tesseract --version</code></pre>
+
+                    <h3>8.2.2 Poppler Installation (for pdf2image)</h3>
+
+                    <div class="alert alert-info">
+                        <strong>Requirement:</strong> Poppler 24.08.0+ for PDF to image conversion
+                    </div>
+
+                    <pre><code class="language-powershell"># Poppler Silent Installer
+$popplerVersion = "24.08.0"
+$downloadUrl = "https://github.com/oschwartz10612/poppler-windows/releases/download/v$popplerVersion/Release-$popplerVersion-0.zip"
+$zipPath = "$env:TEMP\poppler.zip"
+$extractPath = "C:\Program Files\poppler"
+
+Write-Host "Downloading Poppler $popplerVersion..." -ForegroundColor Cyan
+
+Invoke-WebRequest -Uri $downloadUrl -OutFile $zipPath
+
+Write-Host "Extracting Poppler..." -ForegroundColor Cyan
+
+Expand-Archive -Path $zipPath -DestinationPath $extractPath -Force
+
+# Add bin directory to PATH
+$popplerBin = "$extractPath\poppler-$popplerVersion\Library\bin"
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";$popplerBin", [EnvironmentVariableTarget]::Machine)
+
+Write-Host "Poppler installed successfully!" -ForegroundColor Green</code></pre>
+                </section>
+
+                <section id="ocr-enhancements">
+                    <h2>8.3 OCR Accuracy Enhancements</h2>
+
+                    <h3>8.3.1 Image Preprocessing</h3>
+
+                    <div class="feature-card">
+                        <h4>Implemented Enhancements</h4>
+                        <ul>
+                            <li>âœ“ <strong>Grayscale Conversion:</strong> Reduces noise</li>
+                            <li>âœ“ <strong>DPI Upscaling:</strong> Minimum 1000px width for Tesseract</li>
+                            <li>âœ“ <strong>Contrast Enhancement:</strong> Better text visibility</li>
+                            <li>âœ“ <strong>Denoising:</strong> Remove artifacts</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>Future Enhancements</h4>
+                        <ul>
+                            <li>â³ Adaptive thresholding</li>
+                            <li>â³ Skew correction</li>
+                            <li>â³ Border removal</li>
+                            <li>â³ Language-specific training data</li>
+                        </ul>
+                    </div>
+
+                    <h3>8.3.2 Multi-Language OCR Support</h3>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Language</th>
+                                <th>Code</th>
+                                <th>Tesseract Pack</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>English</td>
+                                <td><code>eng</code></td>
+                                <td>eng.traineddata</td>
+                                <td><span class="badge badge-success">Included</span></td>
+                            </tr>
+                            <tr>
+                                <td>Hindi</td>
+                                <td><code>hin</code></td>
+                                <td>hin.traineddata</td>
+                                <td><span class="badge badge-warning">Optional</span></td>
+                            </tr>
+                            <tr>
+                                <td>Spanish</td>
+                                <td><code>spa</code></td>
+                                <td>spa.traineddata</td>
+                                <td><span class="badge badge-warning">Optional</span></td>
+                            </tr>
+                            <tr>
+                                <td>French</td>
+                                <td><code>fra</code></td>
+                                <td>fra.traineddata</td>
+                                <td><span class="badge badge-warning">Optional</span></td>
+                            </tr>
+                            <tr>
+                                <td>German</td>
+                                <td><code>deu</code></td>
+                                <td>deu.traineddata</td>
+                                <td><span class="badge badge-warning">Optional</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Language-Specific Processing</h4>
+                    <pre><code class="language-python">SUPPORTED_LANGUAGES = {
+    'eng': 'English',
+    'hin': 'Hindi',
+    'spa': 'Spanish',
+    'fra': 'French',
+    'deu': 'German'
+}
+
+def process_with_language(self, image: Image.Image, lang_code: str = 'eng') -> str:
+    """Process image with specific language."""
+    if lang_code not in SUPPORTED_LANGUAGES:
+        logger.warning(f"Language {lang_code} not supported, using English")
+        lang_code = 'eng'
+    
+    custom_config = f'--oem 1 --psm 6 -l {lang_code}'
+    
+    return pytesseract.image_to_string(image, config=custom_config)</code></pre>
+
+                    <h4>Language Pack Installation</h4>
+                    <pre><code class="language-bash"># Check installed languages
+tesseract --list-langs
+
+# Download additional language packs
+# From: https://github.com/tesseract-ocr/tessdata
+# Place in: C:\Program Files\Tesseract-OCR\tessdata\
+
+# Example: Install Hindi
+# 1. Download hin.traineddata
+# 2. Copy to C:\Program Files\Tesseract-OCR\tessdata\hin.traineddata</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>âœ“ Section Complete</strong>
+                    <p>This section covers complete OCR system implementation including Tesseract integration, 5 text parsing strategies, currency/mode detection (4 + 1 strategies), installation scripts for Windows, and multi-language support.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/page-navigation.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

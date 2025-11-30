@@ -1,0 +1,55 @@
+# Environment Variables
+.env
+.env.local
+.env.production
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor Directories
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Session Storage (if using file-based sessions)
+sessions/
+
+# Temporary Files
+*.tmp
+*.temp
+.cache/
+
+# PM2
+.pm2/
+pm2.json
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Build artifacts (if any)
+dist/
+build/
+
+# Backup files
+*.backup
+*.bak
+*.swp
+*~

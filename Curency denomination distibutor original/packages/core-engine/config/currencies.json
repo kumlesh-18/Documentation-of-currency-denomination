@@ -1,0 +1,42 @@
+{
+  "INR": {
+    "name": "Indian Rupee",
+    "symbol": "₹",
+    "code": "INR",
+    "decimal_places": 2,
+    "notes": [500, 200, 100, 50, 20, 10],
+    "coins": [20, 10, 5, 2, 1],
+    "smallest_unit": 1,
+    "active": true
+  },
+  "USD": {
+    "name": "US Dollar",
+    "symbol": "$",
+    "code": "USD",
+    "decimal_places": 2,
+    "notes": [100, 50, 20, 10, 5, 2, 1],
+    "coins": [0.50, 0.25, 0.10, 0.05, 0.01],
+    "smallest_unit": 0.01,
+    "active": true
+  },
+  "EUR": {
+    "name": "Euro",
+    "symbol": "€",
+    "code": "EUR",
+    "decimal_places": 2,
+    "notes": [500, 200, 100, 50, 20, 10, 5],
+    "coins": [2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01],
+    "smallest_unit": 0.01,
+    "active": true
+  },
+  "GBP": {
+    "name": "British Pound",
+    "symbol": "£",
+    "code": "GBP",
+    "decimal_places": 2,
+    "notes": [50, 20, 10, 5],
+    "coins": [2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01],
+    "smallest_unit": 0.01,
+    "active": true
+  }
+}

@@ -1,0 +1,696 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UI/UX Requirements - Currency Denomination Calculator</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html" class="active">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>UI/UX Requirements</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>5. UI/UX Requirements</h1>
+
+                <section id="calculator-page">
+                    <h2>5.1 Calculator Page</h2>
+
+                    <h3>5.1.1 Layout Specification</h3>
+                    <p><strong>Component:</strong> <code>packages/desktop-app/src/components/CalculatorPage.tsx</code></p>
+
+                    <div class="alert alert-info">
+                        <strong>Layout Structure:</strong>
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  Calculator Page                                â”‚
+â”‚                                                 â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚  Input Section (Card)                     â”‚ â”‚
+â”‚  â”‚                                           â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚ â”‚
+â”‚  â”‚  â”‚ Amount Input (Large)                â”‚ â”‚ â”‚
+â”‚  â”‚  â”‚ Placeholder: "Enter amount..."      â”‚ â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚ â”‚
+â”‚  â”‚                                           â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚ â”‚
+â”‚  â”‚  â”‚ Currency     â”‚  â”‚ Optimization Modeâ”‚ â”‚ â”‚
+â”‚  â”‚  â”‚ Dropdown     â”‚  â”‚ Dropdown         â”‚ â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚ â”‚
+â”‚  â”‚                                           â”‚ â”‚
+â”‚  â”‚  [Calculate Button] - Full Width, Blue   â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                                 â”‚
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚  Results Section (After Calculation)     â”‚ â”‚
+â”‚  â”‚                                           â”‚ â”‚
+â”‚  â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚ â”‚
+â”‚  â”‚  â”‚ Total  â”‚ â”‚ Total  â”‚ â”‚ Total Denoms â”‚ â”‚ â”‚
+â”‚  â”‚  â”‚ Notes  â”‚ â”‚ Coins  â”‚ â”‚              â”‚ â”‚ â”‚
+â”‚  â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚ â”‚
+â”‚  â”‚                                           â”‚ â”‚
+â”‚  â”‚  Breakdown Table                          â”‚ â”‚
+â”‚  â”‚  Denomination | Type | Count | Value     â”‚ â”‚
+â”‚  â”‚                                           â”‚ â”‚
+â”‚  â”‚  [Copy] [Export CSV]                      â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <h4>Required Elements</h4>
+
+                    <div class="feature-card">
+                        <h5>1. Amount Input Field</h5>
+                        <ul>
+                            <li><strong>Type:</strong> <code>number</code> or <code>text</code> (validated)</li>
+                            <li><strong>Validation:</strong> Positive numbers only, max 15 digits</li>
+                            <li><strong>Placeholder:</strong> "Enter amount..."</li>
+                            <li><strong>Auto-focus:</strong> Yes (on page load)</li>
+                            <li><strong>Clear button:</strong> Yes</li>
+                            <li><strong>Format:</strong> Allow comma separators (e.g., 1,000,000)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>2. Currency Dropdown</h5>
+                        <ul>
+                            <li><strong>Options:</strong> INR, USD, EUR, GBP</li>
+                            <li><strong>Default:</strong> INR</li>
+                            <li><strong>Display:</strong> {code} - {name} (e.g., "INR - Indian Rupee")</li>
+                            <li><strong>Icons:</strong> Currency symbols (â‚¹, $, â‚¬, Â£)</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>3. Optimization Mode Dropdown</h5>
+                        <ul>
+                            <li><strong>Options:</strong> greedy, balanced, minimize_large, minimize_small</li>
+                            <li><strong>Default:</strong> greedy</li>
+                            <li><strong>Display:</strong> Capitalized with description</li>
+                            <li><strong>Tooltips:</strong> Explanation of each mode</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>4. Calculate Button</h5>
+                        <ul>
+                            <li><strong>Style:</strong> Primary blue, full-width</li>
+                            <li><strong>States:</strong> Normal, Hover, Disabled, Loading</li>
+                            <li><strong>Loading:</strong> Show spinner when calculating</li>
+                            <li><strong>Keyboard:</strong> Enter key triggers calculation</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>5. Results Display (Conditional)</h5>
+                        <ul>
+                            <li>Show only after successful calculation</li>
+                            <li>Animate entrance (fade in)</li>
+                            <li>Summary cards with icons</li>
+                            <li>Sortable breakdown table</li>
+                            <li>Copy/Export buttons</li>
+                        </ul>
+                    </div>
+
+                    <h4>Color Scheme</h4>
+                    <pre><code class="language-css">/* Light Mode */
+--bg-primary: #ffffff
+--bg-secondary: #f9fafb
+--text-primary: #111827
+--text-secondary: #6b7280
+--border: #e5e7eb
+--button-primary: #2563eb
+--success: #10b981
+--error: #ef4444
+
+/* Dark Mode */
+--bg-primary: #1f2937
+--bg-secondary: #111827
+--text-primary: #f9fafb
+--text-secondary: #9ca3af
+--border: #374151
+--button-primary: #3b82f6
+--success: #34d399
+--error: #f87171</code></pre>
+
+                    <h4>Responsive Breakpoints</h4>
+                    <ul>
+                        <li><strong>Mobile:</strong> &lt; 640px (single column)</li>
+                        <li><strong>Tablet:</strong> 640px - 1024px (2 columns)</li>
+                        <li><strong>Desktop:</strong> &gt; 1024px (3 columns)</li>
+                    </ul>
+
+                    <h3>5.1.2 Input Validation Rules</h3>
+
+                    <h4>Amount Field Validation</h4>
+                    <pre><code class="language-typescript">interface ValidationRules {
+  required: true;
+  min: 0.01;
+  max: 999999999999999; // 15 digits
+  pattern: /^\d+(\.\d{1,2})?$/; // Optional 2 decimal places
+  errorMessages: {
+    required: "Amount is required";
+    min: "Amount must be greater than 0";
+    max: "Amount too large (max 15 digits)";
+    pattern: "Invalid amount format";
+  }
+}</code></pre>
+
+                    <h4>Real-time Validation</h4>
+                    <ul>
+                        <li>Validate on blur</li>
+                        <li>Show error message below input</li>
+                        <li>Disable calculate button if invalid</li>
+                        <li>Clear error on valid input</li>
+                    </ul>
+
+                    <h4>Edge Cases Handling</h4>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Input</th>
+                                <th>Expected</th>
+                                <th>Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>"0"</td>
+                                <td><span class="badge badge-danger">error</span></td>
+                                <td>Amount must be &gt; 0</td>
+                            </tr>
+                            <tr>
+                                <td>"-100"</td>
+                                <td><span class="badge badge-danger">error</span></td>
+                                <td>Negative not allowed</td>
+                            </tr>
+                            <tr>
+                                <td>"abc"</td>
+                                <td><span class="badge badge-danger">error</span></td>
+                                <td>Not a number</td>
+                            </tr>
+                            <tr>
+                                <td>"1.234"</td>
+                                <td><span class="badge badge-danger">error</span></td>
+                                <td>Max 2 decimals</td>
+                            </tr>
+                            <tr>
+                                <td>"1,000"</td>
+                                <td><span class="badge badge-success">valid</span></td>
+                                <td>Value: 1000</td>
+                            </tr>
+                            <tr>
+                                <td>"0.01"</td>
+                                <td><span class="badge badge-success">valid</span></td>
+                                <td>Minimum valid amount</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>5.1.3 User Interaction Flow</h3>
+
+                    <div class="alert alert-success">
+                        <strong>Happy Path:</strong>
+                        <ol>
+                            <li>User lands on Calculator page</li>
+                            <li>Amount field auto-focused</li>
+                            <li>User types amount: "50000"</li>
+                            <li>User selects currency: "INR" (default selected)</li>
+                            <li>User selects mode: "greedy" (default selected)</li>
+                            <li>User clicks "Calculate" button OR presses Enter</li>
+                            <li>Button shows loading state (spinner)</li>
+                            <li>API request sent</li>
+                            <li>Results appear with animation (&lt; 100ms)</li>
+                            <li>Summary cards + breakdown table displayed</li>
+                            <li>User can copy or export results</li>
+                            <li>User can modify inputs and recalculate</li>
+                        </ol>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <strong>Error Path:</strong>
+                        <ol>
+                            <li>User enters invalid amount: "abc"</li>
+                            <li>Error message appears: "Invalid amount format"</li>
+                            <li>Calculate button disabled</li>
+                            <li>User corrects input: "5000"</li>
+                            <li>Error clears, button enabled</li>
+                            <li>User clicks Calculate</li>
+                            <li>API returns error (e.g., server down)</li>
+                            <li>Error notification shown</li>
+                            <li>Results section remains hidden</li>
+                            <li>User can retry</li>
+                        </ol>
+                    </div>
+
+                    <h3>5.1.4 Accessibility Requirements</h3>
+
+                    <p><strong>MUST HAVE:</strong></p>
+                    <ul>
+                        <li>âœ“ ARIA labels on all form inputs</li>
+                        <li>âœ“ Keyboard navigation (Tab, Shift+Tab, Enter)</li>
+                        <li>âœ“ Focus indicators (visible outline)</li>
+                        <li>âœ“ Screen reader announcements for results</li>
+                        <li>âœ“ Error messages associated with inputs (aria-describedby)</li>
+                        <li>âœ“ Sufficient color contrast (WCAG AA minimum)</li>
+                        <li>âœ“ Focus trap in modals (if any)</li>
+                    </ul>
+
+                    <h4>Example Accessible Markup</h4>
+                    <pre><code class="language-html">&lt;input
+  type="text"
+  id="amount"
+  aria-label="Enter amount to calculate"
+  aria-required="true"
+  aria-invalid={hasError}
+  aria-describedby={hasError ? "amount-error" : undefined}
+/&gt;
+{hasError && (
+  &lt;div id="amount-error" role="alert"&gt;
+    {errorMessage}
+  &lt;/div&gt;
+)}</code></pre>
+                </section>
+
+                <section id="history-page">
+                    <h2>5.2 History Page</h2>
+
+                    <h3>5.2.1 Layout Specification</h3>
+                    <p><strong>Component:</strong> <code>packages/desktop-app/src/components/HistoryPage.tsx</code></p>
+
+                    <div class="alert alert-info">
+                        <strong>Layout:</strong>
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”  â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚  â”‚ Quick   â”‚  â”‚ Full History                 â”‚ â”‚
+â”‚  â”‚ Access  â”‚  â”‚                              â”‚ â”‚
+â”‚  â”‚(Sidebar)â”‚  â”‚ Filter Bar                   â”‚ â”‚
+â”‚  â”‚         â”‚  â”‚ Currency | Date Range        â”‚ â”‚
+â”‚  â”‚ Last 10 â”‚  â”‚                              â”‚ â”‚
+â”‚  â”‚ Calcs   â”‚  â”‚ History Table                â”‚ â”‚
+â”‚  â”‚         â”‚  â”‚ ID | Date | Amount | Cur...  â”‚ â”‚
+â”‚  â”‚ 1.50000 â”‚  â”‚ ... paginated rows ...       â”‚ â”‚
+â”‚  â”‚   INR   â”‚  â”‚                              â”‚ â”‚
+â”‚  â”‚   Today â”‚  â”‚                              â”‚ â”‚
+â”‚  â”‚         â”‚  â”‚ Pagination                   â”‚ â”‚
+â”‚  â”‚ 2. 1000 â”‚  â”‚ << < 1 2 3 > >>              â”‚ â”‚
+â”‚  â”‚   USD   â”‚  â”‚                              â”‚ â”‚
+â”‚  â”‚   Today â”‚  â”‚                              â”‚ â”‚
+â”‚  â”‚         â”‚  â”‚                              â”‚ â”‚
+â”‚  â”‚ ...     â”‚  â”‚                              â”‚ â”‚
+â”‚  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <h4>Required Features</h4>
+
+                    <div class="feature-card">
+                        <h5>1. Quick Access Sidebar</h5>
+                        <ul>
+                            <li>Show last 10 calculations</li>
+                            <li>Display: Amount, Currency, Date (relative)</li>
+                            <li>Click: Load full details in main area</li>
+                            <li>Scroll: Fixed position</li>
+                            <li>Update: Real-time when new calc made</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>2. Filter Bar</h5>
+                        <ul>
+                            <li>Currency filter (All, INR, USD, EUR, GBP)</li>
+                            <li>Date range picker</li>
+                            <li>Clear filters button</li>
+                            <li>Active filter count badge</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>3. History Table</h5>
+                        <ul>
+                            <li>Columns: ID, Date, Amount, Currency, Mode, Total Denoms, Actions</li>
+                            <li>Sortable: By Date (default desc), Amount</li>
+                            <li>Searchable: By amount</li>
+                            <li>Selectable: Checkbox for batch delete</li>
+                            <li>Actions: View, Delete</li>
+                        </ul>
+                    </div>
+
+                    <div class="feature-card">
+                        <h5>4. Pagination</h5>
+                        <ul>
+                            <li>Items per page: 50 (default), 100, 200</li>
+                            <li>Page controls: First, Previous, Numbers, Next, Last</li>
+                            <li>Total count displayed</li>
+                            <li>URL param sync (optional)</li>
+                        </ul>
+                    </div>
+
+                    <h3>5.2.2 Data Loading & Caching</h3>
+
+                    <p><strong>Strategy:</strong> React Query with caching</p>
+
+                    <pre><code class="language-typescript">const { data, isLoading, error, refetch } = useQuery({
+  queryKey: ['history', page, filters],
+  queryFn: () => api.getHistory(page, filters),
+  staleTime: 5 * 60 * 1000, // 5 minutes
+  cacheTime: 10 * 60 * 1000, // 10 minutes
+  keepPreviousData: true, // Smooth pagination
+});</code></pre>
+
+                    <h4>Loading States</h4>
+                    <ul>
+                        <li>Initial load: Full skeleton loader</li>
+                        <li>Pagination: Show previous data + loading spinner</li>
+                        <li>Refetch: Subtle loading indicator</li>
+                        <li>Empty state: "No calculations yet" message</li>
+                    </ul>
+
+                    <h4>Error States</h4>
+                    <ul>
+                        <li>Network error: Retry button</li>
+                        <li>Server error: Contact support message</li>
+                        <li>Empty results: "No matches" with clear filters button</li>
+                    </ul>
+                </section>
+
+                <section id="bulk-upload-page">
+                    <h2>5.3 Bulk Upload Page</h2>
+
+                    <h3>5.3.1 Complete UI Specification</h3>
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/components/BulkUploadPage.tsx</code> (695 lines)</p>
+
+                    <h4>Phase 1: Upload (Idle)</h4>
+                    <div class="alert alert-info">
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Bulk Upload & Processing                    â”‚
+â”‚                                              â”‚
+â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚ â”‚ [Download CSV Template]                  â”‚ â”‚
+â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                              â”‚
+â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚ â”‚   Drag & Drop Area                       â”‚ â”‚
+â”‚ â”‚                                          â”‚ â”‚
+â”‚ â”‚  📁 Drag & drop your file here          â”‚ â”‚
+â”‚ â”‚     or click to browse                   â”‚ â”‚
+â”‚ â”‚                                          â”‚ â”‚
+â”‚ â”‚  [Choose File]                           â”‚ â”‚
+â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                              â”‚
+â”‚ Supported: CSV, PDF, Word, Images            â”‚
+â”‚                                              â”‚
+â”‚ â˜‘ Save to history                           â”‚
+â”‚ [Upload & Process] (disabled)                â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <h4>Phase 2: File Selected</h4>
+                    <div class="alert alert-success">
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚ â”‚   Selected File:                         â”‚ â”‚
+â”‚ â”‚   ðŸ“„ test_bulk_upload.csv                â”‚ â”‚
+â”‚ â”‚  Format: CSV â€¢ Size: 1.25 KB             â”‚ â”‚
+â”‚ â”‚  [Remove File]                           â”‚ â”‚
+â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                              â”‚
+â”‚ â˜‘ Save to history                           â”‚
+â”‚ [Upload & Process] (enabled, blue)           â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <h4>Phase 3: Processing</h4>
+                    <div class="alert alert-warning">
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚ â”‚   Processing Data...                     â”‚ â”‚
+â”‚ â”‚                                          â”‚ â”‚
+â”‚ â”‚   ðŸ“„ test_bulk_upload.csv                â”‚ â”‚
+â”‚ â”‚  CSV â€¢ 1.25 KB                           â”‚ â”‚
+â”‚ â”‚                                          â”‚ â”‚
+â”‚ â”‚  [Spinner Animation]                     â”‚ â”‚
+â”‚ â”‚  Extracting and calculating...           â”‚ â”‚
+â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <h4>Phase 4: Results</h4>
+                    <div class="alert alert-success">
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚ â”‚ Processed File:                          â”‚ â”‚
+â”‚ â”‚  ðŸ“„ test_bulk_upload.csv                 â”‚ â”‚
+â”‚ â”‚ Format: CSV â€¢ Size: 1.25 KB              â”‚ â”‚
+â”‚ â”‚ Processed: Nov 25, 2025 10:30 AM         â”‚ â”‚
+â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â”‚                                              â”‚
+â”‚ â”Œâ”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â” â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”   â”‚
+â”‚ â”‚Total â”‚ â”‚Successâ”‚ â”‚Failedâ”‚ â”‚  Time    â”‚   â”‚
+â”‚ â”‚  10  â”‚ â”‚   9   â”‚ â”‚  1   â”‚ â”‚ 0.12s    â”‚   â”‚
+â”‚ â””â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”˜ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜   â”‚
+â”‚                                              â”‚
+â”‚ [Upload Another] [Export CSV] [Export JSON]  â”‚
+â”‚                                              â”‚
+â”‚ â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â” â”‚
+â”‚ â”‚ Results Table                            â”‚ â”‚
+â”‚ â”‚ Row | Status | Amount | Currency | ...   â”‚ â”‚
+â”‚ â”‚  1  â”‚   âœ“    â”‚ 1000   â”‚   INR    â”‚       â”‚ â”‚
+â”‚ â”‚  2  â”‚   âœ“    â”‚ 2500   â”‚   USD    â”‚       â”‚ â”‚
+â”‚ â”‚  3  â”‚   âœ—    â”‚        â”‚          â”‚ Err   â”‚ â”‚
+â”‚ â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜ â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+                </section>
+
+                <section id="settings-page">
+                    <h2>5.4 Settings Page</h2>
+
+                    <h3>5.4.1 Layout Sections</h3>
+
+                    <div class="feature-card">
+                        <h4>1. Appearance</h4>
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Appearance                        â”‚
+â”‚                                   â”‚
+â”‚ Theme                             â”‚
+â”‚  â—‰ Light  â—‹ Dark  â—‹ System        â”‚
+â”‚                                   â”‚
+â”‚ [Save Settings]                   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>2. Language & Region</h4>
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Language & Region                 â”‚
+â”‚                                   â”‚
+â”‚ Language                          â”‚
+â”‚ [English â–¼]                       â”‚
+â”‚   - English                       â”‚
+â”‚   - à¤¹à¤¿à¤‚à¤¦à¥€ (Hindi)                â”‚
+â”‚   - EspaÃ±ol (Spanish)             â”‚
+â”‚   - FranÃ§ais (French)             â”‚
+â”‚   - Deutsch (German)              â”‚
+â”‚                                   â”‚
+â”‚ [Save Settings]                   â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>3. Default Preferences</h4>
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Default Preferences               â”‚
+â”‚                                   â”‚
+â”‚ Default Currency                  â”‚
+â”‚ [INR â–¼]                           â”‚
+â”‚                                   â”‚
+â”‚ Default Optimization Mode         â”‚
+â”‚ [Greedy â–¼]                        â”‚
+â”‚                                   â”‚
+â”‚ â˜‘ Auto-save to history            â”‚
+â”‚                                   â”‚
+â”‚ [Save Settings] [Reset]           â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <div class="feature-card">
+                        <h4>4. Data Management</h4>
+                        <pre><code>â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+â”‚ Data Management                   â”‚
+â”‚                                   â”‚
+â”‚ History                           â”‚
+â”‚ Total calculations: 1,234         â”‚
+â”‚ Database size: 5.2 MB             â”‚
+â”‚                                   â”‚
+â”‚ [Export All History]              â”‚
+â”‚ [Clear All History] (red)         â”‚
+â”‚                                   â”‚
+â”‚ [Reset All Settings]              â”‚
+â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜</code></pre>
+                    </div>
+
+                    <h3>5.4.2 Confirmation Dialogs</h3>
+
+                    <div class="alert alert-danger">
+                        <strong>Clear All History?</strong>
+                        <p>This will permanently delete all 1,234 calculations from your history. This action cannot be undone.</p>
+                        <p><code>[Cancel]  [Delete All History]</code></p>
+                    </div>
+
+                    <div class="alert alert-warning">
+                        <strong>Reset All Settings?</strong>
+                        <p>This will restore all settings to their default values:</p>
+                        <ul>
+                            <li>Theme: Light</li>
+                            <li>Language: English</li>
+                            <li>Currency: INR</li>
+                            <li>Mode: Greedy</li>
+                            <li>Auto-save: Enabled</li>
+                        </ul>
+                        <p>Your calculation history will NOT be affected.</p>
+                        <p><code>[Cancel]  [Reset Settings]</code></p>
+                    </div>
+                </section>
+
+                <section id="responsive-design">
+                    <h2>5.7 Responsive Design Rules</h2>
+
+                    <h3>5.7.1 Breakpoint System</h3>
+                    <pre><code class="language-typescript">const breakpoints = {
+  sm: '640px',   // Mobile landscape, small tablets
+  md: '768px',   // Tablets
+  lg: '1024px',  // Laptops
+  xl: '1280px',  // Desktops
+  '2xl': '1536px' // Large desktops
+};</code></pre>
+
+                    <h3>5.7.2 Mobile Behavior (&lt; 640px)</h3>
+
+                    <p><strong>MUST:</strong></p>
+                    <ul>
+                        <li>Single column layout</li>
+                        <li>Full-width buttons</li>
+                        <li>Stacked form fields</li>
+                        <li>Collapsible navigation (hamburger menu)</li>
+                        <li>Touch-friendly tap targets (min 44px)</li>
+                        <li>Simplified tables (responsive cards)</li>
+                    </ul>
+
+                    <h4>Example Responsive Classes</h4>
+                    <pre><code class="language-html">&lt;!-- Desktop: 3 columns, Mobile: 1 column --&gt;
+&lt;div className="grid grid-cols-1 md:grid-cols-3 gap-4"&gt;
+
+&lt;!-- Desktop: Row, Mobile: Column --&gt;
+&lt;div className="flex flex-col md:flex-row gap-4"&gt;
+
+&lt;!-- Hide on mobile --&gt;
+&lt;div className="hidden md:block"&gt;
+
+&lt;!-- Show only on mobile --&gt;
+&lt;div className="block md:hidden"&gt;</code></pre>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>âœ“ Section Complete</strong>
+                    <p>This section covers all UI/UX requirements for Calculator, History, Bulk Upload, and Settings pages including layouts, validation, accessibility, and responsive design.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/page-navigation.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

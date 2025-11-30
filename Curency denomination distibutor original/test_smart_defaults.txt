@@ -1,0 +1,45 @@
+Test Smart Defaults - Various Input Formats
+===========================================
+
+Format 1: CSV with all fields
+125.50, USD, greedy
+500.75, EUR, balanced
+
+Format 2: CSV with just amount and currency (mode defaults to greedy)
+1000, INR
+2500.50, GBP
+
+Format 3: Just amounts (currency defaults to INR, mode defaults to greedy)
+5000
+10000.50
+750
+
+Format 4: Tabular format
+1500    USD    greedy
+2000    EUR    balanced
+3500    GBP
+
+Format 5: Mixed - amount and currency only
+999 INR
+12345 USD
+5678.90 EUR
+
+Format 6: Natural language
+Amount: 4000 Currency: INR Mode: greedy
+Total is 8500 in USD with balanced optimization
+
+Format 7: With currency symbols
+₹15000 greedy
+$250.50 balanced
+€500 minimize_large
+
+Format 8: Comma-separated amounts only
+1111, 2222, 3333
+
+Format 9: With words instead of codes
+1000 rupees greedy
+500 dollars balanced
+250 euros
+
+Format 10: Single line with multiple values
+5000 INR greedy

@@ -1,0 +1,375 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Codebase - Currency Denomination Documentation</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <!-- Highlight.js for syntax highlighting -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <style>
+        .codebase-container {
+            display: flex;
+            height: calc(100vh - 140px); /* Adjust based on header/padding */
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .file-tree {
+            width: 300px;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            overflow-y: auto;
+            padding: 10px;
+            flex-shrink: 0;
+        }
+
+        .code-viewer {
+            flex: 1;
+            background: #1e293b; /* Dark background for code */
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #334155;
+        }
+
+        .code-header {
+            background: #0f172a;
+            padding: 10px 20px;
+            color: #e2e8f0;
+            border-bottom: 1px solid #334155;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .code-content {
+            flex: 1;
+            overflow: auto;
+            padding: 0;
+            margin: 0;
+        }
+
+        .code-content pre {
+            margin: 0;
+            padding: 20px;
+            background: transparent;
+            box-shadow: none;
+            border: none;
+        }
+
+        .code-content code {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Tree Styles */
+        .tree-item {
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 0.9rem;
+            color: #475569;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tree-item:hover {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .tree-item.active {
+            background: #bfdbfe;
+            color: #1e40af;
+            font-weight: 500;
+        }
+
+        .tree-folder {
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .tree-children {
+            padding-left: 20px;
+            display: none;
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .tree-children.open {
+            display: block;
+        }
+
+        .folder-icon::before { content: '📁'; }
+        .folder-icon.open::before { content: 'ðŸ“‚'; }
+        .file-icon::before { content: 'ðŸ“„'; }
+        
+        /* File type icons (simple text-based for now) */
+        .file-icon[data-ext=".js"]::before { content: 'ðŸ“œ'; }
+        .file-icon[data-ext=".py"]::before { content: 'ðŸ'; }
+        .file-icon[data-ext=".html"]::before { content: '🌐'; }
+        .file-icon[data-ext=".css"]::before { content: '🎨'; }
+        .file-icon[data-ext=".json"]::before { content: 'âš™ï¸'; }
+        .file-icon[data-ext=".md"]::before { content: '📝'; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .codebase-container {
+                flex-direction: column;
+                height: auto;
+            }
+            .file-tree {
+                width: 100%;
+                max-height: 300px;
+            }
+            .code-viewer {
+                height: 500px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html" class="active">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Complete Codebase</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container" style="max-width: 100%; padding-bottom: 0;">
+                <h1>Complete Project Codebase</h1>
+                <p>Browse the entire source code of the Currency Denomination Distributor project. Select a file from the tree to view its content.</p>
+
+                <div class="codebase-container">
+                    <!-- File Tree -->
+                    <div class="file-tree" id="fileTree">
+                        <div style="text-align: center; padding: 20px; color: #64748b;">Loading codebase...</div>
+                    </div>
+
+                    <!-- Code Viewer -->
+                    <div class="code-viewer">
+                        <div class="code-header">
+                            <span id="fileName">Select a file</span>
+                            <span id="fileSize" style="color: #64748b; font-size: 0.8em;"></span>
+                        </div>
+                        <div class="code-content">
+                            <pre><code id="codeBlock" class="language-plaintext">No file selected.</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </main>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchFileTree();
+        });
+
+        async function fetchFileTree() {
+            try {
+                const response = await fetch('../api/codebase/structure');
+                const tree = await response.json();
+                const treeContainer = document.getElementById('fileTree');
+                treeContainer.innerHTML = '';
+                renderTree(tree, treeContainer);
+            } catch (error) {
+                console.error('Error fetching file tree:', error);
+                document.getElementById('fileTree').innerHTML = '<div style="color: red; padding: 10px;">Error loading file tree.</div>';
+            }
+        }
+
+        function renderTree(nodes, container) {
+            const ul = document.createElement('div');
+            ul.style.paddingLeft = container === document.getElementById('fileTree') ? '0' : '10px';
+
+            nodes.forEach(node => {
+                const item = document.createElement('div');
+                
+                if (node.type === 'directory') {
+                    const folder = document.createElement('div');
+                    folder.className = 'tree-item tree-folder folder-icon';
+                    folder.textContent = node.name;
+                    folder.onclick = (e) => {
+                        e.stopPropagation();
+                        const children = folder.nextElementSibling;
+                        children.classList.toggle('open');
+                        folder.classList.toggle('open');
+                    };
+                    
+                    const childrenContainer = document.createElement('div');
+                    childrenContainer.className = 'tree-children';
+                    renderTree(node.children, childrenContainer);
+                    
+                    item.appendChild(folder);
+                    item.appendChild(childrenContainer);
+                } else {
+                    const file = document.createElement('div');
+                    file.className = 'tree-item file-icon';
+                    const ext = node.name.substring(node.name.lastIndexOf('.'));
+                    file.setAttribute('data-ext', ext);
+                    file.textContent = node.name;
+                    file.onclick = (e) => {
+                        e.stopPropagation();
+                        document.querySelectorAll('.tree-item').forEach(el => el.classList.remove('active'));
+                        file.classList.add('active');
+                        loadFileContent(node.path, node.name, node.size);
+                    };
+                    item.appendChild(file);
+                }
+                
+                ul.appendChild(item);
+            });
+
+            container.appendChild(ul);
+        }
+
+        async function loadFileContent(path, name, size) {
+            const codeBlock = document.getElementById('codeBlock');
+            const fileNameEl = document.getElementById('fileName');
+            const fileSizeEl = document.getElementById('fileSize');
+
+            fileNameEl.textContent = name;
+            fileSizeEl.textContent = formatSize(size);
+            codeBlock.textContent = 'Loading...';
+
+            try {
+                const response = await fetch(`/api/codebase/content?path=${encodeURIComponent(path)}`);
+                const data = await response.json();
+                
+                if (data.error) {
+                    codeBlock.textContent = `Error: ${data.error}`;
+                } else {
+                    codeBlock.textContent = data.content;
+                    codeBlock.className = `language-${getLanguage(name)}`;
+                    hljs.highlightElement(codeBlock);
+                }
+            } catch (error) {
+                console.error('Error loading file:', error);
+                codeBlock.textContent = 'Error loading file content.';
+            }
+        }
+
+        function formatSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function getLanguage(filename) {
+            const ext = filename.split('.').pop().toLowerCase();
+            const map = {
+                'js': 'javascript',
+                'py': 'python',
+                'html': 'xml',
+                'css': 'css',
+                'json': 'json',
+                'md': 'markdown',
+                'ps1': 'powershell',
+                'bat': 'dos',
+                'sh': 'bash',
+                'yml': 'yaml',
+                'yaml': 'yaml'
+            };
+            return map[ext] || 'plaintext';
+        }
+    </script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

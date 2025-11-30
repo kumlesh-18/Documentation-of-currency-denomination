@@ -1,0 +1,34 @@
+[[redirects]]
+  from = "/css/*"
+  to = "/public/css/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/js/*"
+  to = "/public/js/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/pages/*"
+  to = "/public/pages/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/assets/*"
+  to = "/public/assets/:splat"
+  status = 200
+
+[[redirects]]
+  from = "/login.html"
+  to = "/public/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/"
+  to = "/public/index.html"
+  status = 200
+
+[build]
+  command = "npm install"
+  publish = "public"
+  functions = "server"

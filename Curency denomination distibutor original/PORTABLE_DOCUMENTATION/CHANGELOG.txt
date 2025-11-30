@@ -1,0 +1,40 @@
+================================================================================
+  CHANGELOG - Currency Documentation Portable
+================================================================================
+
+Version 1.0.0 (November 2025)
+------------------------------
+[+] Initial portable release
+[+] Complete documentation website (22 pages)
+[+] Embedded Node.js v20.x runtime
+[+] Password protection system
+[+] Offline-capable architecture
+[+] Auto-launch scripts (START.bat, START_AND_OPEN.bat)
+[+] Responsive design for all screen sizes
+[+] Complete navigation system
+[+] Professional styling and layout
+
+Features:
+- 22 comprehensive documentation pages
+- 8071 lines of original documentation preserved
+- Password: currency2025 (customizable)
+- Port: 3000 (configurable)
+- Session timeout: 24 hours
+- Zero external dependencies
+- No installation required
+
+Technical Stack:
+- Node.js v20.x (embedded)
+- Express 4.18.2
+- bcryptjs 2.4.3
+- express-session 1.17.3
+- helmet 7.1.0
+- express-rate-limit 7.1.5
+
+Package Size:
+- Total: ~150 MB (including Node.js runtime)
+- App files: ~5 MB
+- Node.js runtime: ~60 MB
+- Dependencies: ~15 MB
+
+================================================================================

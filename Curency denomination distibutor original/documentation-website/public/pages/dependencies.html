@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dependencies & Installation - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html" class="active">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Dependencies & Installation</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>14. Dependencies & Installation</h1>
+
+                <section id="dependency-list">
+                    <h2>14.1 Complete Dependency List</h2>
+
+                    <h3>Frontend (Desktop App)</h3>
+                    <p><strong>File:</strong> <code>packages/desktop-app/package.json</code></p>
+
+                    <pre><code class="language-json">{
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "axios": "^1.6.2",
+    "lucide-react": "^0.294.0",
+    "@tanstack/react-query": "^5.12.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@types/node": "^20.10.4",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "electron": "^27.1.3",
+    "electron-builder": "^24.9.1",
+    "tailwindcss": "^3.3.6",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.32",
+    "eslint": "^8.55.0"
+  }
+}</code></pre>
+
+                    <h4>Installation</h4>
+                    <pre><code class="language-powershell">cd packages/desktop-app
+npm install</code></pre>
+
+                    <h3>Backend (FastAPI)</h3>
+                    <p><strong>File:</strong> <code>packages/local-backend/requirements.txt</code></p>
+
+                    <pre><code class="language-text"># Core Framework
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+pydantic==2.5.2
+
+# Database
+sqlalchemy==2.0.23
+alembic==1.13.0
+
+# OCR Dependencies
+pytesseract==0.3.10
+Pillow==10.1.0
+PyMuPDF==1.23.8
+pdf2image==1.16.3
+python-docx==1.1.0
+
+# Utilities
+python-multipart==0.0.6</code></pre>
+
+                    <h4>Installation</h4>
+                    <pre><code class="language-powershell">cd packages/local-backend
+pip install -r requirements.txt</code></pre>
+
+                    <h3>Core Engine</h3>
+                    <p><strong>File:</strong> <code>packages/core-engine/requirements.txt</code></p>
+
+                    <div class="alert alert-info">
+                        <strong>No external dependencies</strong>
+                        <p>Core engine uses only Python standard library for maximum portability and minimal dependencies.</p>
+                    </div>
+                </section>
+
+                <section id="system-dependencies">
+                    <h2>14.2 System Dependencies</h2>
+
+                    <h3>Tesseract OCR</h3>
+                    <div class="feature-card">
+                        <table class="data-table">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Version</strong></td>
+                                    <td>5.3.3+</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Platform</strong></td>
+                                    <td>Windows 10/11</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Download</strong></td>
+                                    <td><a href="https://digi.bib.uni-mannheim.de/tesseract/" target="_blank">https://digi.bib.uni-mannheim.de/tesseract/</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Auto-Installer</strong></td>
+                                    <td><code>packages/local-backend/install_ocr_dependencies.ps1</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Auto Installation (Recommended)</h4>
+                    <pre><code class="language-powershell"># Run as Administrator
+.\install_ocr_dependencies.ps1</code></pre>
+
+                    <h4>Manual Installation</h4>
+                    <ol>
+                        <li>Download Tesseract installer from the link above</li>
+                        <li>Run the installer (select all language packs)</li>
+                        <li>Add to PATH: <code>C:\Program Files\Tesseract-OCR</code></li>
+                        <li>Verify installation: <code>tesseract --version</code></li>
+                    </ol>
+
+                    <h3>Poppler (PDF to Image Conversion)</h3>
+                    <div class="feature-card">
+                        <table class="data-table">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Version</strong></td>
+                                    <td>24.08.0+</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Platform</strong></td>
+                                    <td>Windows 10/11</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Download</strong></td>
+                                    <td><a href="https://github.com/oschwartz10612/poppler-windows" target="_blank">https://github.com/oschwartz10612/poppler-windows</a></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Auto-Installer</strong></td>
+                                    <td>Included in <code>install_ocr_dependencies.ps1</code></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Manual Installation</h4>
+                    <ol>
+                        <li>Download Poppler release ZIP from GitHub</li>
+                        <li>Extract to <code>C:\Program Files\poppler</code></li>
+                        <li>Add bin to PATH: <code>C:\Program Files\poppler\Library\bin</code></li>
+                        <li>Verify installation: <code>pdftoppm -v</code></li>
+                    </ol>
+                </section>
+
+                <section id="auto-installer">
+                    <h2>14.3 Auto-Installation Script</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/install_ocr_dependencies.ps1</code></p>
+
+                    <div class="alert alert-warning">
+                        <strong>⚠️ Administrator Rights Required</strong>
+                        <p>This script must be run as Administrator to install system dependencies and modify PATH.</p>
+                    </div>
+
+                    <pre><code class="language-powershell"># Complete Auto-Installer for OCR Dependencies
+# Run as Administrator
+
+Write-Host "=== OCR Dependencies Auto-Installer ===" -ForegroundColor Cyan
+Write-Host ""
+
+# 1. Install Tesseract
+Write-Host "[1/2] Installing Tesseract OCR 5.3.3..." -ForegroundColor Yellow
+
+$tesseractUrl = "https://digi.bib.uni-mannheim.de/tesseract/tesseract-ocr-w64-setup-5.3.3.20231005.exe"
+$tesseractInstaller = "$env:TEMP\tesseract-setup.exe"
+
+Invoke-WebRequest -Uri $tesseractUrl -OutFile $tesseractInstaller
+
+Start-Process -FilePath $tesseractInstaller -ArgumentList "/S", "/D=C:\Program Files\Tesseract-OCR" -Wait
+
+# Add to PATH
+$tesseractPath = "C:\Program Files\Tesseract-OCR"
+$currentPath = [Environment]::GetEnvironmentVariable("Path", [EnvironmentVariableTarget]::Machine)
+if ($currentPath -notlike "*$tesseractPath*") {
+    [Environment]::SetEnvironmentVariable("Path", "$currentPath;$tesseractPath", [EnvironmentVariableTarget]::Machine)
+}
+
+Write-Host "  ✓ Tesseract installed successfully!" -ForegroundColor Green
+
+# 2. Install Poppler
+Write-Host "[2/2] Installing Poppler 24.08.0..." -ForegroundColor Yellow
+
+$popplerUrl = "https://github.com/oschwartz10612/poppler-windows/releases/download/v24.08.0-0/Release-24.08.0-0.zip"
+$popplerZip = "$env:TEMP\poppler.zip"
+$popplerPath = "C:\Program Files\poppler"
+
+Invoke-WebRequest -Uri $popplerUrl -OutFile $popplerZip
+Expand-Archive -Path $popplerZip -DestinationPath $popplerPath -Force
+
+# Add bin to PATH
+$popplerBin = "$popplerPath\poppler-24.08.0\Library\bin"
+if ($currentPath -notlike "*$popplerBin*") {
+    [Environment]::SetEnvironmentVariable("Path", "$currentPath;$popplerBin", [EnvironmentVariableTarget]::Machine)
+}
+
+Write-Host "  ✓ Poppler installed successfully!" -ForegroundColor Green
+
+# Verify installations
+Write-Host ""
+Write-Host "=== Verification ===" -ForegroundColor Cyan
+Write-Host "Tesseract version:" -ForegroundColor Yellow
+& tesseract --version
+
+Write-Host ""
+Write-Host "Poppler version:" -ForegroundColor Yellow
+& pdftoppm -v
+
+Write-Host ""
+Write-Host "=== Installation Complete! ===" -ForegroundColor Green
+Write-Host "Please restart your terminal for PATH changes to take effect." -ForegroundColor Yellow</code></pre>
+                </section>
+
+                <section id="setup-guide">
+                    <h2>14.4 Complete Setup Guide</h2>
+
+                    <h3>Step 1: Clone Repository</h3>
+                    <pre><code class="language-powershell">git clone &lt;repository-url&gt;
+cd currency-denomination-calculator</code></pre>
+
+                    <h3>Step 2: Install Frontend Dependencies</h3>
+                    <pre><code class="language-powershell">cd packages/desktop-app
+npm install</code></pre>
+
+                    <h3>Step 3: Install Backend Dependencies</h3>
+                    <pre><code class="language-powershell">cd ../local-backend
+pip install -r requirements.txt</code></pre>
+
+                    <h3>Step 4: Install OCR Dependencies (Auto)</h3>
+                    <pre><code class="language-powershell"># Run as Administrator
+.\install_ocr_dependencies.ps1</code></pre>
+
+                    <h3>Step 5: Initialize Database</h3>
+                    <div class="alert alert-info">
+                        <p>Database is automatically initialized on first run. No manual setup required.</p>
+                    </div>
+
+                    <h3>Step 6: Run Application</h3>
+                    
+                    <h4>Terminal 1 (Backend)</h4>
+                    <pre><code class="language-powershell">cd packages/local-backend
+python -m uvicorn app.main:app --reload --port 8000</code></pre>
+
+                    <h4>Terminal 2 (Frontend)</h4>
+                    <pre><code class="language-powershell">cd packages/desktop-app
+npm run dev</code></pre>
+
+                    <h3>Expected Output</h3>
+                    <div class="feature-card">
+                        <h4>Backend Console</h4>
+                        <pre><code class="language-text">INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [12345]
+INFO:     Started server process [67890]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.</code></pre>
+
+                        <h4>Frontend Console</h4>
+                        <pre><code class="language-text">VITE v5.0.8  ready in 234 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help</code></pre>
+                    </div>
+                </section>
+
+                <section id="verification">
+                    <h2>14.5 Installation Verification</h2>
+
+                    <h3>Verify Python Dependencies</h3>
+                    <pre><code class="language-powershell"># Check FastAPI
+python -c "import fastapi; print(f'FastAPI {fastapi.__version__}')"
+
+# Check SQLAlchemy
+python -c "import sqlalchemy; print(f'SQLAlchemy {sqlalchemy.__version__}')"
+
+# Check Tesseract binding
+python -c "import pytesseract; print('pytesseract OK')"
+
+# Check PDF processing
+python -c "import fitz; print(f'PyMuPDF {fitz.__version__}')"</code></pre>
+
+                    <h3>Verify System Dependencies</h3>
+                    <pre><code class="language-powershell"># Tesseract
+tesseract --version
+
+# Poppler
+pdftoppm -v
+
+# Python version
+python --version
+
+# Node.js version
+node --version</code></pre>
+
+                    <h3>Expected Versions</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Tool</th>
+                                <th>Minimum Version</th>
+                                <th>Recommended</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Python</td>
+                                <td>3.8</td>
+                                <td>3.11+</td>
+                            </tr>
+                            <tr>
+                                <td>Node.js</td>
+                                <td>16</td>
+                                <td>18+</td>
+                            </tr>
+                            <tr>
+                                <td>Tesseract</td>
+                                <td>5.0</td>
+                                <td>5.3.3+</td>
+                            </tr>
+                            <tr>
+                                <td>Poppler</td>
+                                <td>23.0</td>
+                                <td>24.08.0+</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="troubleshooting">
+                    <h2>14.6 Installation Troubleshooting</h2>
+
+                    <h3>Issue: pip install fails</h3>
+                    <div class="feature-card">
+                        <h4>Symptoms</h4>
+                        <p>Error messages during <code>pip install -r requirements.txt</code></p>
+
+                        <h4>Solutions</h4>
+                        <ol>
+                            <li><strong>Upgrade pip:</strong> <code>python -m pip install --upgrade pip</code></li>
+                            <li><strong>Use virtual environment:</strong>
+                                <pre><code class="language-powershell">python -m venv venv
+.\venv\Scripts\Activate.ps1
+pip install -r requirements.txt</code></pre>
+                            </li>
+                            <li><strong>Install Visual C++ Build Tools</strong> (for binary packages)</li>
+                        </ol>
+                    </div>
+
+                    <h3>Issue: npm install fails</h3>
+                    <div class="feature-card">
+                        <h4>Solutions</h4>
+                        <ol>
+                            <li><strong>Clear cache:</strong> <code>npm cache clean --force</code></li>
+                            <li><strong>Delete node_modules:</strong> <code>Remove-Item node_modules -Recurse -Force</code></li>
+                            <li><strong>Retry installation:</strong> <code>npm install</code></li>
+                            <li><strong>Use different registry:</strong> <code>npm install --registry https://registry.npmjs.org/</code></li>
+                        </ol>
+                    </div>
+
+                    <h3>Issue: Tesseract not found</h3>
+                    <div class="feature-card">
+                        <h4>Solutions</h4>
+                        <ol>
+                            <li><strong>Verify PATH:</strong> <code>$env:PATH -split ';' | Select-String Tesseract</code></li>
+                            <li><strong>Set explicitly in code:</strong>
+                                <pre><code class="language-python"># In ocr_processor.py
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'</code></pre>
+                            </li>
+                            <li><strong>Restart terminal</strong> after installation</li>
+                        </ol>
+                    </div>
+
+                    <h3>Issue: Port already in use</h3>
+                    <div class="feature-card">
+                        <h4>Solutions</h4>
+                        <ol>
+                            <li><strong>Check what's using port 8000:</strong>
+                                <pre><code class="language-powershell">netstat -ano | Select-String ":8000"</code></pre>
+                            </li>
+                            <li><strong>Kill process:</strong>
+                                <pre><code class="language-powershell">Stop-Process -Id &lt;PID&gt; -Force</code></pre>
+                            </li>
+                            <li><strong>Use different port:</strong>
+                                <pre><code class="language-powershell">uvicorn app.main:app --port 8001</code></pre>
+                            </li>
+                        </ol>
+                    </div>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section covers complete dependency lists (Frontend: React/Electron, Backend: FastAPI/SQLAlchemy, OCR: Tesseract/Poppler), auto-installation scripts, step-by-step setup guide, verification commands, and troubleshooting for common installation issues.</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

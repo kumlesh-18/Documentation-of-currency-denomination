@@ -1,0 +1,23 @@
+{
+  "rates": {
+    "USD_INR": {
+      "rate": "83.12",
+      "timestamp": "2025-11-22T10:00:00",
+      "from": "USD",
+      "to": "INR"
+    },
+    "USD_EUR": {
+      "rate": "0.92",
+      "timestamp": "2025-11-22T10:00:00",
+      "from": "USD",
+      "to": "EUR"
+    },
+    "USD_GBP": {
+      "rate": "0.79",
+      "timestamp": "2025-11-22T10:00:00",
+      "from": "USD",
+      "to": "GBP"
+    }
+  },
+  "last_updated": "2025-11-22T10:00:00"
+}

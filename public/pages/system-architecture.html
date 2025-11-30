@@ -1,0 +1,275 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture - Currency Denomination Calculator Documentation</title>
+        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>📺 Documentation</h2>
+                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+            </div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Overview</div>
+                    <ul class="nav-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="./executive-summary.html">Executive Summary</a></li>
+                        <li><a href="./project-overview.html">Project Overview</a></li>
+                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Architecture</div>
+                    <ul class="nav-links">
+                        <li><a href="./system-architecture.html" class="active">System Architecture</a></li>
+                        <li><a href="./core-features.html">Core Features</a></li>
+                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Implementation</div>
+                    <ul class="nav-links">
+                        <li><a href="./backend-logic.html">Backend Logic</a></li>
+                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
+                        <li><a href="./ocr-system.html">OCR System</a></li>
+                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Technical Details</div>
+                    <ul class="nav-links">
+                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
+                        <li><a href="./data-models.html">Data Models & Database</a></li>
+                        <li><a href="./api-specifications.html">API Specifications</a></li>
+                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Operations</div>
+                    <ul class="nav-links">
+                        <li><a href="./error-handling.html">Error Handling</a></li>
+                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
+                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
+                        <li><a href="./testing.html">Testing & QA</a></li>
+                        <li><a href="./deployment.html">Deployment</a></li>
+                        <li><a href="./performance.html">Performance Requirements</a></li>
+                    </ul>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Resources</div>
+                    <ul class="nav-links">
+                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
+                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
+                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
+                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="../index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>System Architecture</span>
+                </div>
+                <div class="header-actions">
+                    <a href="../index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>3. System Architecture</h1>
+
+                <h2>3.1 Architecture Patterns</h2>
+
+                <h3>3.1.1 Layered Architecture</h3>
+                <p>The system follows a strict <strong>4-layer architecture</strong>:</p>
+
+                <h4>Layer 1: Presentation Layer</h4>
+                <ul>
+                    <li>Electron Desktop Application (React + TypeScript + Tailwind CSS)</li>
+                    <li><strong>Responsibilities</strong>:
+                        <ul>
+                            <li>User interface rendering</li>
+                            <li>User input validation</li>
+                            <li>State management (React Context)</li>
+                            <li>API communication</li>
+                            <li>Local storage management</li>
+                            <li>Dark mode theming</li>
+                            <li>Multi-language display</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Layer 2: Application/API Layer</h4>
+                <ul>
+                    <li>FastAPI Backend Service</li>
+                    <li><strong>Responsibilities</strong>:
+                        <ul>
+                            <li>RESTful API endpoints</li>
+                            <li>Request validation (Pydantic)</li>
+                            <li>Business logic orchestration</li>
+                            <li>Authentication & authorization (future)</li>
+                            <li>Rate limiting (future)</li>
+                            <li>Logging & monitoring</li>
+                            <li>File upload handling</li>
+                            <li>OCR processing coordination</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Layer 3: Domain/Core Services Layer</h4>
+                <ul>
+                    <li>Pure Python Core Engine</li>
+                    <li><strong>Responsibilities</strong>:
+                        <ul>
+                            <li>Denomination calculation algorithms</li>
+                            <li>Currency conversion logic</li>
+                            <li>Optimization strategies</li>
+                            <li>FX rate management</li>
+                            <li>Data models & validation</li>
+                            <li>Alternative generation</li>
+                            <li>Mathematical operations</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h4>Layer 4: Infrastructure Layer</h4>
+                <ul>
+                    <li>SQLite Database, File System, External Dependencies (Tesseract, Poppler)</li>
+                    <li><strong>Responsibilities</strong>:
+                        <ul>
+                            <li>Data persistence</li>
+                            <li>File storage</li>
+                            <li>OCR services</li>
+                            <li>PDF processing</li>
+                            <li>Configuration management</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>3.1.2 Repository Pattern</h3>
+                <p><strong>Purpose</strong>: Separate data access logic from business logic</p>
+                <p><strong>Benefits</strong>:</p>
+                <ul>
+                    <li>Database implementation can be swapped (SQLite â†’ PostgreSQL)</li>
+                    <li>Easy to mock for testing</li>
+                    <li>Clear separation of concerns</li>
+                </ul>
+
+                <h3>3.1.3 Service Pattern</h3>
+                <p><strong>Purpose</strong>: Encapsulate business logic in reusable services</p>
+                <p><strong>Example</strong>: OCR Processor Service handles all text extraction logic independently</p>
+
+                <h3>3.1.4 Strategy Pattern</h3>
+                <p><strong>Purpose</strong>: Implement different optimization algorithms</p>
+                <p>The system supports multiple calculation strategies (greedy, balanced, minimize large/small) using the Strategy pattern, allowing runtime algorithm selection.</p>
+
+                <h2>3.2 Data Flow Diagrams</h2>
+
+                <h3>3.2.1 Single Calculation Flow</h3>
+                <div class="code-block">
+                    <pre>User Input â†’ Electron UI â†’ API Call â†’ FastAPI Endpoint â†’ Core Engine
+                  â†“
+       Save to Database (if enabled)
+                  â†“
+       Return Response â†’ Display Results + Update History</pre>
+                </div>
+
+                <h3>3.2.2 Bulk Upload Flow</h3>
+                <div class="code-block">
+                    <pre>File Selection â†’ Validation â†’ FormData â†’ HTTP POST /bulk-upload
+                  â†“
+       File Type Detection â†’ Route to Processor
+                  â†“
+       CSV/PDF/Word/Image Processor â†’ Extract Rows
+                  â†“
+       Apply Smart Defaults â†’ For Each Row: Calculate
+                  â†“
+       Collect Results â†’ Return Summary + Details</pre>
+                </div>
+
+                <h3>3.2.3 OCR Processing Flow</h3>
+                <div class="code-block">
+                    <pre>Image/PDF Upload â†’ OCRProcessor â†’ File Extension Check
+                  â†“
+       Image (.jpg/.png) â†’ Tesseract OCR
+       PDF (.pdf) â†’ PyMuPDF (text) OR pdf2image + Tesseract (scanned)
+       Word (.docx) â†’ python-docx
+                  â†“
+       Extract Text â†’ Parse to Rows â†’ Smart Extraction
+                  â†“
+       Return Structured Data â†’ Continue to Calculation</pre>
+                </div>
+
+                <h2>3.3 Component Interaction Diagram</h2>
+
+                <div class="code-block">
+                    <pre>
+FRONTEND (Electron + React)
+  â”œâ”€â”€ Calculator Page
+  â”œâ”€â”€ History Page
+  â”œâ”€â”€ Bulk Upload Page
+  â””â”€â”€ Settings Page
+      â†“ HTTP/REST
+BACKEND (FastAPI)
+  â”œâ”€â”€ Calculations API
+  â”œâ”€â”€ History API
+  â”œâ”€â”€ Settings API
+  â””â”€â”€ OCR Processor Service
+      â”œâ”€â”€ Tesseract (Images)
+      â”œâ”€â”€ PyMuPDF (PDFs)
+      â””â”€â”€ python-docx (Word)
+      â†“
+INFRASTRUCTURE
+  â”œâ”€â”€ Core Engine (Python)
+  â”‚   â””â”€â”€ Denomination Calculations
+  â””â”€â”€ SQLite Database
+      â”œâ”€â”€ Calculations History
+      â””â”€â”€ Settings
+                    </pre>
+                </div>
+
+                <div class="alert alert-info">
+                    <strong>Key Architecture Benefits:</strong>
+                    <ul>
+                        <li>✅ Clear separation of concerns</li>
+                        <li>✅ Framework-agnostic core engine</li>
+                        <li>✅ Testable components</li>
+                        <li>✅ Scalable and maintainable</li>
+                        <li>✅ Easy to extend with new features</li>
+                    </ul>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="../js/navigation.js"></script>
+    <script src="../js/page-navigation.js"></script>
+    <script src="../js/auth-guard.js"></script>
+    <script src="../js/auth-logout.js"></script>
+</body>
+</html>

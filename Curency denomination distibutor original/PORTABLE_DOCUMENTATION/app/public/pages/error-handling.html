@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error Handling & Validation - Currency Denomination Calculator</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html" class="active">Error Handling</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
+
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="main-content">
+
+            <header class="page-header">
+                <div class="breadcrumbs">
+                    <a href="/index.html">Documentation</a>
+                    <span class="separator">›</span>
+                    <span>Error Handling & Validation</span>
+                </div>
+                <div class="header-actions">
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                </div>
+            </header>
+
+            <article class="article-container">
+
+                <h1>20. Error Handling & Validation</h1>
+
+                <section id="client-validation">
+                    <h2>20.1 Client-Side Validation (React)</h2>
+
+                    <h3>Amount Validation</h3>
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/utils/validation.ts</code></p>
+
+                    <pre><code class="language-typescript">export const validateAmount = (amount: string): {valid: boolean; error?: string} => {
+  // Check empty
+  if (!amount || amount.trim() === '') {
+    return {valid: false, error: 'Amount is required'};
+  }
+  
+  // Check numeric
+  const numAmount = parseFloat(amount);
+  if (isNaN(numAmount)) {
+    return {valid: false, error: 'Amount must be a number'};
+  }
+  
+  // Check positive
+  if (numAmount <= 0) {
+    return {valid: false, error: 'Amount must be greater than 0'};
+  }
+  
+  // Check maximum (1 trillion)
+  if (numAmount > 1_000_000_000_000) {
+    return {valid: false, error: 'Amount exceeds maximum limit (1 trillion)'};
+  }
+  
+  // Check decimal places
+  const decimalPlaces = (amount.split('.')[1] || '').length;
+  if (decimalPlaces > 2) {
+    return {valid: false, error: 'Maximum 2 decimal places allowed'};
+  }
+  
+  return {valid: true};
+};</code></pre>
+
+                    <h3>Validation Rules</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Rule</th>
+                                <th>Validation</th>
+                                <th>Error Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Required</td>
+                                <td>Not empty</td>
+                                <td>"Amount is required"</td>
+                            </tr>
+                            <tr>
+                                <td>Numeric</td>
+                                <td>Must be a number</td>
+                                <td>"Amount must be a number"</td>
+                            </tr>
+                            <tr>
+                                <td>Positive</td>
+                                <td>> 0</td>
+                                <td>"Amount must be greater than 0"</td>
+                            </tr>
+                            <tr>
+                                <td>Maximum</td>
+                                <td>≤ 1 trillion</td>
+                                <td>"Amount exceeds maximum limit"</td>
+                            </tr>
+                            <tr>
+                                <td>Precision</td>
+                                <td>Max 2 decimal places</td>
+                                <td>"Maximum 2 decimal places allowed"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>File Upload Validation</h3>
+                    <pre><code class="language-typescript">export const validateUploadFile = (file: File): {valid: boolean; error?: string} => {
+  // Check file size (max 10MB)
+  const maxSize = 10 * 1024 * 1024; // 10MB
+  if (file.size > maxSize) {
+    return {valid: false, error: 'File size exceeds 10MB limit'};
+  }
+  
+  // Check file type
+  const allowedTypes = [
+    'text/csv',
+    'application/pdf',
+    'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+    'image/jpeg',
+    'image/png',
+    'image/jpg'
+  ];
+  
+  if (!allowedTypes.includes(file.type)) {
+    return {
+      valid: false,
+      error: 'Invalid file type. Allowed: CSV, PDF, Word, Images (JPG/PNG)'
+    };
+  }
+  
+  return {valid: true};
+};</code></pre>
+
+                    <h3>File Validation Rules</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Rule</th>
+                                <th>Limit</th>
+                                <th>Error Message</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>File Size</td>
+                                <td>≤ 10 MB</td>
+                                <td>"File size exceeds 10MB limit"</td>
+                            </tr>
+                            <tr>
+                                <td>File Type</td>
+                                <td>CSV, PDF, DOCX, JPG, PNG</td>
+                                <td>"Invalid file type. Allowed: CSV, PDF, Word, Images"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>UI Validation Display</h3>
+                    <pre><code class="language-tsx">// Example in CalculatorPage.tsx
+const handleCalculate = () => {
+  const validation = validateAmount(amount);
+  
+  if (!validation.valid) {
+    toast.error(validation.error); // Show error toast
+    return;
+  }
+  
+  // Proceed with calculation...
+};</code></pre>
+                </section>
+
+                <section id="server-validation">
+                    <h2>20.2 Server-Side Validation (FastAPI)</h2>
+
+                    <h3>Request Models with Validation</h3>
+                    <p><strong>File:</strong> <code>packages/local-backend/app/models.py</code></p>
+
+                    <pre><code class="language-python">from pydantic import BaseModel, Field, validator
+from decimal import Decimal
+from typing import Literal
+
+class CalculateRequest(BaseModel):
+    amount: Decimal = Field(..., gt=0, le=Decimal('1000000000000'))
+    currency: Literal['INR', 'USD', 'EUR', 'GBP']
+    mode: Literal['greedy', 'balanced', 'minimize_large', 'minimize_small']
+    
+    @validator('amount')
+    def validate_amount_precision(cls, v):
+        # Ensure max 2 decimal places
+        if v.as_tuple().exponent < -2:
+            raise ValueError('Maximum 2 decimal places allowed')
+        return v
+    
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "amount": 1850.50,
+                "currency": "INR",
+                "mode": "greedy"
+            }
+        }</code></pre>
+
+                    <h3>Pydantic Validation Features</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Validation</th>
+                                <th>Implementation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>amount</td>
+                                <td>gt=0, le=1 trillion, max 2 decimals</td>
+                                <td><code>Field(..., gt=0)</code> + custom validator</td>
+                            </tr>
+                            <tr>
+                                <td>currency</td>
+                                <td>Must be INR, USD, EUR, or GBP</td>
+                                <td><code>Literal['INR', 'USD', 'EUR', 'GBP']</code></td>
+                            </tr>
+                            <tr>
+                                <td>mode</td>
+                                <td>Must be valid optimization mode</td>
+                                <td><code>Literal['greedy', 'balanced', ...]</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>File Upload Validation</h3>
+                    <pre><code class="language-python">from fastapi import UploadFile, HTTPException
+import os
+
+async def validate_upload_file(file: UploadFile):
+    # Check file size
+    max_size = 10 * 1024 * 1024  # 10MB
+    
+    # Read file to check size
+    contents = await file.read()
+    await file.seek(0)  # Reset file pointer
+    
+    if len(contents) > max_size:
+        raise HTTPException(
+            status_code=400,
+            detail="File size exceeds 10MB limit"
+        )
+    
+    # Check file extension
+    allowed_extensions = ['.csv', '.pdf', '.docx', '.jpg', '.jpeg', '.png']
+    file_ext = os.path.splitext(file.filename)[1].lower()
+    
+    if file_ext not in allowed_extensions:
+        raise HTTPException(
+            status_code=400,
+            detail=f"Invalid file type. Allowed: {', '.join(allowed_extensions)}"
+        )
+    
+    return True</code></pre>
+                </section>
+
+                <section id="error-response-format">
+                    <h2>20.3 Error Response Format</h2>
+
+                    <h3>Standard Error Response</h3>
+                    <pre><code class="language-json">{
+  "error": {
+    "code": "VALIDATION_ERROR",
+    "message": "Amount must be greater than 0",
+    "field": "amount",
+    "timestamp": "2025-01-15T12:00:00Z"
+  }
+}</code></pre>
+
+                    <h3>Error Response Structure</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Type</th>
+                                <th>Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>code</td>
+                                <td>string</td>
+                                <td>Machine-readable error code</td>
+                            </tr>
+                            <tr>
+                                <td>message</td>
+                                <td>string</td>
+                                <td>Human-readable error message</td>
+                            </tr>
+                            <tr>
+                                <td>field</td>
+                                <td>string (optional)</td>
+                                <td>Which field caused the error</td>
+                            </tr>
+                            <tr>
+                                <td>timestamp</td>
+                                <td>string (ISO 8601)</td>
+                                <td>When the error occurred</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h3>Error Codes</h3>
+                    <p><strong>File:</strong> <code>packages/local-backend/app/errors.py</code></p>
+
+                    <pre><code class="language-python">class ErrorCode:
+    # Validation Errors (400)
+    VALIDATION_ERROR = "VALIDATION_ERROR"
+    INVALID_AMOUNT = "INVALID_AMOUNT"
+    INVALID_CURRENCY = "INVALID_CURRENCY"
+    INVALID_MODE = "INVALID_MODE"
+    INVALID_FILE = "INVALID_FILE"
+    
+    # Not Found (404)
+    CALCULATION_NOT_FOUND = "CALCULATION_NOT_FOUND"
+    
+    # Server Errors (500)
+    CALCULATION_FAILED = "CALCULATION_FAILED"
+    DATABASE_ERROR = "DATABASE_ERROR"
+    OCR_PROCESSING_ERROR = "OCR_PROCESSING_ERROR"</code></pre>
+
+                    <h3>HTTP Status Codes</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Status</th>
+                                <th>Code</th>
+                                <th>Use Case</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>200</td>
+                                <td>OK</td>
+                                <td>Request successful</td>
+                            </tr>
+                            <tr>
+                                <td>400</td>
+                                <td>Bad Request</td>
+                                <td>Validation errors</td>
+                            </tr>
+                            <tr>
+                                <td>404</td>
+                                <td>Not Found</td>
+                                <td>Resource not found</td>
+                            </tr>
+                            <tr>
+                                <td>422</td>
+                                <td>Unprocessable Entity</td>
+                                <td>Pydantic validation errors</td>
+                            </tr>
+                            <tr>
+                                <td>500</td>
+                                <td>Internal Server Error</td>
+                                <td>Server-side errors</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="exception-hierarchy">
+                    <h2>20.4 Exception Hierarchy</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/exceptions.py</code></p>
+
+                    <pre><code class="language-python">class AppException(Exception):
+    """Base application exception."""
+    def __init__(self, message: str, code: str):
+        self.message = message
+        self.code = code
+        super().__init__(self.message)
+
+class ValidationException(AppException):
+    """Validation error exception."""
+    def __init__(self, message: str, field: str = None):
+        super().__init__(message, ErrorCode.VALIDATION_ERROR)
+        self.field = field
+
+class CalculationException(AppException):
+    """Calculation processing error."""
+    def __init__(self, message: str):
+        super().__init__(message, ErrorCode.CALCULATION_FAILED)
+
+class OCRException(AppException):
+    """OCR processing error."""
+    def __init__(self, message: str):
+        super().__init__(message, ErrorCode.OCR_PROCESSING_ERROR)</code></pre>
+
+                    <h3>Exception Hierarchy Diagram</h3>
+                    <pre><code>AppException (Base)
+├── ValidationException
+│   ├── InvalidAmountException
+│   ├── InvalidCurrencyException
+│   └── InvalidModeException
+├── CalculationException
+│   └── CalculationFailedException
+├── OCRException
+│   ├── TesseractNotFoundError
+│   └── OCRParsingError
+└── DatabaseException
+    ├── DatabaseConnectionError
+    └── DatabaseQueryError</code></pre>
+
+                    <h3>Usage Example</h3>
+                    <pre><code class="language-python">def calculate_denominations(amount: Decimal, currency: str, mode: str):
+    """Calculate with proper exception handling."""
+    try:
+        # Validate amount
+        if amount <= 0:
+            raise ValidationException(
+                message="Amount must be greater than 0",
+                field="amount"
+            )
+        
+        # Validate currency
+        if currency not in SUPPORTED_CURRENCIES:
+            raise ValidationException(
+                message=f"Unsupported currency: {currency}",
+                field="currency"
+            )
+        
+        # Perform calculation
+        result = engine.calculate(amount, currency, mode)
+        return result
+        
+    except ValidationException:
+        raise  # Re-raise validation exceptions
+    except Exception as e:
+        logger.error(f"Calculation failed: {str(e)}")
+        raise CalculationException(f"Calculation failed: {str(e)}")</code></pre>
+                </section>
+
+                <section id="global-exception-handler">
+                    <h2>20.5 Global Exception Handler</h2>
+
+                    <p><strong>File:</strong> <code>packages/local-backend/app/main.py</code></p>
+
+                    <pre><code class="language-python">from fastapi import FastAPI, Request
+from fastapi.responses import JSONResponse
+from datetime import datetime
+
+app = FastAPI()
+
+@app.exception_handler(AppException)
+async def app_exception_handler(request: Request, exc: AppException):
+    """Handle application-specific exceptions."""
+    return JSONResponse(
+        status_code=400 if isinstance(exc, ValidationException) else 500,
+        content={
+            "error": {
+                "code": exc.code,
+                "message": exc.message,
+                "field": getattr(exc, 'field', None),
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+    )
+
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    """Handle unexpected exceptions."""
+    logger.error(f"Unhandled exception: {str(exc)}", exc_info=True)
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": {
+                "code": "INTERNAL_SERVER_ERROR",
+                "message": "An unexpected error occurred",
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+    )</code></pre>
+
+                    <h3>Exception Handler Flow</h3>
+                    <div class="feature-card">
+                        <ol>
+                            <li><strong>AppException</strong>: Caught by <code>app_exception_handler</code>
+                                <ul>
+                                    <li>ValidationException → HTTP 400</li>
+                                    <li>Other AppExceptions → HTTP 500</li>
+                                </ul>
+                            </li>
+                            <li><strong>Unexpected Exception</strong>: Caught by <code>general_exception_handler</code>
+                                <ul>
+                                    <li>Logged with full stack trace</li>
+                                    <li>Returns generic error (security)</li>
+                                    <li>HTTP 500</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <h3>Error Logging</h3>
+                    <pre><code class="language-python">import logging
+
+logger = logging.getLogger(__name__)
+
+@app.exception_handler(Exception)
+async def general_exception_handler(request: Request, exc: Exception):
+    # Log with full context
+    logger.error(
+        f"Unhandled exception on {request.method} {request.url.path}",
+        exc_info=True,
+        extra={
+            "method": request.method,
+            "path": request.url.path,
+            "client": request.client.host,
+            "user_agent": request.headers.get("user-agent")
+        }
+    )
+    
+    # Return safe error response
+    return JSONResponse(
+        status_code=500,
+        content={
+            "error": {
+                "code": "INTERNAL_SERVER_ERROR",
+                "message": "An unexpected error occurred",
+                "timestamp": datetime.utcnow().isoformat()
+            }
+        }
+    )</code></pre>
+                </section>
+
+                <section id="frontend-error-handling">
+                    <h2>20.6 Frontend Error Handling</h2>
+
+                    <h3>API Error Handler</h3>
+                    <p><strong>File:</strong> <code>packages/desktop-app/src/utils/api.ts</code></p>
+
+                    <pre><code class="language-typescript">import { toast } from 'react-toastify';
+
+export const handleApiError = (error: any) => {
+  if (error.response) {
+    // Server responded with error
+    const errorData = error.response.data.error;
+    
+    if (errorData) {
+      toast.error(errorData.message);
+    } else {
+      toast.error('An error occurred');
+    }
+  } else if (error.request) {
+    // No response from server
+    toast.error('Cannot connect to server. Please check if backend is running.');
+  } else {
+    // Request setup error
+    toast.error('An unexpected error occurred');
+  }
+};</code></pre>
+
+                    <h3>Usage in Component</h3>
+                    <pre><code class="language-tsx">import { handleApiError } from '@/utils/api';
+
+const CalculatorPage = () => {
+  const handleCalculate = async () => {
+    try {
+      const response = await axios.post('/api/v1/calculate', {
+        amount,
+        currency,
+        mode
+      });
+      
+      setResult(response.data);
+      toast.success('Calculation successful!');
+    } catch (error) {
+      handleApiError(error);  // Centralized error handling
+    }
+  };
+  
+  return (
+    // Component JSX...
+  );
+};</code></pre>
+
+                    <h3>Error Display Components</h3>
+                    <pre><code class="language-tsx">// Error Alert Component
+const ErrorAlert = ({ message }: { message: string }) => (
+  &lt;div className="bg-red-50 border border-red-200 rounded-lg p-4"&gt;
+    &lt;div className="flex items-center"&gt;
+      &lt;AlertCircle className="w-5 h-5 text-red-500 mr-2" /&gt;
+      &lt;p className="text-red-800"&gt;{message}&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+);
+
+// Usage
+{error && &lt;ErrorAlert message={error} /&gt;}</code></pre>
+                </section>
+
+                <section id="validation-summary">
+                    <h2>20.7 Validation Summary</h2>
+
+                    <h3>Complete Validation Pipeline</h3>
+                    <div class="feature-card">
+                        <h4>Layer 1: Client-Side (TypeScript)</h4>
+                        <ul>
+                            <li>Immediate user feedback</li>
+                            <li>Prevent unnecessary API calls</li>
+                            <li>Better UX with instant validation</li>
+                        </ul>
+
+                        <h4>Layer 2: Server-Side (Pydantic)</h4>
+                        <ul>
+                            <li>Security: Don't trust client</li>
+                            <li>Type validation (Decimal, Literal)</li>
+                            <li>Custom validators (@validator)</li>
+                        </ul>
+
+                        <h4>Layer 3: Business Logic (Python)</h4>
+                        <ul>
+                            <li>Domain-specific validation</li>
+                            <li>Cross-field validation</li>
+                            <li>Database constraints</li>
+                        </ul>
+                    </div>
+
+                    <h3>Validation Best Practices</h3>
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Practice</th>
+                                <th>Implementation</th>
+                                <th>Benefit</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Fail Fast</td>
+                                <td>Validate at earliest possible point</td>
+                                <td>Better performance, clearer errors</td>
+                            </tr>
+                            <tr>
+                                <td>Clear Messages</td>
+                                <td>Specific, actionable error messages</td>
+                                <td>Better user experience</td>
+                            </tr>
+                            <tr>
+                                <td>Consistent Format</td>
+                                <td>Standard error response structure</td>
+                                <td>Easier client-side handling</td>
+                            </tr>
+                            <tr>
+                                <td>Security</td>
+                                <td>Never trust client-side validation alone</td>
+                                <td>Prevent malicious requests</td>
+                            </tr>
+                            <tr>
+                                <td>Logging</td>
+                                <td>Log all validation failures</td>
+                                <td>Debugging and monitoring</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <div class="alert alert-success">
+                    <strong>✓ Section Complete</strong>
+                    <p>This section covers comprehensive error handling: Client-side validation (TypeScript validators for amounts/files with immediate feedback), Server-side validation (Pydantic models with Field constraints and custom validators), Standard error response format (code/message/field/timestamp), Error code enumeration (VALIDATION_ERROR, CALCULATION_FAILED, OCR_PROCESSING_ERROR, etc.), Exception hierarchy (AppException base class with ValidationException, CalculationException, OCRException subclasses), Global exception handlers (FastAPI handlers for AppException and general Exception with logging), Frontend error handling (centralized API error handler with toast notifications), Complete validation pipeline (3 layers: client, server, business logic).</p>
+                </div>
+            
+            </article>
+        </div>
+    </div>
+
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
+</body>
+</html>

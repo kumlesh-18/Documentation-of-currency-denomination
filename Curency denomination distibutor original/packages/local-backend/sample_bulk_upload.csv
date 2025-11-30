@@ -1,0 +1,11 @@
+amount,currency,optimization_mode
+50000,INR,greedy
+1000.50,USD,balanced
+5000,EUR,minimize_large
+250000,INR,minimize_small
+999.99,GBP,greedy
+10000,INR,balanced
+5500,USD,greedy
+invalid,INR,greedy
+7500,EUR,minimize_large
+3000,USD,balanced
