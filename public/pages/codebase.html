@@ -255,21 +255,85 @@
 
     <script src="../js/navigation.js"></script>
     <script>
+        const GITHUB_REPO = 'kumlesh-18/Documentation-of-currency-denomination';
+        const GITHUB_BRANCH = 'main';
+        let fileTreeData = [];
+
         document.addEventListener('DOMContentLoaded', () => {
             fetchFileTree();
         });
 
         async function fetchFileTree() {
             try {
-                const response = await fetch('../api/codebase/structure');
-                const tree = await response.json();
-                const treeContainer = document.getElementById('fileTree');
-                treeContainer.innerHTML = '';
-                renderTree(tree, treeContainer);
+                const response = await fetch(
+                    `https://api.github.com/repos/${GITHUB_REPO}/git/trees/${GITHUB_BRANCH}?recursive=1`
+                );
+                const data = await response.json();
+                
+                if (data.tree) {
+                    fileTreeData = data.tree;
+                    const tree = buildTreeStructure(data.tree);
+                    const treeContainer = document.getElementById('fileTree');
+                    treeContainer.innerHTML = '';
+                    renderTree(tree, treeContainer);
+                } else {
+                    throw new Error('Failed to fetch repository tree');
+                }
             } catch (error) {
                 console.error('Error fetching file tree:', error);
-                document.getElementById('fileTree').innerHTML = '<div style="color: red; padding: 10px;">Error loading file tree.</div>';
+                document.getElementById('fileTree').innerHTML = '<div style="color: red; padding: 10px;">Error loading file tree. Please try again later.</div>';
             }
+        }
+
+        function buildTreeStructure(files) {
+            const root = [];
+            const pathMap = {};
+
+            // Filter out unnecessary directories and create structure
+            const relevantFiles = files.filter(file => 
+                !file.path.includes('node_modules') &&
+                !file.path.includes('.git') &&
+                !file.path.startsWith('.')
+            );
+
+            relevantFiles.forEach(file => {
+                const parts = file.path.split('/');
+                let currentLevel = root;
+                let currentPath = '';
+
+                parts.forEach((part, index) => {
+                    currentPath += (currentPath ? '/' : '') + part;
+                    
+                    if (index === parts.length - 1 && file.type === 'blob') {
+                        // It's a file
+                        currentLevel.push({
+                            name: part,
+                            type: 'file',
+                            path: file.path,
+                            size: file.size,
+                            sha: file.sha
+                        });
+                    } else {
+                        // It's a directory
+                        let dir = currentLevel.find(item => item.name === part && item.type === 'directory');
+                        if (!dir) {
+                            dir = {
+                                name: part,
+                                type: 'directory',
+                                path: currentPath,
+                                children: []
+                            };
+                            currentLevel.push(dir);
+                        }
+                        currentLevel = dir.children;
+                    }
+                });
+            });
+
+            return root.sort((a, b) => {
+                if (a.type === b.type) return a.name.localeCompare(b.name);
+                return a.type === 'directory' ? -1 : 1;
+            });
         }
 
         function renderTree(nodes, container) {
@@ -327,19 +391,24 @@
             codeBlock.textContent = 'Loading...';
 
             try {
-                const response = await fetch(`/api/codebase/content?path=${encodeURIComponent(path)}`);
+                // Get file content from GitHub
+                const response = await fetch(
+                    `https://api.github.com/repos/${GITHUB_REPO}/contents/${path}?ref=${GITHUB_BRANCH}`
+                );
                 const data = await response.json();
                 
-                if (data.error) {
-                    codeBlock.textContent = `Error: ${data.error}`;
-                } else {
-                    codeBlock.textContent = data.content;
+                if (data.content) {
+                    // GitHub returns base64 encoded content
+                    const content = atob(data.content);
+                    codeBlock.textContent = content;
                     codeBlock.className = `language-${getLanguage(name)}`;
                     hljs.highlightElement(codeBlock);
+                } else {
+                    codeBlock.textContent = 'Error: Unable to load file content.';
                 }
             } catch (error) {
                 console.error('Error loading file:', error);
-                codeBlock.textContent = 'Error loading file content.';
+                codeBlock.textContent = 'Error loading file content. The file may be too large or unavailable.';
             }
         }
 
