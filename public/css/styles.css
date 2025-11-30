@@ -1567,6 +1567,11 @@ tbody tr:last-child td {
     --sidebar-width: 280px;
   }
 
+  /* Hide desktop sidebar toggle on tablet */
+  .sidebar-toggle {
+    display: none;
+  }
+
   /* Show mobile menu toggle on tablet */
   .mobile-menu-toggle {
     display: flex;
@@ -1679,6 +1684,11 @@ tbody tr:last-child td {
     --header-height: auto;
     --sidebar-width: 85vw;
     --text-base: 0.9375rem; /* 15px for better mobile readability */
+  }
+
+  /* Hide desktop sidebar toggle on mobile */
+  .sidebar-toggle {
+    display: none;
   }
 
   /* Show mobile menu toggle */

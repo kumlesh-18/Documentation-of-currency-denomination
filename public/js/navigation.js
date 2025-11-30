@@ -132,7 +132,7 @@
     }
 
     // ========================================
-    // Mobile Menu System
+    // Mobile Menu System (Mobile & Tablet)
     // ========================================
     function initMobileMenu() {
         const sidebar = document.querySelector('.sidebar');
@@ -144,7 +144,7 @@
         const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
         const isMobileOrTablet = device === 'mobile' || device === 'tablet' || state.isMobile;
 
-        // Create mobile toggle button for mobile and tablet
+        // Create mobile toggle button for mobile AND tablet devices
         let toggleBtn = document.querySelector('.mobile-menu-toggle');
         
         if (!toggleBtn && isMobileOrTablet) {
@@ -155,18 +155,18 @@
             toggleBtn.innerHTML = '<span aria-hidden="true">☰</span>';
             document.body.appendChild(toggleBtn);
 
-            // Create overlay
+            // Create overlay for backdrop
             const overlay = document.createElement('div');
             overlay.className = 'mobile-overlay';
             overlay.setAttribute('aria-hidden', 'true');
             document.body.appendChild(overlay);
 
-            // Toggle menu
+            // Toggle menu on click
             toggleBtn.addEventListener('click', toggleMobileMenu);
             overlay.addEventListener('click', closeMobileMenu);
         }
 
-        // Handle sidebar links on mobile and tablet - close menu after navigation
+        // Handle sidebar links on mobile and tablet - auto-close after navigation
         if (isMobileOrTablet) {
             const sidebarLinks = sidebar.querySelectorAll('a');
             sidebarLinks.forEach(link => {
@@ -533,7 +533,7 @@
     }
 
     // ========================================
-    // Edge Detection & Auto-Appear (Desktop Only)
+    // Edge Detection & Auto-Appear (Desktop/Laptop Only)
     // ========================================
     function initEdgeDetection() {
         // Get device type from ResponsiveSystem if available
@@ -549,7 +549,7 @@
             return;
         }
 
-        // Create hotspot if it doesn't exist
+        // Desktop/Laptop only: Create edge detection hotspot
         let hotspot = document.querySelector('.sidebar-hotspot');
         if (!hotspot) {
             hotspot = document.createElement('div');
@@ -600,6 +600,7 @@
             return;
         }
 
+        // Desktop/Laptop only: Enable auto-collapse functionality
         const sidebar = document.querySelector('.sidebar');
         if (!sidebar) return;
 
