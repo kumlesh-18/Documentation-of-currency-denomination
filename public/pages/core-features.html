@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Core Features - Currency Denomination Calculator</title>
-        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,73 +12,69 @@
 <body>
     <div class="app-container">
 
-        <nav class="sidebar" id="sidebar">
+        <nav class="sidebar">
             <div class="sidebar-header">
-                <h2>📺 Documentation</h2>
-                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
             </div>
             
-            <div class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Overview</div>
-                    <ul class="nav-links">
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="./executive-summary.html">Executive Summary</a></li>
-                        <li><a href="./project-overview.html">Project Overview</a></li>
-                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Architecture</div>
-                    <ul class="nav-links">
-                        <li><a href="./system-architecture.html">System Architecture</a></li>
-                        <li><a href="./core-features.html" class="active">Core Features</a></li>
-                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html" class="active">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Implementation</div>
-                    <ul class="nav-links">
-                        <li><a href="./backend-logic.html">Backend Logic</a></li>
-                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
-                        <li><a href="./ocr-system.html">OCR System</a></li>
-                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Technical Details</div>
-                    <ul class="nav-links">
-                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
-                        <li><a href="./data-models.html">Data Models & Database</a></li>
-                        <li><a href="./api-specifications.html">API Specifications</a></li>
-                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Operations</div>
-                    <ul class="nav-links">
-                        <li><a href="./error-handling.html">Error Handling</a></li>
-                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
-                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
-                        <li><a href="./testing.html">Testing & QA</a></li>
-                        <li><a href="./deployment.html">Deployment</a></li>
-                        <li><a href="./performance.html">Performance Requirements</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Resources</div>
-                    <ul class="nav-links">
-                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
-                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
-                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
-                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
             </div>
         </nav>
 
@@ -87,14 +83,14 @@
 
             <header class="page-header">
                 <div class="breadcrumbs">
-                    <a href="../index.html">Documentation</a>
+                    <a href="/index.html">Documentation</a>
                     <span class="separator">›</span>
                     <span>Core Features</span>
                 </div>
                 <div class="header-actions">
-                    <a href="../index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
                 </div>
             </header>
 
@@ -309,37 +305,37 @@ Result:
                             <tr>
                                 <td>1,000</td>
                                 <td>One thousand</td>
-                                <td><span class="badge badge-success">âœ“ Standard calculation</span></td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,000</td>
                                 <td>One lakh</td>
-                                <td><span class="badge badge-success">âœ“ Standard calculation</span></td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,00,000</td>
                                 <td>One crore</td>
-                                <td><span class="badge badge-success">âœ“ Standard calculation</span></td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,00,00,000</td>
                                 <td>One hundred crore</td>
-                                <td><span class="badge badge-success">âœ“ Standard calculation</span></td>
+                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>10,00,00,00,000</td>
                                 <td>One thousand crore (10 billion)</td>
-                                <td><span class="badge badge-success">âœ“ Handle correctly</span></td>
+                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,00,00,00,000</td>
                                 <td>One lakh crore (1 trillion)</td>
-                                <td><span class="badge badge-success">âœ“ Handle correctly</span></td>
+                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
                             </tr>
                             <tr>
                                 <td>10,00,00,00,00,000</td>
                                 <td>Ten lakh crore (10 trillion)</td>
-                                <td><span class="badge badge-success">âœ“ Handle correctly</span></td>
+                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -372,12 +368,12 @@ pytest test_engine.py::test_extreme_large_amounts</code></pre>
 
                     <p><strong>Requirements:</strong></p>
                     <ul>
-                        <li>âœ“ <strong>MUST</strong> store unlimited calculations (SQLite has no practical limit)</li>
-                        <li>âœ“ <strong>MUST</strong> support pagination (default 50 per page)</li>
-                        <li>âœ“ <strong>MUST</strong> support filtering by currency, date range</li>
-                        <li>âœ“ <strong>MUST</strong> support sorting by date, amount</li>
-                        <li>âœ“ <strong>MUST</strong> allow individual deletion</li>
-                        <li>âœ“ <strong>MUST</strong> allow batch deletion (all, by filter)</li>
+                        <li>✓ <strong>MUST</strong> store unlimited calculations (SQLite has no practical limit)</li>
+                        <li>✓ <strong>MUST</strong> support pagination (default 50 per page)</li>
+                        <li>✓ <strong>MUST</strong> support filtering by currency, date range</li>
+                        <li>✓ <strong>MUST</strong> support sorting by date, amount</li>
+                        <li>✓ <strong>MUST</strong> allow individual deletion</li>
+                        <li>✓ <strong>MUST</strong> allow batch deletion (all, by filter)</li>
                     </ul>
 
                     <h4>Database Schema</h4>
@@ -407,10 +403,10 @@ GET    /api/v1/history/stats</code></pre>
 
                     <p><strong>Requirements:</strong></p>
                     <ul>
-                        <li>âœ“ <strong>MUST</strong> show last 10 calculations chronologically</li>
-                        <li>âœ“ <strong>MUST</strong> update in real-time when new calculation made</li>
-                        <li>âœ“ <strong>MUST</strong> allow click to view full details</li>
-                        <li>âœ“ <strong>MUST</strong> show: amount, currency, date, total denominations</li>
+                        <li>✓ <strong>MUST</strong> show last 10 calculations chronologically</li>
+                        <li>✓ <strong>MUST</strong> update in real-time when new calculation made</li>
+                        <li>✓ <strong>MUST</strong> allow click to view full details</li>
+                        <li>✓ <strong>MUST</strong> show: amount, currency, date, total denominations</li>
                     </ul>
 
                     <p><strong>UI Location:</strong> Left sidebar in History page</p>
@@ -461,7 +457,7 @@ GET    /api/v1/history/stats</code></pre>
                     </div>
 
                     <div class="feature-card">
-                        <h4>🖼️ Image Files</h4>
+                        <h4>🖼️ Image Files</h4>
                         <ul>
                             <li><strong>Formats:</strong> .jpg, .jpeg, .png, .tiff, .tif, .bmp, .gif, .webp</li>
                             <li><strong>Method:</strong> Tesseract OCR</li>
@@ -534,12 +530,12 @@ GET    /api/v1/history/stats</code></pre>
 
                     <div class="alert alert-info">
                         <strong>Step 3: Upload &amp; Processing</strong>
-                        <pre><code>[Client]  â†’ FormData creation â†’ HTTP POST /api/calculations/bulk-upload
-[Server]  â†’ File type detection â†’ Route to processor
-[Processor] â†’ Extract rows â†’ Parse each line
-[Parser]  â†’ Apply smart defaults â†’ Validate data
-[Engine]  â†’ Calculate each row â†’ Collect results
-[Response] â†’ Return summary + details</code></pre>
+                        <pre><code>[Client]  → FormData creation → HTTP POST /api/calculations/bulk-upload
+[Server]  → File type detection → Route to processor
+[Processor] → Extract rows → Parse each line
+[Parser]  → Apply smart defaults → Validate data
+[Engine]  → Calculate each row → Collect results
+[Response] → Return summary + details</code></pre>
                     </div>
 
                     <div class="alert alert-info">
@@ -559,7 +555,7 @@ GET    /api/v1/history/stats</code></pre>
                         <ul>
                             <li><strong>Applied when:</strong> No currency specified in row</li>
                             <li><strong>Configurable:</strong> Yes (in <code>ocr_processor.py</code>)</li>
-                            <li><strong>Fallback Order:</strong> Specified â†’ System Default</li>
+                            <li><strong>Fallback Order:</strong> Specified → System Default</li>
                         </ul>
                     </div>
 
@@ -568,7 +564,7 @@ GET    /api/v1/history/stats</code></pre>
                         <ul>
                             <li><strong>Applied when:</strong> No mode specified in row</li>
                             <li><strong>Configurable:</strong> Yes (in <code>ocr_processor.py</code>)</li>
-                            <li><strong>Fallback Order:</strong> Specified â†’ System Default</li>
+                            <li><strong>Fallback Order:</strong> Specified → System Default</li>
                         </ul>
                     </div>
 
@@ -689,12 +685,12 @@ Total is 250 in EUR with balanced optimization</code></pre>
     if not amount:
         return None
     
-    # Extract currency (optional â†’ defaults to INR)
+    # Extract currency (optional → defaults to INR)
     currency = self._smart_extract_currency(line)
     if not currency:
         currency = self.default_currency
     
-    # Extract mode (optional â†’ defaults to greedy)
+    # Extract mode (optional → defaults to greedy)
     mode = self._smart_extract_mode(line)
     if not mode:
         mode = self.default_mode
@@ -799,9 +795,9 @@ Failed: 1
 Processing Time: 0.12s
 
 Detailed Results:
-Row 1: âœ“ 1000 INR â†’ 2 denominations
-Row 2: âœ“ 250.50 USD â†’ 11 denominations
-Row 3: âœ— Invalid amount format</code></pre>
+Row 1: ✓ 1000 INR → 2 denominations
+Row 2: ✓ 250.50 USD → 11 denominations
+Row 3: ✗ Invalid amount format</code></pre>
 
                     <h4>Implementation</h4>
                     <pre><code class="language-typescript">async handleCopy() {
@@ -831,35 +827,35 @@ Row 3: âœ— Invalid amount format</code></pre>
                             <tr>
                                 <td>English</td>
                                 <td><span class="badge badge-primary">en</span></td>
-                                <td><span class="badge badge-success">âœ“ Complete</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>Hindi</td>
                                 <td><span class="badge badge-primary">hi</span></td>
-                                <td><span class="badge badge-success">âœ“ Complete</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>Spanish</td>
                                 <td><span class="badge badge-primary">es</span></td>
-                                <td><span class="badge badge-success">âœ“ Complete</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>French</td>
                                 <td><span class="badge badge-primary">fr</span></td>
-                                <td><span class="badge badge-success">âœ“ Complete</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>German</td>
                                 <td><span class="badge badge-primary">de</span></td>
-                                <td><span class="badge badge-success">âœ“ Complete</span></td>
+                                <td><span class="badge badge-success">✓ Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
@@ -984,8 +980,8 @@ module.exports = {
 );</code></pre>
 
                     <h4>API</h4>
-                    <pre><code class="language-http">GET  /api/v1/settings â†’ {theme: 'dark', language: 'en'}
-PUT  /api/v1/settings â†’ {theme: 'dark'}</code></pre>
+                    <pre><code class="language-http">GET  /api/v1/settings → {theme: 'dark', language: 'en'}
+PUT  /api/v1/settings → {theme: 'dark'}</code></pre>
 
                     <h4>Startup</h4>
                     <pre><code class="language-typescript">// Load saved theme on app start
@@ -997,7 +993,7 @@ useEffect(() => {
                 </section>
 
                 <div class="alert alert-success">
-                    <strong>âœ“ Section Complete</strong>
+                    <strong>✓ Section Complete</strong>
                     <p>This section covers all 7 core features: Calculation Engine, History Management, Bulk Upload, OCR System, Export Features, Multi-Language Support, and Dark Mode.</p>
                 </div>
             
@@ -1005,10 +1001,7 @@ useEffect(() => {
         </div>
     </div>
 
-    <script src="../js/responsive.js"></script>
-    <script src="../js/navigation.js"></script>
-    <script src="../js/page-navigation.js"></script>
-    <script src="../js/auth-guard.js"></script>
-    <script src="../js/auth-logout.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
 </body>
 </html>

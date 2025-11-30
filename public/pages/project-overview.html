@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Overview - Currency Denomination Calculator Documentation</title>
-        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,73 +12,69 @@
 <body>
     <div class="app-container">
 
-        <nav class="sidebar" id="sidebar">
+        <nav class="sidebar">
             <div class="sidebar-header">
-                <h2>📺 Documentation</h2>
-                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
             </div>
             
-            <div class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Overview</div>
-                    <ul class="nav-links">
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="./executive-summary.html">Executive Summary</a></li>
-                        <li><a href="./project-overview.html" class="active">Project Overview</a></li>
-                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html" class="active">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Architecture</div>
-                    <ul class="nav-links">
-                        <li><a href="./system-architecture.html">System Architecture</a></li>
-                        <li><a href="./core-features.html">Core Features</a></li>
-                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Implementation</div>
-                    <ul class="nav-links">
-                        <li><a href="./backend-logic.html">Backend Logic</a></li>
-                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
-                        <li><a href="./ocr-system.html">OCR System</a></li>
-                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Technical Details</div>
-                    <ul class="nav-links">
-                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
-                        <li><a href="./data-models.html">Data Models & Database</a></li>
-                        <li><a href="./api-specifications.html">API Specifications</a></li>
-                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Operations</div>
-                    <ul class="nav-links">
-                        <li><a href="./error-handling.html">Error Handling</a></li>
-                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
-                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
-                        <li><a href="./testing.html">Testing & QA</a></li>
-                        <li><a href="./deployment.html">Deployment</a></li>
-                        <li><a href="./performance.html">Performance Requirements</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Resources</div>
-                    <ul class="nav-links">
-                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
-                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
-                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
-                        <li><a href="./acceptance-criteria.html">Acceptance Criteria</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
             </div>
         </nav>
 
@@ -87,14 +83,14 @@
 
             <header class="page-header">
                 <div class="breadcrumbs">
-                    <a href="../index.html">Documentation</a>
+                    <a href="/index.html">Documentation</a>
                     <span class="separator">›</span>
                     <span>Project Overview</span>
                 </div>
                 <div class="header-actions">
-                    <a href="../index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
                 </div>
             </header>
 
@@ -270,84 +266,84 @@
                 <p>The project follows a monorepo structure with three main packages:</p>
 
                 <pre><code>f:\Curency denomination distibutor original\
-â”œâ”€â”€ packages/
-â”‚   â”œâ”€â”€ core-engine/           # Python calculation engine
-â”‚   â”‚   â”œâ”€â”€ __init__.py
-â”‚   â”‚   â”œâ”€â”€ engine.py          # Main calculation logic (500+ lines)
-â”‚   â”‚   â”œâ”€â”€ fx_service.py      # Foreign exchange rates
-â”‚   â”‚   â”œâ”€â”€ optimizer.py       # Optimization strategies
-â”‚   â”‚   â”œâ”€â”€ models.py          # Data models
-â”‚   â”‚   â”œâ”€â”€ verify.py          # Engine verification tests
-â”‚   â”‚   â”œâ”€â”€ test_engine.py     # Unit tests
-â”‚   â”‚   â”œâ”€â”€ requirements.txt   # Python dependencies
-â”‚   â”‚   â””â”€â”€ config/
-â”‚   â”‚       â”œâ”€â”€ currencies.json
-â”‚   â”‚       â””â”€â”€ fx_rates_cache.json
-â”‚   â”‚
-â”‚   â”œâ”€â”€ desktop-app/           # Electron frontend
-â”‚   â”‚   â”œâ”€â”€ electron/          # Electron main process
-â”‚   â”‚   â”‚   â”œâ”€â”€ main.ts        # Main process entry
-â”‚   â”‚   â”‚   â”œâ”€â”€ preload.ts     # Preload script
-â”‚   â”‚   â”‚   â””â”€â”€ window.ts      # Window management
-â”‚   â”‚   â”œâ”€â”€ src/               # React application
-â”‚   â”‚   â”‚   â”œâ”€â”€ App.tsx        # Main app component
-â”‚   â”‚   â”‚   â”œâ”€â”€ main.tsx       # React entry point
-â”‚   â”‚   â”‚   â”œâ”€â”€ components/    # React components
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ CalculatorPage.tsx    (450 lines)
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ HistoryPage.tsx       (380 lines)
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ BulkUploadPage.tsx    (695 lines)
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ SettingsPage.tsx      (280 lines)
-â”‚   â”‚   â”‚   â”œâ”€â”€ contexts/      # React contexts
-â”‚   â”‚   â”‚   â”‚   â”œâ”€â”€ LanguageContext.tsx
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ ThemeContext.tsx
-â”‚   â”‚   â”‚   â”œâ”€â”€ api/           # API client
-â”‚   â”‚   â”‚   â”‚   â””â”€â”€ client.ts  # HTTP client
-â”‚   â”‚   â”‚   â”œâ”€â”€ types/         # TypeScript types
-â”‚   â”‚   â”‚   â””â”€â”€ locales/       # Translation files
-â”‚   â”‚   â”œâ”€â”€ package.json
-â”‚   â”‚   â”œâ”€â”€ vite.config.ts
-â”‚   â”‚   â”œâ”€â”€ tailwind.config.js
-â”‚   â”‚   â””â”€â”€ tsconfig.json
-â”‚   â”‚
-â”‚   â””â”€â”€ local-backend/         # FastAPI backend
-â”‚       â”œâ”€â”€ app/
-â”‚       â”‚   â”œâ”€â”€ main.py        # FastAPI application
-â”‚       â”‚   â”œâ”€â”€ api/           # API endpoints
-â”‚       â”‚   â”‚   â”œâ”€â”€ calculations.py     (530 lines)
-â”‚       â”‚   â”‚   â”œâ”€â”€ bulk.py             (420 lines)
-â”‚       â”‚   â”‚   â”œâ”€â”€ ocr.py              (350 lines)
-â”‚       â”‚   â”‚   â”œâ”€â”€ history.py          (280 lines)
-â”‚       â”‚   â”‚   â””â”€â”€ settings.py         (150 lines)
-â”‚       â”‚   â”œâ”€â”€ services/      # Business logic
-â”‚       â”‚   â”‚   â”œâ”€â”€ ocr_processor.py    (645 lines)
-â”‚       â”‚   â”‚   â””â”€â”€ smart_defaults.py   (180 lines)
-â”‚       â”‚   â”œâ”€â”€ db/            # Database
-â”‚       â”‚   â”‚   â”œâ”€â”€ database.py
-â”‚       â”‚   â”‚   â””â”€â”€ models.py
-â”‚       â”‚   â”œâ”€â”€ utils/         # Utilities
-â”‚       â”‚   â”‚   â””â”€â”€ logger.py
-â”‚       â”‚   â””â”€â”€ locales/       # Translation files
-â”‚       â”‚       â”œâ”€â”€ en.json
-â”‚       â”‚       â”œâ”€â”€ hi.json
-â”‚       â”‚       â”œâ”€â”€ es.json
-â”‚       â”‚       â”œâ”€â”€ fr.json
-â”‚       â”‚       â””â”€â”€ de.json
-â”‚       â”œâ”€â”€ requirements.txt
-â”‚       â””â”€â”€ install_dependencies.ps1
-â”‚
-â”œâ”€â”€ check/                     # Installation scripts
-â”‚   â”œâ”€â”€ install_dependencies.ps1
-â”‚   â”œâ”€â”€ check_dependencies.ps1
-â”‚   â””â”€â”€ start_with_auto_install.ps1
-â”‚
-â”œâ”€â”€ documentation/             # Project documentation
-â”‚   â”œâ”€â”€ COMPLETE_PROJECT_DOCUMENTATION.md  (8071 lines)
-â”‚   â”œâ”€â”€ QUICK_REFERENCE.md
-â”‚   â”œâ”€â”€ BULK_UPLOAD_USER_GUIDE.md
-â”‚   â””â”€â”€ OCR_VERIFIED_WORKING.md
-â”‚
-â”œâ”€â”€ README.md                  # Project README
-â””â”€â”€ start.ps1                  # Quick start script</code></pre>
+├── packages/
+│   ├── core-engine/           # Python calculation engine
+│   │   ├── __init__.py
+│   │   ├── engine.py          # Main calculation logic (500+ lines)
+│   │   ├── fx_service.py      # Foreign exchange rates
+│   │   ├── optimizer.py       # Optimization strategies
+│   │   ├── models.py          # Data models
+│   │   ├── verify.py          # Engine verification tests
+│   │   ├── test_engine.py     # Unit tests
+│   │   ├── requirements.txt   # Python dependencies
+│   │   └── config/
+│   │       ├── currencies.json
+│   │       └── fx_rates_cache.json
+│   │
+│   ├── desktop-app/           # Electron frontend
+│   │   ├── electron/          # Electron main process
+│   │   │   ├── main.ts        # Main process entry
+│   │   │   ├── preload.ts     # Preload script
+│   │   │   └── window.ts      # Window management
+│   │   ├── src/               # React application
+│   │   │   ├── App.tsx        # Main app component
+│   │   │   ├── main.tsx       # React entry point
+│   │   │   ├── components/    # React components
+│   │   │   │   ├── CalculatorPage.tsx    (450 lines)
+│   │   │   │   ├── HistoryPage.tsx       (380 lines)
+│   │   │   │   ├── BulkUploadPage.tsx    (695 lines)
+│   │   │   │   └── SettingsPage.tsx      (280 lines)
+│   │   │   ├── contexts/      # React contexts
+│   │   │   │   ├── LanguageContext.tsx
+│   │   │   │   └── ThemeContext.tsx
+│   │   │   ├── api/           # API client
+│   │   │   │   └── client.ts  # HTTP client
+│   │   │   ├── types/         # TypeScript types
+│   │   │   └── locales/       # Translation files
+│   │   ├── package.json
+│   │   ├── vite.config.ts
+│   │   ├── tailwind.config.js
+│   │   └── tsconfig.json
+│   │
+│   └── local-backend/         # FastAPI backend
+│       ├── app/
+│       │   ├── main.py        # FastAPI application
+│       │   ├── api/           # API endpoints
+│       │   │   ├── calculations.py     (530 lines)
+│       │   │   ├── bulk.py             (420 lines)
+│       │   │   ├── ocr.py              (350 lines)
+│       │   │   ├── history.py          (280 lines)
+│       │   │   └── settings.py         (150 lines)
+│       │   ├── services/      # Business logic
+│       │   │   ├── ocr_processor.py    (645 lines)
+│       │   │   └── smart_defaults.py   (180 lines)
+│       │   ├── db/            # Database
+│       │   │   ├── database.py
+│       │   │   └── models.py
+│       │   ├── utils/         # Utilities
+│       │   │   └── logger.py
+│       │   └── locales/       # Translation files
+│       │       ├── en.json
+│       │       ├── hi.json
+│       │       ├── es.json
+│       │       ├── fr.json
+│       │       └── de.json
+│       ├── requirements.txt
+│       └── install_dependencies.ps1
+│
+├── check/                     # Installation scripts
+│   ├── install_dependencies.ps1
+│   ├── check_dependencies.ps1
+│   └── start_with_auto_install.ps1
+│
+├── documentation/             # Project documentation
+│   ├── COMPLETE_PROJECT_DOCUMENTATION.md  (8071 lines)
+│   ├── QUICK_REFERENCE.md
+│   ├── BULK_UPLOAD_USER_GUIDE.md
+│   └── OCR_VERIFIED_WORKING.md
+│
+├── README.md                  # Project README
+└── start.ps1                  # Quick start script</code></pre>
 
                 <h3>Key Statistics</h3>
                 <div class="stats-grid">
@@ -405,10 +401,7 @@
         </div>
     </div>
 
-    <script src="../js/responsive.js"></script>
-    <script src="../js/navigation.js"></script>
-    <script src="../js/page-navigation.js"></script>
-    <script src="../js/auth-guard.js"></script>
-    <script src="../js/auth-logout.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
 </body>
 </html>

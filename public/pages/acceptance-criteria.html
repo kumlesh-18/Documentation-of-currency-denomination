@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceptance Criteria - Currency Denomination Calculator</title>
-        <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -12,73 +12,69 @@
 <body>
     <div class="app-container">
 
-        <nav class="sidebar" id="sidebar">
+        <nav class="sidebar">
             <div class="sidebar-header">
-                <h2>📺 Documentation</h2>
-                <p style="font-size: 0.75rem; color: rgba(255,255,255,0.6); margin-top: 0.5rem;">v1.0.0</p>
+                <h2>Documentation</h2>
+                <p class="text-sm text-gray-400">Complete Project Reference</p>
             </div>
             
-            <div class="sidebar-nav">
-                <div class="nav-section">
-                    <div class="nav-section-title">Overview</div>
-                    <ul class="nav-links">
-                        <li><a href="../index.html">Home</a></li>
-                        <li><a href="./executive-summary.html">Executive Summary</a></li>
-                        <li><a href="./project-overview.html">Project Overview</a></li>
-                        <li><a href="./codebase.html">Browse Codebase (Live)</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Overview</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/index.html">Home</a></li>
+                    <li><a href="/pages/executive-summary.html">Executive Summary</a></li>
+                    <li><a href="/pages/project-overview.html">Project Overview</a></li>
+                    <li><a href="/pages/system-architecture.html">System Architecture</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Architecture</div>
-                    <ul class="nav-links">
-                        <li><a href="./system-architecture.html">System Architecture</a></li>
-                        <li><a href="./core-features.html">Core Features</a></li>
-                        <li><a href="./ui-ux-requirements.html">UI/UX Requirements</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Core Documentation</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/core-features.html">Core Features</a></li>
+                    <li><a href="/pages/ui-ux-requirements.html">UI/UX Requirements</a></li>
+                    <li><a href="/pages/backend-logic.html">Backend Logic</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Implementation</div>
-                    <ul class="nav-links">
-                        <li><a href="./backend-logic.html">Backend Logic</a></li>
-                        <li><a href="./bulk-upload.html">Bulk Upload System</a></li>
-                        <li><a href="./ocr-system.html">OCR System</a></li>
-                        <li><a href="./smart-defaults.html">Smart Defaults</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Advanced Features</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/bulk-upload.html">Bulk Upload System</a></li>
+                    <li><a href="/pages/ocr-system.html">OCR System</a></li>
+                    <li><a href="/pages/smart-defaults.html">Smart Defaults</a></li>
+                    <li><a href="/pages/multi-language.html">Multi-Language Support</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Technical Details</div>
-                    <ul class="nav-links">
-                        <li><a href="./multi-language.html">Multi-Language Support</a></li>
-                        <li><a href="./data-models.html">Data Models & Database</a></li>
-                        <li><a href="./api-specifications.html">API Specifications</a></li>
-                        <li><a href="./calculation-engine.html">Calculation Engine</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Technical Details</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/data-models.html">Data Models & Database</a></li>
+                    <li><a href="/pages/api-specifications.html">API Specifications</a></li>
+                    <li><a href="/pages/calculation-engine.html">Calculation Engine</a></li>
+                    <li><a href="/pages/error-handling.html">Error Handling</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Operations</div>
-                    <ul class="nav-links">
-                        <li><a href="./error-handling.html">Error Handling</a></li>
-                        <li><a href="./complete-codebase.html">Complete Codebase (Static)</a></li>
-                        <li><a href="./dependencies.html">Dependencies & Installation</a></li>
-                        <li><a href="./testing.html">Testing & QA</a></li>
-                        <li><a href="./deployment.html">Deployment</a></li>
-                        <li><a href="./performance.html">Performance Requirements</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Operations</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/dependencies.html">Dependencies & Installation</a></li>
+                    <li><a href="/pages/known-issues.html">Known Issues & Fixes</a></li>
+                    <li><a href="/pages/testing.html">Testing & QA</a></li>
+                    <li><a href="/pages/performance.html">Performance Requirements</a></li>
+                    <li><a href="/pages/deployment.html">Deployment</a></li>
+                </ul>
+            </div>
 
-                <div class="nav-section">
-                    <div class="nav-section-title">Resources</div>
-                    <ul class="nav-links">
-                        <li><a href="./known-issues.html">Known Issues & Fixes</a></li>
-                        <li><a href="./future-enhancements.html">Future Enhancements</a></li>
-                        <li><a href="./screenshots.html">Screenshots & Outputs</a></li>
-                        <li><a href="./acceptance-criteria.html" class="active">Acceptance Criteria</a></li>
-                    </ul>
-                </div>
+            <div class="sidebar-section">
+                <h3>Resources</h3>
+                <ul class="sidebar-links">
+                    <li><a href="/pages/future-enhancements.html">Future Enhancements</a></li>
+                    <li><a href="/pages/acceptance-criteria.html" class="active">Acceptance Criteria</a></li>
+                    <li><a href="/pages/screenshots.html">Screenshots & Outputs</a></li>
+                </ul>
             </div>
         </nav>
 
@@ -87,14 +83,14 @@
 
             <header class="page-header">
                 <div class="breadcrumbs">
-                    <a href="../index.html">Documentation</a>
+                    <a href="/index.html">Documentation</a>
                     <span class="separator">›</span>
                     <span>Acceptance Criteria</span>
                 </div>
                 <div class="header-actions">
-                    <a href="../index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a onclick="performLogout()" href="#" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">🏠 Home</a>
+                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
+                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
                 </div>
             </header>
 
@@ -129,11 +125,11 @@
                         </ul>
 
                         <h4>Test Cases Passed</h4>
-                        <pre><code>âœ“ Calculate 1850 INR (greedy) â†’ 6 pieces
-âœ“ Calculate 2500 USD (balanced) â†’ 8 pieces
-âœ“ Calculate 999999999999999 INR â†’ Valid result
-âœ“ Invalid amount (negative) â†’ Error message
-âœ“ Invalid currency (XYZ) â†’ Error message</code></pre>
+                        <pre><code>✓ Calculate 1850 INR (greedy) → 6 pieces
+✓ Calculate 2500 USD (balanced) → 8 pieces
+✓ Calculate 999999999999999 INR → Valid result
+✓ Invalid amount (negative) → Error message
+✓ Invalid currency (XYZ) → Error message</code></pre>
                     </div>
 
                     <h3>✅ 4 Optimization Modes</h3>
@@ -648,10 +644,7 @@
         </div>
     </div>
 
-    <script src="../js/responsive.js"></script>
-    <script src="../js/navigation.js"></script>
-    <script src="../js/page-navigation.js"></script>
-    <script src="../js/auth-guard.js"></script>
-    <script src="../js/auth-logout.js"></script>
+    <script src="/js/navigation.js"></script>
+    <script src="/js/page-navigation.js"></script>
 </body>
 </html>
