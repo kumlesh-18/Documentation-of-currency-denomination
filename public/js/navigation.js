@@ -140,48 +140,46 @@
         
         if (!sidebar || !mainContent) return;
         
-        // Always create the hamburger toggle button for all devices
+        // Get device type from ResponsiveSystem if available
+        const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
+        const isMobileOrTablet = device === 'mobile' || device === 'tablet' || state.isMobile;
+
+        // Create mobile toggle button for mobile AND tablet devices
         let toggleBtn = document.querySelector('.mobile-menu-toggle');
-        if (!toggleBtn) {
+        
+        if (!toggleBtn && isMobileOrTablet) {
             toggleBtn = document.createElement('button');
             toggleBtn.className = 'mobile-menu-toggle';
-            toggleBtn.setAttribute('role', 'button');
-            toggleBtn.setAttribute('aria-label', 'Toggle navigation');
+            toggleBtn.setAttribute('aria-label', 'Toggle navigation menu');
             toggleBtn.setAttribute('aria-expanded', 'false');
             toggleBtn.innerHTML = '<span aria-hidden="true">☰</span>';
-            // Always insert as first child of .page-header if present
-            const pageHeader = document.querySelector('.page-header');
-            if (pageHeader) {
-                pageHeader.insertBefore(toggleBtn, pageHeader.firstChild);
-            } else {
-                document.body.appendChild(toggleBtn);
-            }
+            document.body.appendChild(toggleBtn);
 
-            // Create overlay for backdrop (for mobile/tablet, but harmless on desktop)
-            let overlay = document.querySelector('.mobile-overlay');
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.className = 'mobile-overlay';
-                overlay.setAttribute('aria-hidden', 'true');
-                document.body.appendChild(overlay);
-            }
+            // Create overlay for backdrop
+            const overlay = document.createElement('div');
+            overlay.className = 'mobile-overlay';
+            overlay.setAttribute('aria-hidden', 'true');
+            document.body.appendChild(overlay);
 
             // Toggle menu on click
             toggleBtn.addEventListener('click', toggleMobileMenu);
             overlay.addEventListener('click', closeMobileMenu);
         }
 
-        // Always handle sidebar links for auto-close after navigation
-        const sidebarLinks = sidebar.querySelectorAll('a');
-        sidebarLinks.forEach(link => {
-            // Remove old listeners to prevent duplicates
-            const newLink = link.cloneNode(true);
-            link.parentNode.replaceChild(newLink, link);
-            newLink.addEventListener('click', () => {
-                // Auto-hide after navigation with slight delay
-                setTimeout(closeMobileMenu, CONFIG.autoCollapse.delay);
+        // Handle sidebar links on mobile and tablet - auto-close after navigation
+        if (isMobileOrTablet) {
+            const sidebarLinks = sidebar.querySelectorAll('a');
+            sidebarLinks.forEach(link => {
+                // Remove old listeners to prevent duplicates
+                const newLink = link.cloneNode(true);
+                link.parentNode.replaceChild(newLink, link);
+                
+                newLink.addEventListener('click', () => {
+                    // Auto-hide after navigation with slight delay
+                    setTimeout(closeMobileMenu, CONFIG.autoCollapse.delay);
+                });
             });
-        });
+        }
     }
 
     function toggleMobileMenu() {
