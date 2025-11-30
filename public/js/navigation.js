@@ -145,9 +145,23 @@
         const isMobileOrTablet = device === 'mobile' || device === 'tablet' || state.isMobile;
 
         // Handle hamburger menu button clicks (from HTML)
+        // Works on ALL devices - mobile/tablet use overlay, desktop/laptop toggle sidebar
         const hamburgerBtns = document.querySelectorAll('.hamburger-menu');
         hamburgerBtns.forEach(btn => {
-            btn.addEventListener('click', toggleMobileMenu);
+            btn.addEventListener('click', () => {
+                const device = window.ResponsiveSystem?.getDevice() || (state.isMobile ? 'mobile' : 'desktop');
+                const isMobileOrTablet = device === 'mobile' || device === 'tablet' || state.isMobile;
+                
+                if (isMobileOrTablet) {
+                    // Mobile/Tablet: Toggle overlay sidebar
+                    toggleMobileMenu();
+                } else {
+                    // Desktop/Laptop: Toggle sidebar collapse
+                    const sidebar = document.querySelector('.sidebar');
+                    const isCollapsed = sidebar?.classList.contains('collapsed');
+                    setSidebarState(!isCollapsed);
+                }
+            });
         });
 
         // Create mobile toggle button for mobile and tablet (dynamic creation)

@@ -1505,8 +1505,9 @@ tbody tr:last-child td {
 }
 
 /* Hamburger Menu Button (in page-header) */
+/* Always visible on ALL devices for manual sidebar toggle */
 .hamburger-menu {
-  display: none;
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -1557,13 +1558,6 @@ tbody tr:last-child td {
 
 .hamburger-menu.active .hamburger-bar:nth-child(3) {
   transform: translateY(-7px) rotate(-45deg);
-}
-
-/* Show hamburger menu on mobile and tablet */
-@media (max-width: 1024px) {
-  .hamburger-menu {
-    display: flex;
-  }
 }
 
 /* Touch device optimization */
