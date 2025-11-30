@@ -9,7 +9,7 @@
     // Breakpoint definitions
     const BREAKPOINTS = {
         mobile: 480,
-        tablet: 768,
+        tablet: 1024,  // Updated to match CSS tablet breakpoint
         laptop: 1280,
         desktop: Infinity
     };

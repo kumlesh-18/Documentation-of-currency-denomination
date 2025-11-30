@@ -12,7 +12,7 @@
     const CONFIG = {
         breakpoints: {
             mobile: 768,
-            tablet: 1024
+            tablet: 1024  // Matches CSS and responsive.js breakpoint
         },
         session: {
             timeout: 24 * 60 * 60 * 1000, // 24 hours
