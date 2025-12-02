@@ -589,6 +589,16 @@ hr {
   backdrop-filter: blur(10px);
 }
 
+/* Logo hover animation */
+.sidebar-header img {
+  transition: transform var(--transition-base);
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.2));
+}
+
+.sidebar-header:hover img {
+  transform: scale(1.05) rotate(3deg);
+}
+
 .sidebar-header h2 {
   color: white;
   font-size: var(--text-2xl);
