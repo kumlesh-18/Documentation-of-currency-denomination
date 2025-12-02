@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multi-Language Support - Currency Denomination Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +85,13 @@
             <header class="page-header">
                 <div class="breadcrumbs">
                     <a href="/index.html">Documentation</a>
-                    <span class="separator">›</span>
+                    <span class="separator">�</span>
                     <span>Multi</span>
                 </div>
                 <div class="header-actions">
-                    <a href="/index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">?? Home</a>
+                    <a href="javascript:window.print()" class="action-link">??? Print</a>
+                    <a href="/auth/logout" class="action-link">?? Logout</a>
                 </div>
                 <button class="hamburger-menu" aria-label="Toggle sidebar" role="button" tabindex="0" type="button">
                     <span class="hamburger-bar"></span>
@@ -127,21 +128,21 @@
                             <tr>
                                 <td>Hindi</td>
                                 <td><code>hi</code></td>
-                                <td>हिन्दी</td>
+                                <td>??????</td>
                                 <td>45+</td>
                                 <td><span class="badge badge-success">Complete</span></td>
                             </tr>
                             <tr>
                                 <td>Spanish</td>
                                 <td><code>es</code></td>
-                                <td>Español</td>
+                                <td>Espa�ol</td>
                                 <td>45+</td>
                                 <td><span class="badge badge-success">Complete</span></td>
                             </tr>
                             <tr>
                                 <td>French</td>
                                 <td><code>fr</code></td>
-                                <td>Français</td>
+                                <td>Fran�ais</td>
                                 <td>45+</td>
                                 <td><span class="badge badge-success">Complete</span></td>
                             </tr>
@@ -156,7 +157,7 @@
                     </table>
 
                     <div class="alert alert-info">
-                        <strong>Translation Coverage:</strong> 45+ keys × 5 languages = 225+ translations
+                        <strong>Translation Coverage:</strong> 45+ keys � 5 languages = 225+ translations
                     </div>
                 </section>
 
@@ -165,17 +166,17 @@
 
                     <h3>File Structure</h3>
                     <pre><code>packages/desktop-app/src/
-├── i18n/
-│   ├── config.ts           # i18n configuration
-│   ├── translations/
-│   │   ├── en.json        # English translations
-│   │   ├── hi.json        # Hindi translations
-│   │   ├── es.json        # Spanish translations
-│   │   ├── fr.json        # French translations
-│   │   └── de.json        # German translations
-│   └── index.ts           # Export all translations
-└── contexts/
-    └── LanguageContext.tsx  # Language state management</code></pre>
++-- i18n/
+�   +-- config.ts           # i18n configuration
+�   +-- translations/
+�   �   +-- en.json        # English translations
+�   �   +-- hi.json        # Hindi translations
+�   �   +-- es.json        # Spanish translations
+�   �   +-- fr.json        # French translations
+�   �   +-- de.json        # German translations
+�   +-- index.ts           # Export all translations
++-- contexts/
+    +-- LanguageContext.tsx  # Language state management</code></pre>
                 </section>
 
                 <section id="translation-keys">
@@ -338,23 +339,23 @@
 
                     <pre><code class="language-json">{
   "app": {
-    "title": "मुद्रा मूल्यवर्ग कैलकुलेटर",
-    "subtitle": "अपने नकदी वितरण को अनुकूलित करें"
+    "title": "?????? ????????? ?????????",
+    "subtitle": "???? ???? ????? ?? ???????? ????"
   },
   "navigation": {
-    "calculator": "कैलकुलेटर",
-    "history": "इतिहास",
-    "bulkUpload": "बल्क अपलोड",
-    "settings": "सेटिंग्स"
+    "calculator": "?????????",
+    "history": "??????",
+    "bulkUpload": "???? ?????",
+    "settings": "????????"
   },
   "calculator": {
-    "title": "मूल्यवर्ग कैलकुलेटर",
-    "amountLabel": "राशि दर्ज करें",
-    "amountPlaceholder": "राशि दर्ज करें...",
-    "currencyLabel": "मुद्रा",
-    "modeLabel": "अनुकूलन मोड",
-    "calculateButton": "गणना करें",
-    "calculating": "गणना हो रही है..."
+    "title": "????????? ?????????",
+    "amountLabel": "???? ???? ????",
+    "amountPlaceholder": "???? ???? ????...",
+    "currencyLabel": "??????",
+    "modeLabel": "??????? ???",
+    "calculateButton": "???? ????",
+    "calculating": "???? ?? ??? ??..."
   }
 }</code></pre>
                 </section>
@@ -478,9 +479,9 @@ const CalculatorPage = () => {
         onChange={(e) => setLanguage(e.target.value as Language)}
       >
         <option value="en">English</option>
-        <option value="hi">हिन्दी (Hindi)</option>
-        <option value="es">Español (Spanish)</option>
-        <option value="fr">Français (French)</option>
+        <option value="hi">?????? (Hindi)</option>
+        <option value="es">Espa�ol (Spanish)</option>
+        <option value="fr">Fran�ais (French)</option>
         <option value="de">Deutsch (German)</option>
       </select>
       
@@ -677,7 +678,7 @@ def get_localized_currencies(lang: str) -> Dict:
     """Get currency names in specified language."""
     translations = {
         'en': {'INR': 'Indian Rupee', 'USD': 'US Dollar', ...},
-        'hi': {'INR': 'भारतीय रुपया', 'USD': 'अमेरिकी डॉलर', ...},
+        'hi': {'INR': '?????? ?????', 'USD': '??????? ????', ...},
         # ...
     }
     
@@ -685,7 +686,7 @@ def get_localized_currencies(lang: str) -> Dict:
                 </section>
 
                 <div class="alert alert-success">
-                    <strong>✓ Section Complete</strong>
+                    <strong>? Section Complete</strong>
                     <p>This section covers complete multi-language support including 5 languages (45+ keys each = 225+ translations), React Context implementation, nested key support, localStorage persistence, component usage examples, RTL support planning, and translation management utilities.</p>
                 </div>
             

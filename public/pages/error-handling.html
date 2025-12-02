@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Error Handling & Validation - Currency Denomination Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +85,13 @@
             <header class="page-header">
                 <div class="breadcrumbs">
                     <a href="/index.html">Documentation</a>
-                    <span class="separator">›</span>
+                    <span class="separator">�</span>
                     <span>Error Handling & Validation</span>
                 </div>
                 <div class="header-actions">
-                    <a href="/index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">?? Home</a>
+                    <a href="javascript:window.print()" class="action-link">??? Print</a>
+                    <a href="/auth/logout" class="action-link">?? Logout</a>
                 </div>
                 <button class="hamburger-menu" aria-label="Toggle sidebar" role="button" tabindex="0" type="button">
                     <span class="hamburger-bar"></span>
@@ -167,7 +168,7 @@
                             </tr>
                             <tr>
                                 <td>Maximum</td>
-                                <td>≤ 1 trillion</td>
+                                <td>= 1 trillion</td>
                                 <td>"Amount exceeds maximum limit"</td>
                             </tr>
                             <tr>
@@ -218,7 +219,7 @@
                         <tbody>
                             <tr>
                                 <td>File Size</td>
-                                <td>≤ 10 MB</td>
+                                <td>= 10 MB</td>
                                 <td>"File size exceeds 10MB limit"</td>
                             </tr>
                             <tr>
@@ -467,18 +468,18 @@ class OCRException(AppException):
 
                     <h3>Exception Hierarchy Diagram</h3>
                     <pre><code>AppException (Base)
-├── ValidationException
-│   ├── InvalidAmountException
-│   ├── InvalidCurrencyException
-│   └── InvalidModeException
-├── CalculationException
-│   └── CalculationFailedException
-├── OCRException
-│   ├── TesseractNotFoundError
-│   └── OCRParsingError
-└── DatabaseException
-    ├── DatabaseConnectionError
-    └── DatabaseQueryError</code></pre>
++-- ValidationException
+�   +-- InvalidAmountException
+�   +-- InvalidCurrencyException
+�   +-- InvalidModeException
++-- CalculationException
+�   +-- CalculationFailedException
++-- OCRException
+�   +-- TesseractNotFoundError
+�   +-- OCRParsingError
++-- DatabaseException
+    +-- DatabaseConnectionError
+    +-- DatabaseQueryError</code></pre>
 
                     <h3>Usage Example</h3>
                     <pre><code class="language-python">def calculate_denominations(amount: Decimal, currency: str, mode: str):
@@ -555,8 +556,8 @@ async def general_exception_handler(request: Request, exc: Exception):
                         <ol>
                             <li><strong>AppException</strong>: Caught by <code>app_exception_handler</code>
                                 <ul>
-                                    <li>ValidationException → HTTP 400</li>
-                                    <li>Other AppExceptions → HTTP 500</li>
+                                    <li>ValidationException ? HTTP 400</li>
+                                    <li>Other AppExceptions ? HTTP 500</li>
                                 </ul>
                             </li>
                             <li><strong>Unexpected Exception</strong>: Caught by <code>general_exception_handler</code>
@@ -734,7 +735,7 @@ const ErrorAlert = ({ message }: { message: string }) => (
                 </section>
 
                 <div class="alert alert-success">
-                    <strong>✓ Section Complete</strong>
+                    <strong>? Section Complete</strong>
                     <p>This section covers comprehensive error handling: Client-side validation (TypeScript validators for amounts/files with immediate feedback), Server-side validation (Pydantic models with Field constraints and custom validators), Standard error response format (code/message/field/timestamp), Error code enumeration (VALIDATION_ERROR, CALCULATION_FAILED, OCR_PROCESSING_ERROR, etc.), Exception hierarchy (AppException base class with ValidationException, CalculationException, OCRException subclasses), Global exception handlers (FastAPI handlers for AppException and general Exception with logging), Frontend error handling (centralized API error handler with toast notifications), Complete validation pipeline (3 layers: client, server, business logic).</p>
                 </div>
             

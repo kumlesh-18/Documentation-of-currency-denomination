@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Deployment & Operations - Currency Denomination Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +85,13 @@
             <header class="page-header">
                 <div class="breadcrumbs">
                     <a href="/index.html">Documentation</a>
-                    <span class="separator">›</span>
+                    <span class="separator">�</span>
                     <span>Deployment & Operations</span>
                 </div>
                 <div class="header-actions">
-                    <a href="/index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">?? Home</a>
+                    <a href="javascript:window.print()" class="action-link">??? Print</a>
+                    <a href="/auth/logout" class="action-link">?? Logout</a>
                 </div>
                 <button class="hamburger-menu" aria-label="Toggle sidebar" role="button" tabindex="0" type="button">
                     <span class="hamburger-bar"></span>
@@ -314,9 +315,9 @@ $originalSize = (Get-Item $dbFile).Length
 $backupSize = (Get-Item $backupFile).Length
 
 if ($originalSize -eq $backupSize) {
-    Write-Host "✓ Backup successful: $backupFile" -ForegroundColor Green
+    Write-Host "? Backup successful: $backupFile" -ForegroundColor Green
 } else {
-    Write-Host "✗ Backup failed: Size mismatch" -ForegroundColor Red
+    Write-Host "? Backup failed: Size mismatch" -ForegroundColor Red
     exit 1
 }
 
@@ -330,7 +331,7 @@ Get-ChildItem -Path $backupDir -Filter "backup_*.db" |
         Write-Host "  Deleted: $($_.Name)" -ForegroundColor Yellow
     }
 
-Write-Host "✓ Backup process complete" -ForegroundColor Green</code></pre>
+Write-Host "? Backup process complete" -ForegroundColor Green</code></pre>
 
                         <h4>Schedule Automated Backup (Windows Task Scheduler)</h4>
                         <pre><code class="language-powershell"># Create scheduled task (run daily at 2 AM)
@@ -391,17 +392,17 @@ alembic downgrade -1</code></pre>
                             <tr>
                                 <td><code>logs/api.log</code></td>
                                 <td>API requests, errors</td>
-                                <td>5 files × 10MB</td>
+                                <td>5 files � 10MB</td>
                             </tr>
                             <tr>
                                 <td><code>logs/ocr.log</code></td>
                                 <td>OCR processing logs</td>
-                                <td>3 files × 10MB</td>
+                                <td>3 files � 10MB</td>
                             </tr>
                             <tr>
                                 <td><code>logs/calculation.log</code></td>
                                 <td>Calculation engine logs</td>
-                                <td>3 files × 10MB</td>
+                                <td>3 files � 10MB</td>
                             </tr>
                         </tbody>
                     </table>
@@ -415,42 +416,42 @@ Write-Host ""
 Write-Host "[1/4] Checking Backend API..." -ForegroundColor Yellow
 try {
     $response = Invoke-RestMethod -Uri "http://localhost:8000/health" -TimeoutSec 5
-    Write-Host "  ✓ Backend: HEALTHY" -ForegroundColor Green
+    Write-Host "  ? Backend: HEALTHY" -ForegroundColor Green
     Write-Host "    Database: $($response.database)"
     Write-Host "    Version: $($response.version)"
 } catch {
-    Write-Host "  ✗ Backend: OFFLINE" -ForegroundColor Red
+    Write-Host "  ? Backend: OFFLINE" -ForegroundColor Red
 }
 
 # 2. Check Database
 Write-Host "[2/4] Checking Database..." -ForegroundColor Yellow
 if (Test-Path "currency_calculator.db") {
     $dbSize = (Get-Item "currency_calculator.db").Length / 1MB
-    Write-Host "  ✓ Database: $($dbSize.ToString('F2')) MB" -ForegroundColor Green
+    Write-Host "  ? Database: $($dbSize.ToString('F2')) MB" -ForegroundColor Green
     
     if ($dbSize > 50) {
-        Write-Host "    ⚠ WARNING: Database > 50MB (consider cleanup)" -ForegroundColor Yellow
+        Write-Host "    ? WARNING: Database > 50MB (consider cleanup)" -ForegroundColor Yellow
     }
 } else {
-    Write-Host "  ✗ Database: NOT FOUND" -ForegroundColor Red
+    Write-Host "  ? Database: NOT FOUND" -ForegroundColor Red
 }
 
 # 3. Check Tesseract OCR
 Write-Host "[3/4] Checking Tesseract OCR..." -ForegroundColor Yellow
 try {
     $tesseractVersion = & tesseract --version 2>&1 | Select-Object -First 1
-    Write-Host "  ✓ Tesseract: $tesseractVersion" -ForegroundColor Green
+    Write-Host "  ? Tesseract: $tesseractVersion" -ForegroundColor Green
 } catch {
-    Write-Host "  ✗ Tesseract: NOT FOUND" -ForegroundColor Red
+    Write-Host "  ? Tesseract: NOT FOUND" -ForegroundColor Red
 }
 
 # 4. Check Poppler (PDF processing)
 Write-Host "[4/4] Checking Poppler..." -ForegroundColor Yellow
 try {
     $popplerVersion = & pdftoppm -v 2>&1 | Select-Object -First 1
-    Write-Host "  ✓ Poppler: $popplerVersion" -ForegroundColor Green
+    Write-Host "  ? Poppler: $popplerVersion" -ForegroundColor Green
 } catch {
-    Write-Host "  ✗ Poppler: NOT FOUND" -ForegroundColor Red
+    Write-Host "  ? Poppler: NOT FOUND" -ForegroundColor Red
 }
 
 Write-Host ""
@@ -464,25 +465,25 @@ Write-Host "=== Health Check Complete ===" -ForegroundColor Cyan</code></pre>
                     <div class="feature-card">
                         <h4>Daily Tasks</h4>
                         <ul>
-                            <li>☑ Monitor log files for errors</li>
-                            <li>☑ Check database size</li>
-                            <li>☑ Verify backups are running</li>
+                            <li>? Monitor log files for errors</li>
+                            <li>? Check database size</li>
+                            <li>? Verify backups are running</li>
                         </ul>
 
                         <h4>Weekly Tasks</h4>
                         <ul>
-                            <li>☑ Review backup retention</li>
-                            <li>☑ Test restore procedure</li>
-                            <li>☑ Check disk space</li>
-                            <li>☑ Update dependencies (security patches)</li>
+                            <li>? Review backup retention</li>
+                            <li>? Test restore procedure</li>
+                            <li>? Check disk space</li>
+                            <li>? Update dependencies (security patches)</li>
                         </ul>
 
                         <h4>Monthly Tasks</h4>
                         <ul>
-                            <li>☑ Database vacuum (optimize)</li>
-                            <li>☑ Clean up old log files</li>
-                            <li>☑ Review performance metrics</li>
-                            <li>☑ Update Tesseract/Poppler if needed</li>
+                            <li>? Database vacuum (optimize)</li>
+                            <li>? Clean up old log files</li>
+                            <li>? Review performance metrics</li>
+                            <li>? Update Tesseract/Poppler if needed</li>
                         </ul>
                     </div>
 
@@ -505,7 +506,7 @@ Get-ChildItem -Path "logs" -Filter "*.log*" |
                 </section>
 
                 <div class="alert alert-success">
-                    <strong>✓ Section Complete</strong>
+                    <strong>? Section Complete</strong>
                     <p>This section covers deployment processes: Development build (backend: uvicorn, frontend: npm run dev), Production build (Electron packaging with NSIS/Portable), Backend deployment (local server, Windows Service with NSSM), Database management (backup/restore scripts, automated backups with Task Scheduler, Alembic migrations), Monitoring & logging (rotating file handlers, health check script), Maintenance tasks (daily/weekly/monthly checklists, database optimization, log cleanup).</p>
                 </div>
             

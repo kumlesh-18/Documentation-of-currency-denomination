@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OCR System Implementation - Currency Denomination Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +85,13 @@
             <header class="page-header">
                 <div class="breadcrumbs">
                     <a href="/index.html">Documentation</a>
-                    <span class="separator">›</span>
+                    <span class="separator">�</span>
                     <span>OCR System Implementation</span>
                 </div>
                 <div class="header-actions">
-                    <a href="/index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">?? Home</a>
+                    <a href="javascript:window.print()" class="action-link">??? Print</a>
+                    <a href="/auth/logout" class="action-link">?? Logout</a>
                 </div>
                 <button class="hamburger-menu" aria-label="Toggle sidebar" role="button" tabindex="0" type="button">
                     <span class="hamburger-bar"></span>
@@ -539,7 +540,7 @@ def _is_list_format(self, text: str) -> bool:
                     <div class="alert alert-success">
                         <strong>4 Detection Strategies (Priority Order):</strong>
                         <ol>
-                            <li><strong>Currency Symbols:</strong> ₹, Rs, $, €, £</li>
+                            <li><strong>Currency Symbols:</strong> ?, Rs, $, �, �</li>
                             <li><strong>Currency Codes:</strong> INR, USD, EUR, GBP</li>
                             <li><strong>Currency Names:</strong> Rupee, Dollar, Euro, Pound</li>
                             <li><strong>Default Fallback:</strong> INR (smart default)</li>
@@ -551,7 +552,7 @@ def _is_list_format(self, text: str) -> bool:
     Detect currency from text using multiple strategies.
     
     Strategy priority:
-    1. Currency symbols (₹, $, €, £)
+    1. Currency symbols (?, $, �, �)
     2. Currency codes (INR, USD, EUR, GBP)
     3. Currency names (Rupee, Dollar, Euro, Pound)
     4. Default fallback
@@ -559,13 +560,13 @@ def _is_list_format(self, text: str) -> bool:
     text_upper = text.upper()
     
     # Strategy 1: Symbols
-    if '₹' in text or 'RS' in text_upper or 'RS.' in text_upper:
+    if '?' in text or 'RS' in text_upper or 'RS.' in text_upper:
         return 'INR'
     elif '$' in text:
         return 'USD'
-    elif '€' in text:
+    elif '�' in text:
         return 'EUR'
-    elif '£' in text:
+    elif '�' in text:
         return 'GBP'
     
     # Strategy 2: Currency codes
@@ -690,20 +691,20 @@ Write-Host "Poppler installed successfully!" -ForegroundColor Green</code></pre>
                     <div class="feature-card">
                         <h4>Implemented Enhancements</h4>
                         <ul>
-                            <li>✓ <strong>Grayscale Conversion:</strong> Reduces noise</li>
-                            <li>✓ <strong>DPI Upscaling:</strong> Minimum 1000px width for Tesseract</li>
-                            <li>✓ <strong>Contrast Enhancement:</strong> Better text visibility</li>
-                            <li>✓ <strong>Denoising:</strong> Remove artifacts</li>
+                            <li>? <strong>Grayscale Conversion:</strong> Reduces noise</li>
+                            <li>? <strong>DPI Upscaling:</strong> Minimum 1000px width for Tesseract</li>
+                            <li>? <strong>Contrast Enhancement:</strong> Better text visibility</li>
+                            <li>? <strong>Denoising:</strong> Remove artifacts</li>
                         </ul>
                     </div>
 
                     <div class="feature-card">
                         <h4>Future Enhancements</h4>
                         <ul>
-                            <li>⏳ Adaptive thresholding</li>
-                            <li>⏳ Skew correction</li>
-                            <li>⏳ Border removal</li>
-                            <li>⏳ Language-specific training data</li>
+                            <li>? Adaptive thresholding</li>
+                            <li>? Skew correction</li>
+                            <li>? Border removal</li>
+                            <li>? Language-specific training data</li>
                         </ul>
                     </div>
 
@@ -785,7 +786,7 @@ tesseract --list-langs
                 </section>
 
                 <div class="alert alert-success">
-                    <strong>✓ Section Complete</strong>
+                    <strong>? Section Complete</strong>
                     <p>This section covers complete OCR system implementation including Tesseract integration, 5 text parsing strategies, currency/mode detection (4 + 1 strategies), installation scripts for Windows, and multi-language support.</p>
                 </div>
             

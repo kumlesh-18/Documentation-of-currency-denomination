@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Core Features - Currency Denomination Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +85,13 @@
             <header class="page-header">
                 <div class="breadcrumbs">
                     <a href="/index.html">Documentation</a>
-                    <span class="separator">›</span>
+                    <span class="separator">�</span>
                     <span>Core Features</span>
                 </div>
                 <div class="header-actions">
-                    <a href="/index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">?? Home</a>
+                    <a href="javascript:window.print()" class="action-link">??? Print</a>
+                    <a href="/auth/logout" class="action-link">?? Logout</a>
                 </div>
                 <button class="hamburger-menu" aria-label="Toggle sidebar" role="button" tabindex="0" type="button">
                     <span class="hamburger-bar"></span>
@@ -185,7 +186,7 @@ interface DenominationBreakdown {
                             <tr>
                                 <td>Indian Rupee</td>
                                 <td><span class="badge badge-primary">INR</span></td>
-                                <td>₹</td>
+                                <td>?</td>
                                 <td>2000, 500, 200, 100, 50, 20, 10</td>
                                 <td>10, 5, 2, 1</td>
                                 <td>0.01 (paisa)</td>
@@ -201,7 +202,7 @@ interface DenominationBreakdown {
                             <tr>
                                 <td>Euro</td>
                                 <td><span class="badge badge-primary">EUR</span></td>
-                                <td>€</td>
+                                <td>�</td>
                                 <td>500, 200, 100, 50, 20, 10, 5</td>
                                 <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
                                 <td>0.01 (cent)</td>
@@ -209,7 +210,7 @@ interface DenominationBreakdown {
                             <tr>
                                 <td>British Pound</td>
                                 <td><span class="badge badge-primary">GBP</span></td>
-                                <td>£</td>
+                                <td>�</td>
                                 <td>50, 20, 10, 5</td>
                                 <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
                                 <td>0.01 (penny)</td>
@@ -223,7 +224,7 @@ interface DenominationBreakdown {
                     <pre><code class="language-json">{
   "INR": {
     "name": "Indian Rupee",
-    "symbol": "₹",
+    "symbol": "?",
     "code": "INR",
     "notes": [2000, 500, 200, 100, 50, 20, 10],
     "coins": [10, 5, 2, 1],
@@ -252,8 +253,8 @@ interface DenominationBreakdown {
                         </ul>
                         
                         <p><strong>Example:</strong></p>
-                        <pre><code>Amount: ₹50,000
-Result: 25 × ₹2000 = ₹50,000
+                        <pre><code>Amount: ?50,000
+Result: 25 � ?2000 = ?50,000
 Total: 25 denominations</code></pre>
                     </div>
 
@@ -267,10 +268,10 @@ Total: 25 denominations</code></pre>
                         </ul>
                         
                         <p><strong>Example:</strong></p>
-                        <pre><code>Amount: ₹50,000
+                        <pre><code>Amount: ?50,000
 Result:
-  10 × ₹2000 = ₹20,000
-  10 × ₹500  = ₹5,000
+  10 � ?2000 = ?20,000
+  10 � ?500  = ?5,000
   ... (more balanced)</code></pre>
                     </div>
 
@@ -310,37 +311,37 @@ Result:
                             <tr>
                                 <td>1,000</td>
                                 <td>One thousand</td>
-                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                                <td><span class="badge badge-success">? Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,000</td>
                                 <td>One lakh</td>
-                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                                <td><span class="badge badge-success">? Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,00,000</td>
                                 <td>One crore</td>
-                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                                <td><span class="badge badge-success">? Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,00,00,000</td>
                                 <td>One hundred crore</td>
-                                <td><span class="badge badge-success">✓ Standard calculation</span></td>
+                                <td><span class="badge badge-success">? Standard calculation</span></td>
                             </tr>
                             <tr>
                                 <td>10,00,00,00,000</td>
                                 <td>One thousand crore (10 billion)</td>
-                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
+                                <td><span class="badge badge-success">? Handle correctly</span></td>
                             </tr>
                             <tr>
                                 <td>1,00,00,00,00,000</td>
                                 <td>One lakh crore (1 trillion)</td>
-                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
+                                <td><span class="badge badge-success">? Handle correctly</span></td>
                             </tr>
                             <tr>
                                 <td>10,00,00,00,00,000</td>
                                 <td>Ten lakh crore (10 trillion)</td>
-                                <td><span class="badge badge-success">✓ Handle correctly</span></td>
+                                <td><span class="badge badge-success">? Handle correctly</span></td>
                             </tr>
                         </tbody>
                     </table>
@@ -373,12 +374,12 @@ pytest test_engine.py::test_extreme_large_amounts</code></pre>
 
                     <p><strong>Requirements:</strong></p>
                     <ul>
-                        <li>✓ <strong>MUST</strong> store unlimited calculations (SQLite has no practical limit)</li>
-                        <li>✓ <strong>MUST</strong> support pagination (default 50 per page)</li>
-                        <li>✓ <strong>MUST</strong> support filtering by currency, date range</li>
-                        <li>✓ <strong>MUST</strong> support sorting by date, amount</li>
-                        <li>✓ <strong>MUST</strong> allow individual deletion</li>
-                        <li>✓ <strong>MUST</strong> allow batch deletion (all, by filter)</li>
+                        <li>? <strong>MUST</strong> store unlimited calculations (SQLite has no practical limit)</li>
+                        <li>? <strong>MUST</strong> support pagination (default 50 per page)</li>
+                        <li>? <strong>MUST</strong> support filtering by currency, date range</li>
+                        <li>? <strong>MUST</strong> support sorting by date, amount</li>
+                        <li>? <strong>MUST</strong> allow individual deletion</li>
+                        <li>? <strong>MUST</strong> allow batch deletion (all, by filter)</li>
                     </ul>
 
                     <h4>Database Schema</h4>
@@ -408,10 +409,10 @@ GET    /api/v1/history/stats</code></pre>
 
                     <p><strong>Requirements:</strong></p>
                     <ul>
-                        <li>✓ <strong>MUST</strong> show last 10 calculations chronologically</li>
-                        <li>✓ <strong>MUST</strong> update in real-time when new calculation made</li>
-                        <li>✓ <strong>MUST</strong> allow click to view full details</li>
-                        <li>✓ <strong>MUST</strong> show: amount, currency, date, total denominations</li>
+                        <li>? <strong>MUST</strong> show last 10 calculations chronologically</li>
+                        <li>? <strong>MUST</strong> update in real-time when new calculation made</li>
+                        <li>? <strong>MUST</strong> allow click to view full details</li>
+                        <li>? <strong>MUST</strong> show: amount, currency, date, total denominations</li>
                     </ul>
 
                     <p><strong>UI Location:</strong> Left sidebar in History page</p>
@@ -432,7 +433,7 @@ GET    /api/v1/history/stats</code></pre>
                     <h3>4.3.1 Supported File Formats</h3>
 
                     <div class="feature-card">
-                        <h4>📄 CSV Files (.csv)</h4>
+                        <h4>?? CSV Files (.csv)</h4>
                         <ul>
                             <li><strong>Method:</strong> Direct parsing</li>
                             <li><strong>Max Size:</strong> 10 MB</li>
@@ -442,7 +443,7 @@ GET    /api/v1/history/stats</code></pre>
                     </div>
 
                     <div class="feature-card">
-                        <h4>📕 PDF Files (.pdf)</h4>
+                        <h4>?? PDF Files (.pdf)</h4>
                         <ul>
                             <li><strong>Method:</strong> PyMuPDF (text) + Tesseract OCR (scanned)</li>
                             <li><strong>Max Size:</strong> 50 MB</li>
@@ -452,7 +453,7 @@ GET    /api/v1/history/stats</code></pre>
                     </div>
 
                     <div class="feature-card">
-                        <h4>📘 Word Documents (.docx, .doc)</h4>
+                        <h4>?? Word Documents (.docx, .doc)</h4>
                         <ul>
                             <li><strong>Method:</strong> python-docx</li>
                             <li><strong>Max Size:</strong> 10 MB</li>
@@ -462,7 +463,7 @@ GET    /api/v1/history/stats</code></pre>
                     </div>
 
                     <div class="feature-card">
-                        <h4>🖼️ Image Files</h4>
+                        <h4>??? Image Files</h4>
                         <ul>
                             <li><strong>Formats:</strong> .jpg, .jpeg, .png, .tiff, .tif, .bmp, .gif, .webp</li>
                             <li><strong>Method:</strong> Tesseract OCR</li>
@@ -535,12 +536,12 @@ GET    /api/v1/history/stats</code></pre>
 
                     <div class="alert alert-info">
                         <strong>Step 3: Upload &amp; Processing</strong>
-                        <pre><code>[Client]  → FormData creation → HTTP POST /api/calculations/bulk-upload
-[Server]  → File type detection → Route to processor
-[Processor] → Extract rows → Parse each line
-[Parser]  → Apply smart defaults → Validate data
-[Engine]  → Calculate each row → Collect results
-[Response] → Return summary + details</code></pre>
+                        <pre><code>[Client]  ? FormData creation ? HTTP POST /api/calculations/bulk-upload
+[Server]  ? File type detection ? Route to processor
+[Processor] ? Extract rows ? Parse each line
+[Parser]  ? Apply smart defaults ? Validate data
+[Engine]  ? Calculate each row ? Collect results
+[Response] ? Return summary + details</code></pre>
                     </div>
 
                     <div class="alert alert-info">
@@ -560,7 +561,7 @@ GET    /api/v1/history/stats</code></pre>
                         <ul>
                             <li><strong>Applied when:</strong> No currency specified in row</li>
                             <li><strong>Configurable:</strong> Yes (in <code>ocr_processor.py</code>)</li>
-                            <li><strong>Fallback Order:</strong> Specified → System Default</li>
+                            <li><strong>Fallback Order:</strong> Specified ? System Default</li>
                         </ul>
                     </div>
 
@@ -569,7 +570,7 @@ GET    /api/v1/history/stats</code></pre>
                         <ul>
                             <li><strong>Applied when:</strong> No mode specified in row</li>
                             <li><strong>Configurable:</strong> Yes (in <code>ocr_processor.py</code>)</li>
-                            <li><strong>Fallback Order:</strong> Specified → System Default</li>
+                            <li><strong>Fallback Order:</strong> Specified ? System Default</li>
                         </ul>
                     </div>
 
@@ -690,12 +691,12 @@ Total is 250 in EUR with balanced optimization</code></pre>
     if not amount:
         return None
     
-    # Extract currency (optional → defaults to INR)
+    # Extract currency (optional ? defaults to INR)
     currency = self._smart_extract_currency(line)
     if not currency:
         currency = self.default_currency
     
-    # Extract mode (optional → defaults to greedy)
+    # Extract mode (optional ? defaults to greedy)
     mode = self._smart_extract_mode(line)
     if not mode:
         mode = self.default_mode
@@ -710,13 +711,13 @@ Total is 250 in EUR with balanced optimization</code></pre>
                     <h3>4.4.4 Currency Detection</h3>
 
                     <h4>Strategy 1: Currency Symbols</h4>
-                    <pre><code class="language-python">if '₹' in text or 'rs.' in text.lower():
+                    <pre><code class="language-python">if '?' in text or 'rs.' in text.lower():
     return 'INR'
 if '$' in text:
     return 'USD'
-if '€' in text:
+if '�' in text:
     return 'EUR'
-if '£' in text:
+if '�' in text:
     return 'GBP'</code></pre>
 
                     <h4>Strategy 2: Currency Names</h4>
@@ -745,7 +746,7 @@ if match and match.group(1) not in ['THE', 'AND', 'FOR', ...]:
 
                     <h4>Single Calculation</h4>
                     <pre><code class="language-csv">Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Breakdown
-50000,INR,greedy,25,0,1,"25 × ₹2000 = ₹50000"</code></pre>
+50000,INR,greedy,25,0,1,"25 � ?2000 = ?50000"</code></pre>
 
                     <h4>Bulk Upload Results</h4>
                     <pre><code class="language-csv">Row Number,Status,Amount,Currency,Optimization Mode,Total Notes,Total Coins,Total Denominations,Error
@@ -800,9 +801,9 @@ Failed: 1
 Processing Time: 0.12s
 
 Detailed Results:
-Row 1: ✓ 1000 INR → 2 denominations
-Row 2: ✓ 250.50 USD → 11 denominations
-Row 3: ✗ Invalid amount format</code></pre>
+Row 1: ? 1000 INR ? 2 denominations
+Row 2: ? 250.50 USD ? 11 denominations
+Row 3: ? Invalid amount format</code></pre>
 
                     <h4>Implementation</h4>
                     <pre><code class="language-typescript">async handleCopy() {
@@ -832,35 +833,35 @@ Row 3: ✗ Invalid amount format</code></pre>
                             <tr>
                                 <td>English</td>
                                 <td><span class="badge badge-primary">en</span></td>
-                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td><span class="badge badge-success">? Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>Hindi</td>
                                 <td><span class="badge badge-primary">hi</span></td>
-                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td><span class="badge badge-success">? Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>Spanish</td>
                                 <td><span class="badge badge-primary">es</span></td>
-                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td><span class="badge badge-success">? Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>French</td>
                                 <td><span class="badge badge-primary">fr</span></td>
-                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td><span class="badge badge-success">? Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
                             <tr>
                                 <td>German</td>
                                 <td><span class="badge badge-primary">de</span></td>
-                                <td><span class="badge badge-success">✓ Complete</span></td>
+                                <td><span class="badge badge-success">? Complete</span></td>
                                 <td>45+ keys</td>
                                 <td>100%</td>
                             </tr>
@@ -985,8 +986,8 @@ module.exports = {
 );</code></pre>
 
                     <h4>API</h4>
-                    <pre><code class="language-http">GET  /api/v1/settings → {theme: 'dark', language: 'en'}
-PUT  /api/v1/settings → {theme: 'dark'}</code></pre>
+                    <pre><code class="language-http">GET  /api/v1/settings ? {theme: 'dark', language: 'en'}
+PUT  /api/v1/settings ? {theme: 'dark'}</code></pre>
 
                     <h4>Startup</h4>
                     <pre><code class="language-typescript">// Load saved theme on app start
@@ -998,7 +999,7 @@ useEffect(() => {
                 </section>
 
                 <div class="alert alert-success">
-                    <strong>✓ Section Complete</strong>
+                    <strong>? Section Complete</strong>
                     <p>This section covers all 7 core features: Calculation Engine, History Management, Bulk Upload, OCR System, Export Features, Multi-Language Support, and Dark Mode.</p>
                 </div>
             

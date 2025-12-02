@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acceptance Criteria - Currency Denomination Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +85,13 @@
             <header class="page-header">
                 <div class="breadcrumbs">
                     <a href="/index.html">Documentation</a>
-                    <span class="separator">›</span>
+                    <span class="separator">�</span>
                     <span>Acceptance Criteria</span>
                 </div>
                 <div class="header-actions">
-                    <a href="/index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">?? Home</a>
+                    <a href="javascript:window.print()" class="action-link">??? Print</a>
+                    <a href="/auth/logout" class="action-link">?? Logout</a>
                 </div>
                 <button class="hamburger-menu" aria-label="Toggle sidebar" role="button" tabindex="0" type="button">
                     <span class="hamburger-bar"></span>
@@ -101,43 +102,43 @@
 
             <article class="article-container">
 
-                <h1>18. Acceptance Criteria - Phase 1 Complete ✅</h1>
+                <h1>18. Acceptance Criteria - Phase 1 Complete ?</h1>
 
                 <div class="alert alert-success">
-                    <strong>✅ Phase 1 Complete</strong>
+                    <strong>? Phase 1 Complete</strong>
                     <p>All core features, advanced features, and system requirements have been successfully implemented and tested.</p>
                 </div>
 
                 <section id="core-features">
                     <h2>Core Features</h2>
 
-                    <h3>✅ Single Denomination Calculation</h3>
+                    <h3>? Single Denomination Calculation</h3>
                     <div class="feature-card">
                         <h4>Requirements</h4>
                         <ul>
-                            <li>✅ Accept amount input (up to 1 trillion)</li>
-                            <li>✅ Support 4 currencies (INR, USD, EUR, GBP)</li>
-                            <li>✅ Support 4 optimization modes</li>
-                            <li>✅ Calculate denomination breakdown</li>
-                            <li>✅ Display results with counts and totals</li>
+                            <li>? Accept amount input (up to 1 trillion)</li>
+                            <li>? Support 4 currencies (INR, USD, EUR, GBP)</li>
+                            <li>? Support 4 optimization modes</li>
+                            <li>? Calculate denomination breakdown</li>
+                            <li>? Display results with counts and totals</li>
                         </ul>
 
                         <h4>Validation</h4>
                         <ul>
-                            <li>✅ Amount validation (positive, max 2 decimals)</li>
-                            <li>✅ Currency validation (must be supported)</li>
-                            <li>✅ Mode validation (must be valid)</li>
+                            <li>? Amount validation (positive, max 2 decimals)</li>
+                            <li>? Currency validation (must be supported)</li>
+                            <li>? Mode validation (must be valid)</li>
                         </ul>
 
                         <h4>Test Cases Passed</h4>
-                        <pre><code>✓ Calculate 1850 INR (greedy) → 6 pieces
-✓ Calculate 2500 USD (balanced) → 8 pieces
-✓ Calculate 999999999999999 INR → Valid result
-✓ Invalid amount (negative) → Error message
-✓ Invalid currency (XYZ) → Error message</code></pre>
+                        <pre><code>? Calculate 1850 INR (greedy) ? 6 pieces
+? Calculate 2500 USD (balanced) ? 8 pieces
+? Calculate 999999999999999 INR ? Valid result
+? Invalid amount (negative) ? Error message
+? Invalid currency (XYZ) ? Error message</code></pre>
                     </div>
 
-                    <h3>✅ 4 Optimization Modes</h3>
+                    <h3>? 4 Optimization Modes</h3>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -150,27 +151,27 @@
                             <tr>
                                 <td>Greedy</td>
                                 <td>Minimize total pieces (largest denominations first)</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Balanced</td>
                                 <td>Distribute evenly across denominations</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Minimize Large</td>
                                 <td>Minimize notes (prefer coins)</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Minimize Small</td>
                                 <td>Minimize coins (prefer notes)</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                         </tbody>
                     </table>
 
-                    <h3>✅ 4 Currencies Support</h3>
+                    <h3>? 4 Currencies Support</h3>
                     <table class="data-table">
                         <thead>
                             <tr>
@@ -182,47 +183,47 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td>INR (₹)</td>
+                                <td>INR (?)</td>
                                 <td>2000, 500, 200, 100, 50, 20, 10</td>
                                 <td>10, 5, 2, 1</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>USD ($)</td>
                                 <td>100, 50, 20, 10, 5, 2, 1</td>
                                 <td>0.25, 0.10, 0.05, 0.01</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
-                                <td>EUR (€)</td>
+                                <td>EUR (�)</td>
                                 <td>500, 200, 100, 50, 20, 10, 5</td>
                                 <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
-                                <td>GBP (£)</td>
+                                <td>GBP (�)</td>
                                 <td>50, 20, 10, 5</td>
                                 <td>2, 1, 0.50, 0.20, 0.10, 0.05, 0.02, 0.01</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                         </tbody>
                     </table>
                 </section>
 
                 <section id="history-management">
-                    <h2>✅ History Management</h2>
+                    <h2>? History Management</h2>
 
                     <div class="feature-card">
                         <h4>Requirements</h4>
                         <ul>
-                            <li>✅ Save calculations to database</li>
-                            <li>✅ Display history in table format</li>
-                            <li>✅ Pagination (50 items per page)</li>
-                            <li>✅ Sort by timestamp (newest first)</li>
-                            <li>✅ Filter by currency</li>
-                            <li>✅ Delete individual calculation</li>
-                            <li>✅ Clear all history</li>
-                            <li>✅ View calculation details</li>
+                            <li>? Save calculations to database</li>
+                            <li>? Display history in table format</li>
+                            <li>? Pagination (50 items per page)</li>
+                            <li>? Sort by timestamp (newest first)</li>
+                            <li>? Filter by currency</li>
+                            <li>? Delete individual calculation</li>
+                            <li>? Clear all history</li>
+                            <li>? View calculation details</li>
                         </ul>
 
                         <h4>Database Schema</h4>
@@ -239,7 +240,7 @@
                 </section>
 
                 <section id="bulk-upload">
-                    <h2>✅ Bulk Upload System</h2>
+                    <h2>? Bulk Upload System</h2>
 
                     <h3>Supported File Formats</h3>
                     <table class="data-table">
@@ -256,25 +257,25 @@
                                 <td>CSV</td>
                                 <td>.csv</td>
                                 <td>Direct parsing</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>PDF</td>
                                 <td>.pdf</td>
                                 <td>Poppler + OCR</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Word</td>
                                 <td>.docx</td>
                                 <td>python-docx + OCR</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Images</td>
                                 <td>.jpg, .png</td>
                                 <td>Tesseract OCR</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                         </tbody>
                     </table>
@@ -282,35 +283,35 @@
                     <h3>Bulk Upload Features</h3>
                     <div class="feature-card">
                         <ul>
-                            <li>✅ File validation (type, size ≤ 10MB)</li>
-                            <li>✅ Progress indicator during processing</li>
-                            <li>✅ Success/failure count summary</li>
-                            <li>✅ Detailed results table</li>
-                            <li>✅ Export results (CSV, JSON, Clipboard)</li>
-                            <li>✅ Error handling with clear messages</li>
+                            <li>? File validation (type, size = 10MB)</li>
+                            <li>? Progress indicator during processing</li>
+                            <li>? Success/failure count summary</li>
+                            <li>? Detailed results table</li>
+                            <li>? Export results (CSV, JSON, Clipboard)</li>
+                            <li>? Error handling with clear messages</li>
                         </ul>
                     </div>
                 </section>
 
                 <section id="ocr-integration">
-                    <h2>✅ OCR Integration</h2>
+                    <h2>? OCR Integration</h2>
 
                     <h3>OCR Capabilities</h3>
                     <div class="feature-card">
                         <h4>Text Format Support (5 formats)</h4>
                         <ul>
-                            <li>✅ CSV-like format (amount,currency,mode)</li>
-                            <li>✅ Labeled format (Amount: 1850, Currency: INR)</li>
-                            <li>✅ List format (bullet points)</li>
-                            <li>✅ Number-only format (with smart defaults)</li>
-                            <li>✅ Mixed format (combination of above)</li>
+                            <li>? CSV-like format (amount,currency,mode)</li>
+                            <li>? Labeled format (Amount: 1850, Currency: INR)</li>
+                            <li>? List format (bullet points)</li>
+                            <li>? Number-only format (with smart defaults)</li>
+                            <li>? Mixed format (combination of above)</li>
                         </ul>
 
                         <h4>Detection Strategies</h4>
                         <ul>
-                            <li>✅ Currency detection (4 strategies: symbols, codes, names, default)</li>
-                            <li>✅ Mode detection (keyword matching)</li>
-                            <li>✅ Amount extraction (regex patterns)</li>
+                            <li>? Currency detection (4 strategies: symbols, codes, names, default)</li>
+                            <li>? Mode detection (keyword matching)</li>
+                            <li>? Amount extraction (regex patterns)</li>
                         </ul>
 
                         <h4>Success Rates</h4>
@@ -326,27 +327,27 @@
                                 <tr>
                                     <td>CSV-like</td>
                                     <td>99%</td>
-                                    <td>✅ Excellent</td>
+                                    <td>? Excellent</td>
                                 </tr>
                                 <tr>
                                     <td>Labeled</td>
                                     <td>95%</td>
-                                    <td>✅ Excellent</td>
+                                    <td>? Excellent</td>
                                 </tr>
                                 <tr>
                                     <td>List</td>
                                     <td>92%</td>
-                                    <td>✅ Good</td>
+                                    <td>? Good</td>
                                 </tr>
                                 <tr>
                                     <td>Number-only</td>
                                     <td>98%</td>
-                                    <td>✅ Excellent</td>
+                                    <td>? Excellent</td>
                                 </tr>
                                 <tr>
                                     <td>Mixed</td>
                                     <td>90%</td>
-                                    <td>✅ Good</td>
+                                    <td>? Good</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -354,17 +355,17 @@
                 </section>
 
                 <section id="smart-defaults">
-                    <h2>✅ Smart Defaults System</h2>
+                    <h2>? Smart Defaults System</h2>
 
                     <div class="feature-card">
                         <h4>Requirements</h4>
                         <ul>
-                            <li>✅ Default currency: INR</li>
-                            <li>✅ Default mode: greedy</li>
-                            <li>✅ Auto-detect currency from symbols/keywords</li>
-                            <li>✅ Auto-detect mode from keywords</li>
-                            <li>✅ Apply defaults when fields missing</li>
-                            <li>✅ Log default applications</li>
+                            <li>? Default currency: INR</li>
+                            <li>? Default mode: greedy</li>
+                            <li>? Auto-detect currency from symbols/keywords</li>
+                            <li>? Auto-detect mode from keywords</li>
+                            <li>? Apply defaults when fields missing</li>
+                            <li>? Log default applications</li>
                         </ul>
 
                         <h4>Detection Examples</h4>
@@ -378,7 +379,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>1000 ₹</td>
+                                    <td>1000 ?</td>
                                     <td>Currency: INR</td>
                                     <td>Mode: greedy</td>
                                 </tr>
@@ -398,7 +399,7 @@
                 </section>
 
                 <section id="multi-language">
-                    <h2>✅ Multi-Language Support</h2>
+                    <h2>? Multi-Language Support</h2>
 
                     <h3>Supported Languages (5)</h3>
                     <table class="data-table">
@@ -415,31 +416,31 @@
                                 <td>English</td>
                                 <td>en</td>
                                 <td>45+</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Hindi</td>
                                 <td>hi</td>
                                 <td>45+</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Spanish</td>
                                 <td>es</td>
                                 <td>45+</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>French</td>
                                 <td>fr</td>
                                 <td>45+</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>German</td>
                                 <td>de</td>
                                 <td>45+</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                         </tbody>
                     </table>
@@ -447,26 +448,26 @@
                     <h3>Features</h3>
                     <div class="feature-card">
                         <ul>
-                            <li>✅ Language selector in UI</li>
-                            <li>✅ Persistent language preference (localStorage)</li>
-                            <li>✅ Complete UI translation</li>
-                            <li>✅ Nested translation key support</li>
-                            <li>✅ Fallback to English if translation missing</li>
+                            <li>? Language selector in UI</li>
+                            <li>? Persistent language preference (localStorage)</li>
+                            <li>? Complete UI translation</li>
+                            <li>? Nested translation key support</li>
+                            <li>? Fallback to English if translation missing</li>
                         </ul>
                     </div>
                 </section>
 
                 <section id="ui-features">
-                    <h2>✅ UI/UX Features</h2>
+                    <h2>? UI/UX Features</h2>
 
                     <h3>Dark Mode</h3>
                     <div class="feature-card">
                         <ul>
-                            <li>✅ Light/Dark theme toggle</li>
-                            <li>✅ System preference detection</li>
-                            <li>✅ Persistent theme preference</li>
-                            <li>✅ Complete color palette for both themes</li>
-                            <li>✅ Smooth transition animations</li>
+                            <li>? Light/Dark theme toggle</li>
+                            <li>? System preference detection</li>
+                            <li>? Persistent theme preference</li>
+                            <li>? Complete color palette for both themes</li>
+                            <li>? Smooth transition animations</li>
                         </ul>
                     </div>
 
@@ -483,17 +484,17 @@
                             <tr>
                                 <td>CSV</td>
                                 <td>Headers, formatted data, download</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>JSON</td>
                                 <td>Complete data structure, download</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                             <tr>
                                 <td>Clipboard</td>
                                 <td>Plain text, formatted for paste</td>
-                                <td>✅ Complete</td>
+                                <td>? Complete</td>
                             </tr>
                         </tbody>
                     </table>
@@ -501,35 +502,35 @@
                     <h3>Responsive Design</h3>
                     <div class="feature-card">
                         <ul>
-                            <li>✅ Desktop (1920×1080)</li>
-                            <li>✅ Laptop (1366×768)</li>
-                            <li>✅ Tablet (768×1024)</li>
-                            <li>✅ Mobile (375×667)</li>
+                            <li>? Desktop (1920�1080)</li>
+                            <li>? Laptop (1366�768)</li>
+                            <li>? Tablet (768�1024)</li>
+                            <li>? Mobile (375�667)</li>
                         </ul>
                     </div>
                 </section>
 
                 <section id="technical-requirements">
-                    <h2>✅ Technical Requirements</h2>
+                    <h2>? Technical Requirements</h2>
 
                     <h3>Offline Operation</h3>
                     <div class="feature-card">
                         <ul>
-                            <li>✅ Fully functional without internet</li>
-                            <li>✅ Local SQLite database</li>
-                            <li>✅ Electron desktop app</li>
-                            <li>✅ Local backend server (FastAPI)</li>
+                            <li>? Fully functional without internet</li>
+                            <li>? Local SQLite database</li>
+                            <li>? Electron desktop app</li>
+                            <li>? Local backend server (FastAPI)</li>
                         </ul>
                     </div>
 
                     <h3>Auto-Installation</h3>
                     <div class="feature-card">
                         <ul>
-                            <li>✅ PowerShell auto-installer for OCR dependencies</li>
-                            <li>✅ Tesseract OCR 5.3.3 installation</li>
-                            <li>✅ Poppler 24.08.0 installation</li>
-                            <li>✅ PATH configuration</li>
-                            <li>✅ Verification scripts</li>
+                            <li>? PowerShell auto-installer for OCR dependencies</li>
+                            <li>? Tesseract OCR 5.3.3 installation</li>
+                            <li>? Poppler 24.08.0 installation</li>
+                            <li>? PATH configuration</li>
+                            <li>? Verification scripts</li>
                         </ul>
                     </div>
 
@@ -548,31 +549,31 @@
                                 <td>Single Calculation</td>
                                 <td>&lt; 1ms</td>
                                 <td>~0.3ms</td>
-                                <td>✅ Pass</td>
+                                <td>? Pass</td>
                             </tr>
                             <tr>
                                 <td>Bulk 100 rows</td>
                                 <td>&lt; 100ms</td>
                                 <td>~35ms</td>
-                                <td>✅ Pass</td>
+                                <td>? Pass</td>
                             </tr>
                             <tr>
                                 <td>OCR Processing</td>
                                 <td>&lt; 3s</td>
                                 <td>~2.5s</td>
-                                <td>✅ Pass</td>
+                                <td>? Pass</td>
                             </tr>
                             <tr>
                                 <td>History Query</td>
                                 <td>&lt; 100ms</td>
                                 <td>~25ms</td>
-                                <td>✅ Pass</td>
+                                <td>? Pass</td>
                             </tr>
                             <tr>
                                 <td>Page Load</td>
                                 <td>&lt; 2s</td>
                                 <td>~800ms</td>
-                                <td>✅ Pass</td>
+                                <td>? Pass</td>
                             </tr>
                         </tbody>
                     </table>
@@ -582,7 +583,7 @@
                     <h2>Phase 1 Completion Summary</h2>
 
                     <div class="alert alert-success">
-                        <h3>✅ All Features Complete</h3>
+                        <h3>? All Features Complete</h3>
                         <table class="data-table">
                             <thead>
                                 <tr>
@@ -595,53 +596,53 @@
                                 <tr>
                                     <td>Core Calculation</td>
                                     <td>Single calc, 4 currencies, 4 modes</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                                 <tr>
                                     <td>History</td>
                                     <td>Save, view, delete, filter, export</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                                 <tr>
                                     <td>Bulk Upload</td>
                                     <td>CSV, PDF, Word, Images</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                                 <tr>
                                     <td>OCR System</td>
                                     <td>5 formats, 4 detection strategies</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                                 <tr>
                                     <td>Smart Defaults</td>
                                     <td>Auto-detect, fallback logic</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                                 <tr>
                                     <td>Multi-Language</td>
                                     <td>5 languages, 45+ keys</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                                 <tr>
                                     <td>UI/UX</td>
                                     <td>Dark mode, export, responsive</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                                 <tr>
                                     <td>Technical</td>
                                     <td>Offline, auto-install, performance</td>
-                                    <td>✅ 100%</td>
+                                    <td>? 100%</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <h3 style="margin-top: 2rem;">Overall: 100% Complete ✅</h3>
+                        <h3 style="margin-top: 2rem;">Overall: 100% Complete ?</h3>
                         <p>All Phase 1 requirements have been met and validated. The system is production-ready.</p>
                     </div>
                 </section>
 
                 <div class="alert alert-info">
-                    <strong>📋 Next Steps</strong>
+                    <strong>?? Next Steps</strong>
                     <p>With Phase 1 complete, the project can proceed to Phase 2 planning (Cloud sync, Multi-user support, Advanced analytics). See the <a href="future-enhancements.html">Future Enhancements</a> page for details.</p>
                 </div>
             

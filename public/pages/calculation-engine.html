@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculation Engine Logic - Currency Denomination Calculator</title>
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -84,13 +85,13 @@
             <header class="page-header">
                 <div class="breadcrumbs">
                     <a href="/index.html">Documentation</a>
-                    <span class="separator">›</span>
+                    <span class="separator">�</span>
                     <span>Calculation Engine Logic</span>
                 </div>
                 <div class="header-actions">
-                    <a href="/index.html" class="action-link">🏠 Home</a>
-                    <a href="javascript:window.print()" class="action-link">🖨️ Print</a>
-                    <a href="/auth/logout" class="action-link">🚪 Logout</a>
+                    <a href="/index.html" class="action-link">?? Home</a>
+                    <a href="javascript:window.print()" class="action-link">??? Print</a>
+                    <a href="/auth/logout" class="action-link">?? Logout</a>
                 </div>
                 <button class="hamburger-menu" aria-label="Toggle sidebar" role="button" tabindex="0" type="button">
                     <span class="hamburger-bar"></span>
@@ -194,34 +195,34 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>₹500</td>
+                                    <td>?500</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>3</td>
-                                    <td>₹1,500.00</td>
+                                    <td>?1,500.00</td>
                                 </tr>
                                 <tr>
-                                    <td>₹200</td>
+                                    <td>?200</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>1</td>
-                                    <td>₹200.00</td>
+                                    <td>?200.00</td>
                                 </tr>
                                 <tr>
-                                    <td>₹100</td>
+                                    <td>?100</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>1</td>
-                                    <td>₹100.00</td>
+                                    <td>?100.00</td>
                                 </tr>
                                 <tr>
-                                    <td>₹50</td>
+                                    <td>?50</td>
                                     <td><span class="badge badge-primary">Note</span></td>
                                     <td>1</td>
-                                    <td>₹50.00</td>
+                                    <td>?50.00</td>
                                 </tr>
                                 <tr>
-                                    <td>₹0.50</td>
+                                    <td>?0.50</td>
                                     <td><span class="badge badge-warning">Coin</span></td>
                                     <td>1</td>
-                                    <td>₹0.50</td>
+                                    <td>?0.50</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -339,7 +340,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
     # Skip largest denomination if possible
     for i, denom in enumerate(sorted_denoms):
         if i == 0 and remaining < denom * 2:
-            # Skip largest if amount < 2× largest denomination
+            # Skip largest if amount < 2� largest denomination
             continue
         
         if remaining >= denom:
@@ -373,18 +374,18 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                             <tbody>
                                 <tr>
                                     <td><strong>Greedy</strong></td>
-                                    <td>₹2000×1, ₹500×2</td>
+                                    <td>?2000�1, ?500�2</td>
                                     <td>3 pieces</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Minimize Large</strong></td>
-                                    <td>₹500×6</td>
+                                    <td>?500�6</td>
                                     <td>6 pieces</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p class="text-sm text-gray-600">Minimize Large avoids ₹2000 note, uses more ₹500 notes instead.</p>
+                        <p class="text-sm text-gray-600">Minimize Large avoids ?2000 note, uses more ?500 notes instead.</p>
                     </div>
                 </section>
 
@@ -433,18 +434,18 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                             <tbody>
                                 <tr>
                                     <td><strong>Greedy</strong></td>
-                                    <td>₹20×2, ₹5×1, ₹2×1, ₹0.50×1</td>
+                                    <td>?20�2, ?5�1, ?2�1, ?0.50�1</td>
                                     <td>5 pieces (4 notes, 1 coin)</td>
                                 </tr>
                                 <tr>
                                     <td><strong>Minimize Small</strong></td>
-                                    <td>₹20×2 (rounded to ₹40)</td>
+                                    <td>?20�2 (rounded to ?40)</td>
                                     <td>2 pieces (2 notes, 0 coins)</td>
                                 </tr>
                             </tbody>
                         </table>
 
-                        <p class="text-sm text-gray-600">Minimize Small rounds ₹47.50 → ₹40 to avoid coins entirely.</p>
+                        <p class="text-sm text-gray-600">Minimize Small rounds ?47.50 ? ?40 to avoid coins entirely.</p>
                     </div>
                 </section>
 
@@ -457,7 +458,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                     <pre><code class="language-json">{
   "INR": {
     "name": "Indian Rupee",
-    "symbol": "₹",
+    "symbol": "?",
     "code": "INR",
     "note_threshold": 10,
     "denominations": [
@@ -501,7 +502,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                     <pre><code class="language-json">{
   "EUR": {
     "name": "Euro",
-    "symbol": "€",
+    "symbol": "�",
     "code": "EUR",
     "note_threshold": 5,
     "denominations": [
@@ -528,7 +529,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                     <pre><code class="language-json">{
   "GBP": {
     "name": "British Pound",
-    "symbol": "£",
+    "symbol": "�",
     "code": "GBP",
     "note_threshold": 5,
     "denominations": [
@@ -622,7 +623,7 @@ def _rebalance_to_notes(amount: Decimal, denominations: List[Decimal],
                     </table>
 
                     <div class="alert alert-success">
-                        <strong>✓ Performance Target Met</strong>
+                        <strong>? Performance Target Met</strong>
                         <p>All algorithms execute in &lt;1ms per calculation, ensuring instant UI feedback even for large bulk uploads.</p>
                     </div>
                 </section>
@@ -667,7 +668,7 @@ def validate_mode(mode: str) -> None:
                 </section>
 
                 <div class="alert alert-success">
-                    <strong>✓ Section Complete</strong>
+                    <strong>? Section Complete</strong>
                     <p>This section documents all four calculation algorithms (Greedy, Balanced, Minimize Large, Minimize Small), complete currency configurations for INR/USD/EUR/GBP, performance benchmarks (&lt;1ms per calculation), and comprehensive input validation.</p>
                 </div>
             
